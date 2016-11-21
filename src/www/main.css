@@ -23,12 +23,17 @@ nav .menu {
 	list-style: none;
 	margin-top: 2%;
 }
+<<<<<<< HEAD
 nav .menu li{
+=======
+nav .menu a{
+>>>>>>> ba9ef2f07895a690fd869d6d90eb3d0e5fb7cd8e
 	display: inline-block;
 	width: 30.6%;
 	margin-left: 2%;
 	margin-bottom: 2%;
 	text-align: center;
+<<<<<<< HEAD
 
 }
 nav .menu li>a{
@@ -67,6 +72,41 @@ nav .menu li:nth-child(9) {
   background-color: #ff6571;
 }
 nav .menu li:nth-child(10) {
+=======
+	color: #fff;
+	font-size: 1.0rem;
+	padding: 16px 0;
+	text-decoration: none;
+}
+nav .menu a:nth-child(1) {
+  background-color: #5fc6e3;
+}
+nav .menu a:nth-child(2) {
+  background-color: #afcc12;
+}
+nav .menu a:nth-child(3) {
+  background-color: #68bc91;
+}
+nav .menu a:nth-child(4) {
+  background-color: #eca266;
+}
+nav .menu a:nth-child(5) {
+  background-color: #1cbab7;
+}
+nav .menu a:nth-child(6) {
+  background-color: #e9b11c;
+}
+nav .menu a:nth-child(7) {
+  background-color: #7c6dc7;
+}
+nav .menu a:nth-child(8) {
+  background-color: #00b0d2;
+}
+nav .menu a:nth-child(9) {
+  background-color: #ff6571;
+}
+nav .menu a:nth-child(10) {
+>>>>>>> ba9ef2f07895a690fd869d6d90eb3d0e5fb7cd8e
   background-color: #e4af4c;
 }
 nav .menu a i {
@@ -75,6 +115,11 @@ nav .menu a i {
 	color: #fff !important;
   	padding-bottom: 5px;
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ba9ef2f07895a690fd869d6d90eb3d0e5fb7cd8e
 .contact-record-list {
 	padding:0;
 }
@@ -103,6 +148,7 @@ nav .menu a i {
     background-color: #ededf0!important;
     height: 48px!important;
 }
+<<<<<<< HEAD
 .fiexded{
     position: fixed;
     top: 0;
