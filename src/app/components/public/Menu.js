@@ -1,6 +1,6 @@
-import React from 'react';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import React, { Component }from 'react';
+import classname from 'classnames';
+import Done from 'material-ui/svg-icons/action/done';
 const styles={
     menu:{
         top: 45
@@ -13,36 +13,41 @@ const styles={
     },
     select: {
         backgroundColor: '#fac057',
+    },
+    done: {
+        position: 'absolute',
+        right: 12,
+        top: 5,
+        width: 20,
+        height: 20,
+        verticalAlign: 'middle',
+        color: '#fff'
     }
 };
 
- class Menu extends React.Component {
+class Menu extends Component{
     constructor(props){
         super(props);
         this.state={
-            value:0,
-        };
-        this.handleChange=this.handleChange.bind(this);
+            menuopen: false,
+            index: 0
+        }
     }
-    handleChange(event,index,value){
-        event.stopPropagation();
-        event.preventDefault();
-        this.setState({value});
+    toggleDropdownMenu(){
+         this.setState({ menuopen: ! this.state.menuopen })
     }
     render() {
         return (
-            <div>
-                <DropDownMenu value={this.state.value} onChange={this.handleChange} underlineStyle={styles.under}>
-                    <MenuItem value={1} primaryText='我的'/>
-                    <MenuItem value={2} primaryText='全部'/>
-                    <MenuItem value={3} primaryText='潜在客户'/>
-                    <MenuItem value={4} primaryText='VIP客户'/>
-                    <MenuItem value={5} primaryText='成交客户'/>
-                    <MenuItem value={6} primaryText='热点客户'/>
-                    <MenuItem value={7} primaryText='30天未更新'/>
-                    <MenuItem value={8} primaryText='本月创建'/>
-                    <MenuItem value={9} primaryText='公海客户'/>
-                </DropDownMenu>
+            <div className={classname({open:this.state.menuopen})}>
+                <a href='javascript:void(0);' className='dropdown-toggle' onClick={()=>this.toggleDropdownMenu()}>
+                    全部
+                    <span className="caret"></span>
+                </a>
+                <ul className='dropdown-menu' role='menu' value={this.state.index}>
+                    {this.props.items.map((item, index) => {
+                        return <li key={index}><a href='javascript:void(0);'>{item}{<Done style={styles.done}/>}</a></li>
+                    })}
+                </ul>
             </div>
         );
     }

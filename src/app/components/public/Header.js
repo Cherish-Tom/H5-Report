@@ -12,12 +12,13 @@ const styles={
     textAlign: 'center',
     fontSize:18,
     height:45,
-    'lineHeight':'50px',
+    lineHeight:'45px',
     color: grey900,
    },
    bar:{
        height:45,
-       backgroundColor: grey100
+       lineHeight:'45px',
+       backgroundColor: '#fff'
    }
 };
 function handleClick(){
@@ -25,10 +26,9 @@ function handleClick(){
 }
 const Header = () => (
     <AppBar
+        titleStyle={styles.text}
         style={styles.bar}
-        title={<div style={styles.text}>卓谷科技</div>}
-      // iconElementLeft={<Link to={hashHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
-        // iconStyleLeft={{marginTop:0}}
+        title={<div>卓谷科技</div>}
         iconStyleRight={{marginTop:0}}
         iconElementRight={<Link to={hashHistory}><IconButton><Setting /></IconButton></Link>}
     />

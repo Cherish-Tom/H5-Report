@@ -5,19 +5,21 @@ import NProgress from 'nprogress';
 import Master from './components/index/Master';
 import Index from './components/index/Index';
 
-import CustomerList from './components/list/CustomerList';
-import AuditList from './components/list/AuditList';
-import ContactList from './components/list/ContactList';
-import OrderList from './components/list/OrderList';
+import Customer from './components/list/Customer';
+import Audit from './components/list/Audit';
+import Contact from './components/list/Contact';
+import Order from './components/list/Order';
+import Record from './components/list/Record';
 
 
 const AppRouters = (
     <Route path='/' component={Master}>
         <IndexRoute component={Index} />
-        <Route path='CustomerList' component={CustomerList} />
-        <Route path='AuditList' component={AuditList} />
-        <Route path='ContactList' component={ContactList} />
-        <Route path='OrderList' component={OrderList} />
+        <Route path='customer' component={Customer} />
+        <Route path='contact' component={Contact} />
+        <Route path='record' component={Record} />
+        <Route path='audit' component={Audit} />
+        <Route path='order' component={Order} />
     </Route>
 )
 

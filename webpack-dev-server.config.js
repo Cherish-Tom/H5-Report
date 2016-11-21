@@ -17,7 +17,7 @@ const config = {
     devtool: 'eval',
     hot: true, // Live-reload
     inline: true,
-    port: 3001, // Port Number
+    port: 3030, // Port Number
     host: 'localhost', // Change to '0.0.0.0' for external facing server
   },
   devtool: 'eval',
@@ -33,7 +33,7 @@ const config = {
     // Moves files
     new TransferWebpackPlugin([
       {from: 'www'},
-    ], path.resolve(__dirname, 'src')),
+    ], path.resolve(__dirname, 'src'))
   ],
   module: {
     loaders: [
