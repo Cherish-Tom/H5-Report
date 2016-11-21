@@ -262,4 +262,3 @@ function mapStateToProps(state) {
   };
 }
 export default CustomerList;
-// export default connect(mapStateToProps)(CustomerList);

@@ -25,16 +25,19 @@ const styles={
     }
 };
 
-class Menu extends Component{
+class Menu extends Component {
     constructor(props){
         super(props);
         this.state={
             menuopen: false,
-            index: 0
+            value: 0
         }
     }
     toggleDropdownMenu(){
          this.setState({ menuopen: ! this.state.menuopen })
+    }
+    handleChange (event, index, value){
+        this.setState({ menuopen: false, value: value})
     }
     render() {
         return (
@@ -43,7 +46,7 @@ class Menu extends Component{
                     全部
                     <span className="caret"></span>
                 </a>
-                <ul className='dropdown-menu' role='menu' value={this.state.index}>
+                <ul className='dropdown-menu' role='menu' value={this.state.index} onChange={this.handleChange}>
                     {this.props.items.map((item, index) => {
                         return <li key={index}><a href='javascript:void(0);'>{item}{<Done style={styles.done}/>}</a></li>
                     })}

@@ -4,8 +4,6 @@ import {Link, browserHistory} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Search from '../public/Search';
 import Menu from '../public/Menu';
-import MenuItem from 'material-ui/MenuItem';
-import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Add from 'material-ui/svg-icons/content/add';
@@ -122,16 +120,7 @@ class Head extends React.Component {
                 iconStyleLeft={{marginTop: 0}}
                 iconStyleRight={{marginTop: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
-                iconElementRight={<IconMenu
-                        iconButtonElement={<IconButton><Add color="#5e95c9"/></IconButton>}
-                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                    >
-                        <MenuItem primaryText="快速创建"/>
-                        <MenuItem primaryText="创建"/>
-                        <MenuItem primaryText="拍名片创建"/>
-                        <MenuItem primaryText="选名片创建"/>
-                    </IconMenu>}
+                iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}
             >
             </AppBar>
         )

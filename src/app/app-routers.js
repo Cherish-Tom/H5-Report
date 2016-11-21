@@ -14,11 +14,11 @@ import Record from './components/list/Record';
 const AppRouters = (
     <Route path='/' component={Master}>
         <IndexRoute component={Index} />
-        <Route path='customer' component={Customer} />
-        <Route path='contact' component={Contact} />
-        <Route path='record' component={Record} />
-        <Route path='audit' component={Audit} />
-        <Route path='order' component={Order} />
+        <Route path='/customer' component={Customer} />
+        <Route path='/contact' component={Contact} />
+        <Route path='/record' component={Record} />
+        <Route path='/audit' component={Audit} />
+        <Route path='/order' component={Order} />
     </Route>
 )
 
