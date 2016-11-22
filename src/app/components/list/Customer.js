@@ -161,7 +161,7 @@ const styles={
         padding: '0',
     },
     back:{
-        backgroundColor: '#fff',
+        backgroundColor: fullWhite,
         margin: '0 12px 12px',
         borderRadius: 4,
         boxShadow:'rgba(0, 0, 0, 0.117647) 0px 1px 6px',

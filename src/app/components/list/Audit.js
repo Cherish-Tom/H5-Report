@@ -10,17 +10,6 @@ import Setting from 'material-ui/svg-icons/action/settings';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import {blue600,blueGrey50,grey100,grey900} from 'material-ui/styles/colors';
 
-const muiTheme = getMuiTheme({
-    tabs: {
-        backgroundColor: blueGrey50,
-        textColor:'rgba(94, 149, 201 ,.8)',
-        selectedTextColor: 'rgba(255, 255, 255, 1)'
-    },
-    appBar:{
-        height: 45,
-    }
-})
-
 const styles = {
     back:{
         'borderTop': '1px solid #5e95c9',
@@ -74,8 +63,6 @@ export default class AuditList extends React.Component {
     }
     render() {
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
-
                 <div>
                     <AppBar
                         style={styles.bar}
@@ -103,7 +90,6 @@ export default class AuditList extends React.Component {
                         </div>
                     </SwipeableViews>
                 </div>
-            </MuiThemeProvider>
     )
     }
 }

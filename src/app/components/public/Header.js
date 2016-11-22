@@ -24,13 +24,21 @@ const styles={
 function handleClick(){
   alert("2");
 }
-const Header = () => (
-    <AppBar
-        titleStyle={styles.text}
-        style={styles.bar}
-        title={<div>卓谷科技</div>}
-        iconStyleRight={{marginTop:0}}
-        iconElementRight={<Link to={hashHistory}><IconButton><Setting /></IconButton></Link>}
-    />
-)
+class Header extends React.Component{
+    constructor(props,content){
+        super(props,content)
+    }
+    render(){
+        return (
+            <AppBar
+                titleStyle={styles.text}
+                style={styles.bar}
+                title={<div>卓谷科技</div>}
+                iconStyleRight={{marginTop:0}}
+                iconElementRight={<Link to={hashHistory}><IconButton><Setting /></IconButton></Link>}
+            />
+        )
+    }
+}
+
 export default Header;
