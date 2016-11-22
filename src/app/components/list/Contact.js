@@ -149,14 +149,15 @@ class ContactList extends React.Component {
     componentDidMount(){
         this.setState({contact: contactData});
     }
-    handleToggle(e) {
-        event.preventDefault()
-        event.stopPropagation()
-        let parent = e.currentTarget.parentNode
-        let tel = parent.querySelector('.tel').childNodes[2].nodeValue
-        this.setState({open: !this.state.open, tel: tel})
+    handleToggle(event) {
+        let parent = event.currentTarget.parentNode;
+        let tel = parent.querySelector('.tel').childNodes[2].nodeValue;
+        this.setState({open: !this.state.open, tel: tel});
+        event.preventDefault();
     }
-    handleClose(){ this.setState({open: false})}
+    handleClose(){
+      this.setState({open: false}
+    )}
     render() {
         return (
             <div>
@@ -189,7 +190,8 @@ class ContactList extends React.Component {
                     width={200}
                     open={this.state.open}
                     containerStyle={this.state.open?styles.transform:styles.container}
-                    onRequestChange={(open) => this.setState({open})}>
+                    onRequestChange={(open) => this.setState({open})}
+                >
                     <RaisedButton
                         fullWidth={true}
                         backgroundColor='#82bde3'
