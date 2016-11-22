@@ -21,14 +21,12 @@ const styles={
        backgroundColor: '#fff'
    }
 };
-function handleClick(){
-  alert("2");
-}
 class Header extends React.Component{
     constructor(props,content){
         super(props,content)
     }
     render(){
+        
         return (
             <AppBar
                 titleStyle={styles.text}

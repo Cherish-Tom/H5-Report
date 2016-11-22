@@ -212,7 +212,7 @@ class Lists extends Component{
     render() {
         return(
             <div>
-                <List style={{backgroundColor: '#efeef4',paddingTop: '96px'}}>
+                <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
                     {dataCustomerList.map((item, index) => (
                         <ListItem
                             style={styles.back}

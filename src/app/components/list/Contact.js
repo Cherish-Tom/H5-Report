@@ -1,5 +1,4 @@
 import React from 'react';
-import {findDOM} from 'react-dom';
 import {List, ListItem} from 'material-ui/List';
 import Drawer from 'material-ui/Drawer';
 import {Link, browserHistory} from 'react-router';
@@ -17,7 +16,7 @@ const styles = {
         textAlign: 'center',
         lineHeight: '45px',
         height: 45,
-        overflow: 'initial'
+        overflow: 'initial',
     },
     bar: {
         backgroundColor: '#fff',
@@ -46,17 +45,6 @@ const styles = {
         padding: 20,
         transform: 'translate(0, 0)',
         overflow: 'hidden'
-    },
-    a:{
-        display: 'block',
-        backgroundColor: '#82bde3',
-        marginBottom: 20,
-        height: 36,
-        width: '100%',
-        color: '#fff',
-        textAlign: 'center',
-        lineHeight: 36,
-        borderRadius: 2
     }
 }
 
@@ -147,13 +135,6 @@ class Head extends React.Component {
         )
     }
 }
-
-const iconButtonElement = (
-    <IconButton iconStyle={styles.phone} touch={true} >
-        <PhoneForwarded color='#a2dd86'/>
-    </IconButton>
-)
-
 class ContactList extends React.Component {
     constructor(props){
         super(props);
@@ -162,7 +143,7 @@ class ContactList extends React.Component {
         this.state={
             contact: [],
             open: false,
-            tel: '0816-2333333'
+            tel: ''
         }
     }
     componentDidMount(){
@@ -172,19 +153,18 @@ class ContactList extends React.Component {
         event.preventDefault()
         event.stopPropagation()
         let parent = e.currentTarget.parentNode
-        let val = parent.querySelector('.tel').childNodes[2].nodeValue
-        this.setState({open: !this.state.open,tel:val})
+        let tel = parent.querySelector('.tel').childNodes[2].nodeValue
+        this.setState({open: !this.state.open, tel: tel})
     }
     handleClose(){ this.setState({open: false})}
     render() {
-        const pathname = this.props.location.pathname
         return (
             <div>
                 <div className="fiexded" >
                     <Head />
-                    <Search />
+                    <Search title="请输入电话号码或者联系人"/>
                 </div>
-                <List style={{paddingTop: '93px'}} className="contact_list">
+                <List className="contact_list">
                     {this.state.contact&&this.state.contact.map((item,index) => (
                         <ListItem
                             className='contact'
@@ -214,7 +194,7 @@ class ContactList extends React.Component {
                         fullWidth={true}
                         backgroundColor='#82bde3'
                         labelColor='#fff'
-                        label={this.state.tel}
+                        label={this.state.tel?this.state.tel:'10000'}
                         href={`tel:${this.state.tel}`}
                         style={{marginBottom: 20}}
                         onTouchTap={this.handleClose}

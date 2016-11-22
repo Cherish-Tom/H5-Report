@@ -41,7 +41,7 @@ class Menu extends Component {
     }
     render() {
         return (
-            <div className={classname({open:this.state.menuopen})}>
+            <div className={classname('dropdown-title',{open:this.state.menuopen})}>
                 <a href='javascript:void(0);' className='dropdown-toggle' onClick={()=>this.toggleDropdownMenu()}>
                     全部
                     <span className="caret"></span>
