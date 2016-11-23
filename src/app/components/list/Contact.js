@@ -12,7 +12,7 @@ import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import PhoneForwarded from 'material-ui/svg-icons/notification/phone-forwarded';
 import Add from 'material-ui/svg-icons/content/add';
 import {CONFIG} from '../../constants/Config';
-
+import {dataList} from './data';
 const styles = {
     title:{
         textAlign: 'center',
@@ -49,75 +49,6 @@ const styles = {
         overflow: 'hidden'
     }
 }
-
-const contactData = [
-    {
-        name: '张三',
-        company: '新希望集团新希望集团新希望集团新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '18633537746'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '13281521352'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    }
-]
 class Head extends React.Component {
     constructor(props) {
         super(props);
@@ -150,9 +81,7 @@ class ContactList extends React.Component {
     }
     componentDidMount(){
         const self = this;
-        fetch(`http://localhost:3030/dataCustomerList.json`)
-            .then(response => response.json())
-            .then(json => self.setState({contact: json}))
+        this.setState({contact: dataList.contact})
     }
     handleToggle(event) {
         let parent = event.currentTarget.parentNode;
