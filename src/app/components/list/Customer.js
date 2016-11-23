@@ -171,7 +171,7 @@ const styles={
         textAlign: 'center',
         height: 45,
         lineHeight: '45px',
-        backgroundColor:'rgb(245, 245, 245)',
+        backgroundColor:'rgb(255, 255, 255)',
     },
     fiexd:{
         position: 'fixed',
@@ -189,7 +189,6 @@ const styles={
         height: 45,
         lineHeight: '45px',
         overflow: 'initial'
-
     }
 
 
@@ -209,32 +208,26 @@ class Head extends Component {
         )
     }
 }
-class Lists extends Component{
-    render() {
-        return(
-            <div>
-                <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
-                    {dataCustomerList.map((item, index) => (
-                        <ListItem
-                            style={styles.back}
-                            key={index}
-                            primaryText={
-                                <p><span style={styles.textColor}>{item.name}</span></p>
-                            }
-                            secondaryText={
-                                <p>
-                                    <span style={styles.textColor}>{item.id}&nbsp;&nbsp;{item.time}</span><br />
-                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.price}</span>
-                                </p>
-                            }
-                            secondaryTextLines={2}
-                        />
-                    ))}
-                </List>
-            </div>
-        );
-    }
-}
+const Lists = () => (
+  <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
+      {dataCustomerList.map((item, index) => (
+          <ListItem
+              style={styles.back}
+              key={index}
+              primaryText={
+                  <p><span style={styles.textColor}>{item.name}</span></p>
+              }
+              secondaryText={
+                  <p>
+                      <span style={styles.textColor}>{item.id}&nbsp;&nbsp;{item.time}</span><br />
+                      <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.price}</span>
+                  </p>
+              }
+              secondaryTextLines={2}
+          />
+      ))}
+  </List>
+)
 class CustomerList extends Component {
     render() {
         return (
@@ -247,19 +240,5 @@ class CustomerList extends Component {
             </div>
         );
     }
-}
-function mapStateToProps(state) {
-  const {
-    isFetching,
-    items
-  } = state || {
-    isFetching: true,
-    items: []
-  };
-
-  return {
-    isFetching,
-    items
-  };
 }
 export default CustomerList;

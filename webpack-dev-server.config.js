@@ -33,7 +33,7 @@ const config = {
     // Moves files
     new TransferWebpackPlugin([
       {from: 'www'},
-    ], path.resolve(__dirname, 'src'))
+    ], path.resolve(__dirname, 'src')),
   ],
   module: {
     loaders: [

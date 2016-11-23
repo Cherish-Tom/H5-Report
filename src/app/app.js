@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {render} from 'react-dom';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
@@ -7,15 +7,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import configureStore from './store/configureStore';
 import AppRouters from './app-routers';
 injectTapEventPlugin();
-
-
-// let store = configureStore();
 render(
-        // <Provider store={store}>
-            <Router history={browserHistory}
-                    routes={AppRouters}
-                    onUpdate={()=>window.scrollTo(0,0)}
-            />,
-        // </Provider>,
-        document.getElementById('app')
-    );
+        <Router history={browserHistory}
+                routes={AppRouters}
+                onUpdate={()=>window.scrollTo(0,0)}
+        />,
+        document.getElementById('app'));
