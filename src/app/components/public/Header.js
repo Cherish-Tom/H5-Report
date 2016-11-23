@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
+
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Setting from 'material-ui/svg-icons/action/settings';
 
-import {Router, Route, hashHistory} from 'react-router';
-import {Link} from 'react-router';
+import {browserHistory, Link} from 'react-router';
 import {grey100, grey900} from 'material-ui/styles/colors';
 const styles={
   text: {
@@ -21,22 +21,46 @@ const styles={
        backgroundColor: '#fff'
    }
 };
+<<<<<<< HEAD
 class Header extends Component {
     constructor(props,content){
         super(props,content)
     }
     render(){
         const pathname = this.props.location
+=======
+class Header extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        const pathname = window.location.pathname;
+        let title, leftIcons, rightIcons;
+        switch(pathname) {
+            case '/':
+                title = '卓谷科技'
+                rightIcons = <Setting color="#555"/>
+                break;
+            case '/photo':
+                title = '拍照'
+                leftIcons = <ArrowBaclIcon color="#5e95c9"/>
+        }
+>>>>>>> 3cef2fbf9091fc243351ea3f0253904246c957c2
         return (
             <AppBar
                 titleStyle={styles.text}
                 style={styles.bar}
-                title={<div>卓谷科技</div>}
+                title={title}
                 iconStyleRight={{marginTop:0}}
-                iconElementRight={<Link to={hashHistory}><IconButton><Setting /></IconButton></Link>}
+                iconStyleLeft={{marginTop:0}}
+                iconElementLeft={<Link to={browserHistory}><IconButton>{leftIcons}</IconButton></Link>}
+                iconElementRight={<IconButton>{rightIcons}</IconButton>}
             />
+
         )
     }
 }
-
+Header.defaultProps={
+    title:'卓谷科技'
+}
 export default Header;

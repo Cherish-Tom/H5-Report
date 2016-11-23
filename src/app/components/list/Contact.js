@@ -2,6 +2,7 @@ import React from 'react';
 import {List, ListItem} from 'material-ui/List';
 import Drawer from 'material-ui/Drawer';
 import {Link, browserHistory} from 'react-router';
+import fetch from 'isomorphic-fetch';
 import AppBar from 'material-ui/AppBar';
 import Search from '../public/Search';
 import Menu from '../public/Menu';
@@ -11,6 +12,7 @@ import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import PhoneForwarded from 'material-ui/svg-icons/notification/phone-forwarded';
 import Add from 'material-ui/svg-icons/content/add';
 import {CONFIG} from '../../constants/Config';
+import {dataList} from './data';
 const styles = {
     title:{
         textAlign: 'center',
@@ -47,75 +49,6 @@ const styles = {
         overflow: 'hidden'
     }
 }
-
-const contactData = [
-    {
-        name: '张三',
-        company: '新希望集团新希望集团新希望集团新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '18633537746'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '13281521352'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    },
-    {
-        name: '张三',
-        company: '新希望集团',
-        position: '副总',
-        tel: '0816-2333333'
-    }
-]
 class Head extends React.Component {
     constructor(props) {
         super(props);
@@ -147,7 +80,8 @@ class ContactList extends React.Component {
         }
     }
     componentDidMount(){
-        this.setState({contact: contactData});
+        const self = this;
+        this.setState({contact: dataList.contact})
     }
     handleToggle(event) {
         let parent = event.currentTarget.parentNode;

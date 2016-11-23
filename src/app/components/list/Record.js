@@ -6,9 +6,9 @@ import Search from '../public/Search';
 import Menu from '../public/Menu';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
-import PhoneForwarded from 'material-ui/svg-icons/notification/phone-forwarded';
+import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import Add from 'material-ui/svg-icons/content/add';
-
+import {dataList} from './data';
 import {CONFIG} from '../../constants/Config';
 const styles = {
     title:{
@@ -22,39 +22,26 @@ const styles = {
         lineHeight: '45px',
         height: 45,
     },
-    phone:{
-        width: 16,
-        height: 16,
-        top: 20
+    textColor: {
+        color: '#7888af',
+        maxWidth: '75%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
     },
-    container:{
-        width: '100%',
-        height: 132,
-        bottom: 0,
-        top: 'none',
-        padding: 20,
-        transform: 'translate(0, 145px)',
-        overflow: 'hidden'
+    back: {
+        margin: 12,
+        backgroundColor: '#fff',
+        borderRadius: 4
     },
-    transform: {
-        width: '100%',
-        height: 132,
-        bottom: 0,
-        top: 'none',
-        padding: 20,
-        transform: 'translate(0, 0)',
-        overflow: 'hidden'
+    inner:{
+        padding: '10px 100px 10px 10px'
     },
-    a:{
-        display: 'block',
-        backgroundColor: '#82bde3',
-        marginBottom: 20,
+    btn:{
+        width: 100,
+        padding: 0,
         height: 36,
-        width: '100%',
-        color: '#fff',
-        textAlign: 'center',
-        lineHeight: 36,
-        borderRadius: 2
+        textAlign: 'right'
     }
 }
 class Head extends React.Component {
@@ -73,9 +60,33 @@ class Head extends React.Component {
         )
     }
 }
+class ViewCell extends React.Component {
+    render(){
+        return (
+            <ListItem
+                style={styles.back}
+                innerDivStyle={styles.inner}
+                primaryText = {<p style={styles.textColor}>{this.props.name}</p>}
+                secondaryText={<p className="contact_second">
+                    <span className='company'>{this.props.company}</span>
+                    <span className='position'>{this.props.prople}</span>
+                </p>}
+                rightIconButton={<IconButton style={styles.btn}><span className="created_at">{this.props.created_at.substring(0, 10)}</span><ChevronRight color='#a4e6cf'/></IconButton>}
+            />
+        )
+
+    }
+}
+
 class Record extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            data: []
+        }
+    }
+    componentDidMount() {
+        this.setState({data: dataList.record});
     }
     render(){
         return (
@@ -84,13 +95,15 @@ class Record extends Component {
                     <Head />
                     <Search title="请输入电话号码或者联系人" />
                 </div>
-                <List className='contact_list'>
-
+                <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
+                    {
+                        this.state.data.map((item, index) => {
+                            return <ViewCell {...item} key={index} />
+                        })
+                    }
                 </List>
             </div>
         )
     }
 }
-
-
 export default Record;

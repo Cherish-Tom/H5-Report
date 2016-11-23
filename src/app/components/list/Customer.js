@@ -5,156 +5,16 @@ import { connect } from 'react-redux';
 import { fetchIssuesIfNeeded } from '../../actions/index';
 
 import AppBar from 'material-ui/AppBar';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Add from 'material-ui/svg-icons/content/add';
 import {grey400, darkBlack, lightBlack, fullWhite} from 'material-ui/styles/colors';
 import Search from '../public/Search';
 import Menu from '../public/Menu';
-
-import {CONFIG} from '../../constants/Config';
-
-let dataCustomerList = [
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    },
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    },
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    },
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    },
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    },
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    },
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    },
-    {
-        name: '山东泰恒科技有限公司',
-        id: 'SO322',
-        time: '2015-04-02',
-        price: '2340.00',
-        industry: '科研院所',
-        customerType: '普通客户',
-        customerStatus: '成交客户',
-        salesDirector: '老板',
-        creationTime: '2015-04-01 00:11:39',
-        modifyTime: '2015-04-01 13:57:39',
-        customerSource: '电话来访',
-        staffSize: '50-200人',
-        natureCompany: '民营企业',
-        customerRelationship: '一般',
-        registeredCapital: '1000万以上'
-    }
-]
-
-
+//头部选项
+import { CONFIG } from '../../constants/Config';
+//模拟数据来源
+import {dataList} from './data';
 const styles={
     textColor:{
         color: '#7888af',
@@ -162,7 +22,7 @@ const styles={
     },
     back:{
         backgroundColor: fullWhite,
-        margin: '0 12px 12px',
+        margin: '12px',
         borderRadius: 4,
         boxShadow:'rgba(0, 0, 0, 0.117647) 0px 1px 6px',
     },
@@ -189,8 +49,6 @@ const styles={
         lineHeight: '45px',
         overflow: 'initial'
     }
-
-
 }
 class Head extends Component {
     render() {
@@ -207,27 +65,40 @@ class Head extends Component {
         )
     }
 }
-const Lists = () => (
-  <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
-      {dataCustomerList.map((item, index) => (
-          <ListItem
-              style={styles.back}
-              key={index}
-              primaryText={
-                  <p><span style={styles.textColor}>{item.name}</span></p>
-              }
-              secondaryText={
-                  <p>
-                      <span style={styles.textColor}>{item.id}&nbsp;&nbsp;{item.time}</span><br />
-                      <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.price}</span>
-                  </p>
-              }
-              secondaryTextLines={2}
-          />
-      ))}
-  </List>
-)
+class Lists extends React.Component{
+    render(){
+        return(
+            <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} >
+                  {this.props.data&&this.props.data.map((item, index) => (
+                      <ListItem
+                        style={styles.back}
+                        key={index}
+                        primaryText={
+                            <p><span style={styles.textColor}>{item.name}</span></p>
+                        }
+                        secondaryText={
+                            <p>
+                                <span style={styles.textColor}>{item.id}&nbsp;&nbsp;{item.created_at.substring(0, 10)}</span><br />
+                                <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.price}</span>
+                            </p>
+                        }
+                        secondaryTextLines={2}
+                    />
+                ))}
+            </List>
+        )
+    }
+}
 class CustomerList extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            data: []
+        }
+    }
+    componentDidMount(){
+        this.setState({data: dataList.customer})
+    }
     render() {
         return (
             <div>
@@ -235,7 +106,7 @@ class CustomerList extends Component {
                     <Head />
                     <Search title='请输入客户名称或地址'/>
                 </div>
-                <Lists />
+                <Lists data={this.state.data} />
             </div>
         );
     }

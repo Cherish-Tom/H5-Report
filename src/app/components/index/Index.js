@@ -26,7 +26,7 @@ const Index = React.createClass({
     const styles = this.getStyles();
     return(
       <div>
-            <Header style={styles.appBar}/>
+            <Header style={styles.appBar} />
             <nav>
               <ul className="menu">
                 <li><Link to="/customer"><i className="material-icons">&#xE7FB;</i><span>客户</span></Link></li>

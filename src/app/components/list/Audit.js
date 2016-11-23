@@ -1,5 +1,6 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import {List, ListItem} from 'material-ui/List';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import {Router, Route, browserHistory, Link} from 'react-router';
@@ -8,7 +9,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Setting from 'material-ui/svg-icons/action/settings';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
+import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import {blue600,blueGrey50,grey100,grey900} from 'material-ui/styles/colors';
+import {dataList} from './data';
 
 const styles = {
     back:{
@@ -45,16 +48,50 @@ const styles = {
         height:50,
         backgroundColor:'rgb(94, 149, 201)',
         marginTop: -50,
+    },
+    boxback:{
+        backgroundColor: "#fff",
+        margin: '12px',
+        borderRadius: 4,
+    },
+    child:{
+        position: 'absolute',
+        left: 6,
+        top: 25
     }
 }
 
-export default class AuditList extends React.Component {
+class Cell extends React.Component {
+    render(){
+        return(
+            <ListItem
+                style={styles.boxback}
+                innerDivStyle={{padding: '6px 6px 6px 80px'}}
+                children={<span style={styles.child}>销售订单</span>}
+                primaryText={<p className="overflow">{this.props.id}&nbsp;({this.props.name})</p>}
+                insetChildren={true}
+                secondaryText={
+                    <p style={{color:'#7888af'}}>
+                        {this.props.created_at}&nbsp;￥{this.props.price}<br />
+                        {this.props.salesDirector}
+                    </p>
+                }
+                secondaryTextLines={2}
+            />
+        )
+    }
+}
+class Audit extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             slideIndex: 0,
+            data:[]
         };
         this.handleChange = this.handleChange.bind(this);
+    }
+    componentDidMount(){
+        this.setState({data: dataList.customer});
     }
     handleChange(value) {
         this.setState({
@@ -63,33 +100,35 @@ export default class AuditList extends React.Component {
     }
     render() {
         return (
-                <div>
+            <div style={{backgroundColor: '#efeef4'}}>
+                <div className="fiexded">
                     <AppBar
                         style={styles.bar}
                         title={<div style={styles.title}>审批中心</div>}
                         iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
                         iconStyleLeft={{marginTop:0}}
-                        iconStyleRight={{marginTop:0}}
-                        iconElementRight={<Link to={browserHistory}><IconButton><Setting /></IconButton></Link>}
                     />
                     <Tabs onChange={this.handleChange} value={this.state.slideIndex} style={styles.back} inkBarStyle={styles.ink}>
                         <Tab label="已审批" value={0} style={styles.lable}/>
                         <Tab label="待审批" value={1} style={styles.lable}/>
                         <Tab label="近30天" value={2} style={styles.lable}/>
                     </Tabs>
-                    <SwipeableViews index={this.state.slideIndex} onChangeIndex={this.handleChange} >
-                        <div>
-                            <h2 style={styles.headline}>Tabs with slide effect</h2>
-                            Swipe to see the next slide.<br />
-                        </div>
-                        <div style={styles.slide}>
-                            slide n°2
-                        </div>
-                        <div style={styles.slide}>
-                            slide n°3
-                        </div>
-                    </SwipeableViews>
                 </div>
+                <SwipeableViews index={this.state.slideIndex} onChangeIndex={this.handleChange} style={{paddingTop: 95}}>
+                    <div>
+                        {
+                            this.state.data.map((item, index) => {
+                                return <Cell {...item} key={index} />
+                            })
+                        }
+                    </div>
+                    <div style={styles.slide}>
+                    </div>
+                    <div style={styles.slide}>
+                    </div>
+                </SwipeableViews>
+            </div>
     )
     }
 }
+export default Audit
