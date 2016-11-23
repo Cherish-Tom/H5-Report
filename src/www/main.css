@@ -82,7 +82,7 @@ nav .menu a i {
 .search_text{
     padding: 0 12px;
     box-sizing: border-box;
-    background-color: #ededf0!important;
+    background-color: #c9c9cc!important;
     height: 48px!important;
 }
 .fiexded{
@@ -216,4 +216,69 @@ input.photo_input:focus{
 .photo_img img{
     width: 100%;
     height: 100%;
+    border: 0;
+}
+.overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0;
+  left: -100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  will-change: opacity;
+  transform: translateZ(0);
+  transition: left 0ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, opacity 400ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  z-index: 1200;
+  pointer-events: none;
+
+}
+.overlay.open{
+  left: 0;
+  opacity: 1;
+}
+.click_element{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  transform: translate(0, 100%);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+  padding: 20px 40px;
+  z-index: 1300;
+  width: 100%;
+  box-sizing: border-box;
+}
+.click_element.open{
+  transform: translate(0, 0);
+}
+.click_element_input{
+  border-radius: 2px;
+  position: relative;
+  height: 36px;
+  line-height: 36px;
+  background-color: #04ce9b;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 0;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+}
+.click_element_input input[type=file]{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  width: 100%;
+}
+.click_element>div{
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 }

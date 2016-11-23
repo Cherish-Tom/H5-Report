@@ -36,7 +36,7 @@ const styles = {
     },
     bar:{
         height:45,
-        backgroundColor: grey100
+        backgroundColor: '#fff'
     },
     title:{
         textAlign: 'center',
@@ -60,7 +60,6 @@ const styles = {
         top: 25
     }
 }
-
 class Cell extends React.Component {
     render(){
         return(

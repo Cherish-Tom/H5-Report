@@ -21,14 +21,6 @@ const styles={
        backgroundColor: '#fff'
    }
 };
-<<<<<<< HEAD
-class Header extends Component {
-    constructor(props,content){
-        super(props,content)
-    }
-    render(){
-        const pathname = this.props.location
-=======
 class Header extends React.Component{
     constructor(props){
         super(props)
@@ -45,7 +37,6 @@ class Header extends React.Component{
                 title = '拍照'
                 leftIcons = <ArrowBaclIcon color="#5e95c9"/>
         }
->>>>>>> 3cef2fbf9091fc243351ea3f0253904246c957c2
         return (
             <AppBar
                 titleStyle={styles.text}

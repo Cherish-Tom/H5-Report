@@ -80,7 +80,6 @@ class ContactList extends React.Component {
         }
     }
     componentDidMount(){
-        const self = this;
         this.setState({contact: dataList.contact})
     }
     handleToggle(event) {
