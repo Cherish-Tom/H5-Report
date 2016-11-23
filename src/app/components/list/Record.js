@@ -82,7 +82,7 @@ class Record extends Component {
             <div>
                 <div className="fiexded" >
                     <Head />
-                    <Search title="请输入电话号码或者联系人"/>
+                    <Search title="请输入电话号码或者联系人" />
                 </div>
                 <List className='contact_list'>
 

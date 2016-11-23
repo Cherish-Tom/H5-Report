@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
@@ -21,12 +21,12 @@ const styles={
        backgroundColor: '#fff'
    }
 };
-class Header extends React.Component{
+class Header extends Component {
     constructor(props,content){
         super(props,content)
     }
     render(){
-        
+        const pathname = this.props.location
         return (
             <AppBar
                 titleStyle={styles.text}
