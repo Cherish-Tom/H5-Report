@@ -155,6 +155,7 @@ let dataCustomerList = [
 ]
 
 
+
 const styles={
     textColor:{
         color: '#7888af',

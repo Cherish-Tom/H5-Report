@@ -2,6 +2,7 @@ import React from 'react';
 import {List, ListItem} from 'material-ui/List';
 import Drawer from 'material-ui/Drawer';
 import {Link, browserHistory} from 'react-router';
+import fetch from 'isomorphic-fetch';
 import AppBar from 'material-ui/AppBar';
 import Search from '../public/Search';
 import Menu from '../public/Menu';
@@ -11,6 +12,7 @@ import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import PhoneForwarded from 'material-ui/svg-icons/notification/phone-forwarded';
 import Add from 'material-ui/svg-icons/content/add';
 import {CONFIG} from '../../constants/Config';
+
 const styles = {
     title:{
         textAlign: 'center',
@@ -147,7 +149,10 @@ class ContactList extends React.Component {
         }
     }
     componentDidMount(){
-        this.setState({contact: contactData});
+        const self = this;
+        fetch(`http://localhost:3030/dataCustomerList.json`)
+            .then(response => response.json())
+            .then(json => self.setState({contact: json}))
     }
     handleToggle(e) {
         event.preventDefault()
