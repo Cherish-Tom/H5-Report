@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Add from 'material-ui/svg-icons/content/add';
 import Search from '../public/Search';
-import Menu from '../public/Menu';
+import MenuTotal from '../public/MenuTotal';
 import {CONFIG} from '../../constants/Config';
 import {dataList} from './data'
 const styles={
@@ -38,7 +38,7 @@ class Head extends React.Component {
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<Menu items={CONFIG.order} />}
+                title={<MenuTotal items={CONFIG.order} />}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}

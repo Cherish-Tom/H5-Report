@@ -5,7 +5,7 @@ import {Link, browserHistory} from 'react-router';
 import fetch from 'isomorphic-fetch';
 import AppBar from 'material-ui/AppBar';
 import Search from '../public/Search';
-import Menu from '../public/Menu';
+import MenuTotal from '../public/MenuTotal';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
@@ -57,7 +57,7 @@ class Head extends React.Component {
         return(
             <AppBar
                 style={styles.bar}
-                title={<Menu items={CONFIG.contact}/>}
+                title={<MenuTotal items={CONFIG.contact}/>}
                 titleStyle={styles.title}
                 iconStyleLeft={{marginTop: 0}}
                 iconStyleRight={{marginTop: 0}}

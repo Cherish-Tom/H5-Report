@@ -28,7 +28,8 @@ class Photo extends React.Component {
             let ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, width);
             let base64 = canvas.toDataURL('image/jpeg', .75);
-            _this.setState({data_uri: base64, opacity: 1})
+            _this.setState({data_uri: base64, opacity: 1});
+            URL.revokeObjectURL(fileURL);
         }
     }
     handleSubmit(event){

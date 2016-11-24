@@ -157,7 +157,7 @@ a.dropdown-toggle{
 .dropdown-menu{
     background-color: #7f7f7f;
     line-height: 34px;
-    width: 75%;
+    /*width: 75%;*/
     margin: 0 auto;
     border-width: 1px 1px 0 1px;
     border-style: solid;
@@ -168,6 +168,7 @@ a.dropdown-toggle{
     list-style: none;
     position: absolute;
     left: 12.5%;
+    width: none!important
 }
 .dropdown-menu:before{
     content: '';

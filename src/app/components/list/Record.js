@@ -3,7 +3,7 @@ import {List, ListItem} from 'material-ui/List';
 import {Link, browserHistory} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Search from '../public/Search';
-import Menu from '../public/Menu';
+import MenuTotal from '../public/MenuTotal';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
@@ -49,7 +49,7 @@ class Head extends React.Component {
         return(
             <AppBar
                 style={styles.bar}
-                title={<Menu items={CONFIG.record}/>}
+                title={<MenuTotal items={CONFIG.record}/>}
                 titleStyle={styles.title}
                 iconStyleLeft={{marginTop: 0}}
                 iconStyleRight={{marginTop: 0}}

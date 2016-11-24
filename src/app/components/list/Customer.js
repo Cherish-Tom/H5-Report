@@ -10,7 +10,7 @@ import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Add from 'material-ui/svg-icons/content/add';
 import {grey400, darkBlack, lightBlack, fullWhite} from 'material-ui/styles/colors';
 import Search from '../public/Search';
-import Menu from '../public/Menu';
+import MenuTotal from '../public/MenuTotal';
 //头部选项
 import { CONFIG } from '../../constants/Config';
 //模拟数据来源
@@ -56,7 +56,7 @@ class Head extends Component {
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<Menu items={CONFIG.customer} />}
+                title={<MenuTotal items={CONFIG.customer} />}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
