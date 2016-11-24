@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Setting from 'material-ui/svg-icons/action/settings';
+import AccessTime from 'material-ui/svg-icons/device/access-time';
 
 import {browserHistory, Link} from 'react-router';
 import {grey100, grey900} from 'material-ui/styles/colors';
@@ -27,6 +28,7 @@ class Header extends React.Component{
     }
     render(){
         const pathname = window.location.pathname;
+        const color = '#5e95c9'
         let title, leftIcons, rightIcons;
         switch(pathname) {
             case '/':
@@ -35,7 +37,12 @@ class Header extends React.Component{
                 break;
             case '/photo':
                 title = '拍照'
-                leftIcons = <ArrowBaclIcon color="#5e95c9"/>
+                leftIcons = <ArrowBaclIcon color={color}/>
+                break;
+            case '/check':
+                title = '签到考勤'
+                leftIcons = <ArrowBaclIcon color={color}/>
+                rightIcons = <AccessTime color={color}/>
         }
         return (
             <AppBar

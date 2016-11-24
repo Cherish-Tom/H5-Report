@@ -69,21 +69,23 @@ class Lists extends React.Component{
     render(){
         return(
             <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} >
-                  {this.props.data&&this.props.data.map((item, index) => (
-                      <ListItem
-                        style={styles.back}
-                        key={index}
-                        primaryText={
-                            <p><span style={styles.textColor}>{item.name}</span></p>
-                        }
-                        secondaryText={
-                            <p>
-                                <span style={styles.textColor}>{item.id}&nbsp;&nbsp;{item.created_at.substring(0, 10)}</span><br />
-                                <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.price}</span>
-                            </p>
-                        }
-                        secondaryTextLines={2}
-                    />
+                {this.props.data&&this.props.data.map((item, index) => (
+                    <a href={`/customer/list/${item.number}`} key={index}>
+                        <ListItem
+                            style={styles.back}
+                            key={index}
+                            primaryText={
+                                <p><span style={styles.textColor}>{item.name}</span></p>
+                            }
+                            secondaryText={
+                                <p>
+                                    <span style={styles.textColor}>{item.id}&nbsp;&nbsp;{item.created_at.substring(0, 10)}</span><br />
+                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.price}</span>
+                                </p>
+                            }
+                            secondaryTextLines={2}
+                        />
+                    </a>
                 ))}
             </List>
         )

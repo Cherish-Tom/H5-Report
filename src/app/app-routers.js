@@ -1,5 +1,6 @@
 import React from 'react';
-import {Route, IndexRoute} from 'react-router';
+import {Route, IndexRoute, Redirect} from 'react-router';
+
 import Master from './components/index/Master';
 import Index from './components/index/Index';
 import Customer from './components/list/Customer';
@@ -8,15 +9,22 @@ import Contact from './components/list/Contact';
 import Order from './components/list/Order';
 import Record from './components/list/Record';
 import Photo from './components/list/Photo';
+import Check from './components/list/Check';
+
+import Details from './components/public/Details';
+
 const AppRouters = (
     <Route path='/' component={Master}>
         <IndexRoute component={Index} />
-        <Route path='/customer' component={Customer} />
-        <Route path='/contact' component={Contact} />
-        <Route path='/record' component={Record} />
-        <Route path='/audit' component={Audit} />
-        <Route path='/order' component={Order} />
-        <Route path='/photo' component={Photo}/>
+        <Route path='customer' component={Customer}>
+            <Route path='list/:id' component={Details} />
+        </Route>
+        <Route path='contact' component={Contact} />
+        <Route path='record' component={Record} />
+        <Route path='audit' component={Audit} />
+        <Route path='check' component={Check} />
+        <Route path='order' component={Order} />
+        <Route path='photo' component={Photo}/>
     </Route>
 )
 export default AppRouters;

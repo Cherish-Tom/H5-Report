@@ -3,6 +3,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '455',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
@@ -20,6 +21,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '45',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
@@ -37,6 +39,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '44',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
@@ -54,6 +57,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '55',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
@@ -71,6 +75,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '75',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
@@ -88,6 +93,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '78',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
@@ -105,6 +111,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '7987',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
@@ -122,6 +129,7 @@ export const dataList = {
         {
             'name': '山东泰恒科技有限公司',
             'id': 'SO322',
+            'number': '54454',
             'created_at': '2015-04-02 14:55:06',
             'price': '2340.00',
             'industry': '科研院所',
