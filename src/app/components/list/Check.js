@@ -79,8 +79,6 @@ class Check extends React.Component {
                         </div>
                     </div>
                     <div></div>
-                    <div style={styles.slide}>
-                    </div>
                 </SwipeableViews>
             </div>
         )

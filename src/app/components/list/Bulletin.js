@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link, browserHistory } from 'react-router';
 import MenuTotal from '../public/MenuTotal';
 import Search from '../public/Search';
 import Header from '../public/Header';
@@ -7,6 +7,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Add from 'material-ui/svg-icons/content/add';
+import { CONFIG }  from '../../constants/Config'
 const styles={
     textColor:{
         color: '#7888af',
@@ -50,7 +51,7 @@ class Head extends React.Component {
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<MenuTotal items={CONFIG.customer} />}
+                title={<MenuTotal items={CONFIG.bulletin} />}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
