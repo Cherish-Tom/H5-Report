@@ -57,8 +57,8 @@ class ViewCell extends React.Component {
 				}
 				secondaryText={
 					<p>
-						<span style={styles.textColor}>{this.props.id}&nbsp;&nbsp;{this.props.created_at.substring(0, 10)}</span><br />
-						<span ><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;¥</span>{this.props.price}</span>
+						<span style={styles.textColor}>{this.props.id}&nbsp;&nbsp;{this.props.created_at.substr(0, 10)}</span><br />
+						<span ><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;¥</span>{this.props.sales_price}</span>
 					</p>
 				}
 				secondaryTextLines={2}
@@ -86,7 +86,7 @@ class Record extends React.Component {
 				<List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
 					{
 						this.state.data.map((item, index) => {
-							return <ViewCell {...item} key={index} />
+							return <ViewCell {...item.basic} key={index} />
 						})
 					}
 				</List>

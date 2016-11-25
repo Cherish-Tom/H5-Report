@@ -157,7 +157,7 @@ a.dropdown-toggle{
 .dropdown-menu{
     background-color: #7f7f7f;
     line-height: 34px;
-    /*width: 75%;*/
+    width: 75%;
     margin: 0 auto;
     border-width: 1px 1px 0 1px;
     border-style: solid;
@@ -284,4 +284,41 @@ input.photo_input:focus{
   flex: 1;
   justify-content: center;
   align-items: center;
+}
+.check_input{
+    padding: 10px 90px 10px 10px;
+    box-sizing: border-box;
+    position: relative;
+    linear-gradient(to right, #f9efef, rgba(245, 242, 242, 0.85), #f9f8f8)
+}
+.check_input input{
+    width: 100%;
+    outline: 0;
+    border: 1px solid #ddd;
+    padding: 10px 6px;
+    border-radius: 4px;
+    transition: border .3s cubic-bezier(0.42,0,0.58,1);
+}
+.check_input input:first-child{
+    margin-bottom: 10px;
+}
+.check_input input:focus{
+    border-color: #5e95c9;
+}
+.check_input a{
+    display: block;
+    text-decoration: none;
+    padding: 8px 20px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #5e95c9;
+    transform: translateY(-50%);
+}
+.anchorBL{
+    display: none;
+    opacity: 0;
 }

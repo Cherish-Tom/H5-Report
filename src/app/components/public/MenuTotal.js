@@ -30,6 +30,7 @@ const styles={
 class MenuTotal extends Component {
     constructor(props){
         super(props);
+        this.handleClick = this.handleClick.bind(this);
         this.state={
             menuopen: false,
             value: 0
@@ -38,14 +39,10 @@ class MenuTotal extends Component {
     toggleDropdownMenu(){
          this.setState({ menuopen: ! this.state.menuopen })
     }
-    handleChange (event, index, value){
-        this.setState({ menuopen: false, value: value})
-        // <ul className='dropdown-menu' role='menu' value={this.state.index} onChange={this.handleChange}>
-        //     {this.props.items.map((item, index) => {
-        //         return <li key={index} value={index}><a href='javascript:void(0);'>{item}{<Done style={styles.done}/>}</a></li>
-        //     })}
-        // <MenuItem primaryText="Paragraph styles" rightIcon={<Done />} />
-        // </ul>
+    handleClick(event) {
+        console.log(event.currentTarget);
+        this.setState({ menuopen: false })
+        event.preventDefault();
     }
     render() {
         return (
@@ -54,22 +51,14 @@ class MenuTotal extends Component {
                     全部
                     <span className="caret"></span>
                 </a>
-                <Paper>
-                    <Menu selectedMenuItemStyle={{backgroundColor: 'red'}} className='dropdown-menu' style={{width: '75%'}}>
-                        {
-                            this.props.items.map((item, index) => {
-                                return <MenuItem
-                                          key={index}
-                                          value={index}
-                                          primaryText={item}
-                                          rightIcon={<Done style={styles.done} color="#fff"/>}
-                                          focusState='focused'
-                                      />
-                            })
-                        }
-                    </Menu>
-                </Paper>
 
+                <ul className='dropdown-menu' role='menu' value={this.state.value}>
+                    {this.props.items.map((item, index) => {
+                        return  <li key={index} value={index} onClick={this.handleClick}>
+                                    <a href='javascript:void(0);'>{item}{<Done style={styles.done} color='#fff'/>}</a>
+                                </li>
+                    })}
+                </ul>
             </div>
         );
     }

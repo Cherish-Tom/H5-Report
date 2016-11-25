@@ -18,19 +18,23 @@ class Photo extends React.Component {
     }
     handleChange(event){
         event.preventDefault();
-        let _this = this,img = new Image(),file  = event.target.files[0],fileURL = URL.createObjectURL(file),width = document.body.clientWidth * 0.56;
+        let _this = this,
+            img = new Image(),
+            file  = event.target.files[0],
+            fileURL = URL.createObjectURL(file),
+            width = document.body.clientWidth * 0.55;
         img.src = fileURL;
-        this.setState({ open: false });
         img.onload = function() {
             let canvas = document.createElement('canvas');
                 canvas.width = width;
                 canvas.height = width;
             let ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, width);
-            let base64 = canvas.toDataURL('image/jpeg', .75);
-            _this.setState({data_uri: base64, opacity: 1});
-            URL.revokeObjectURL(fileURL);
+            let base64 = canvas.toDataURL('image/jpeg', .8);
+            _this.setState({data_uri: base64, opacity: 1, open: false});
+            // URL.revokeObjectURL(fileURL);
         }
+
     }
     handleSubmit(event){
         const form = document.querySelector('form');
@@ -54,7 +58,7 @@ class Photo extends React.Component {
                     <form encType="multipart/form-data" onSubmit={()=>this.handleSubmit(this)} method="post">
                         <input type='text' placeholder='请选择客户' className='photo_input'/>
                         <input type='text' placeholder='请输入描述' className='photo_input'/>
-                        <div className='photo_img' style={{height: w, overflow: 'hidden',width: w}} ref="IMGBOX">
+                        <div className='photo_img' style={{height: w ,overflow: 'hidden',width: w}} ref="IMGBOX">
                             <img src={data_uri} style={{opacity: opacity}} />
                         </div>
                         <RaisedButton

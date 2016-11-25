@@ -62,17 +62,18 @@ const styles = {
 }
 class Cell extends React.Component {
     render(){
+        const { id , name, created_at, sales_price, sales_director} = this.props;
         return(
             <ListItem
                 style={styles.boxback}
                 innerDivStyle={{padding: '6px 6px 6px 80px'}}
                 children={<span style={styles.child}>销售订单</span>}
-                primaryText={<p className="overflow">{this.props.id}&nbsp;({this.props.name})</p>}
+                primaryText={<p className="overflow">{id}&nbsp;({name})</p>}
                 insetChildren={true}
                 secondaryText={
                     <p style={{color:'#7888af'}}>
-                        {this.props.created_at}&nbsp;￥{this.props.price}<br />
-                        {this.props.salesDirector}
+                        {created_at}&nbsp;￥{sales_price}<br />
+                        {sales_director}
                     </p>
                 }
                 secondaryTextLines={2}
@@ -114,13 +115,13 @@ class Audit extends React.Component {
                     </Tabs>
                 </div>
                 <SwipeableViews index={this.state.slideIndex} onChangeIndex={this.handleChange} style={{paddingTop: 95}}>
-                    <div>
+                    <List>
                         {
                             this.state.data.map((item, index) => {
-                                return <Cell {...item} key={index} />
+                                return <Cell {...item.basic} key={index}/>
                             })
                         }
-                    </div>
+                    </List>
                     <div style={styles.slide}>
                     </div>
                     <div style={styles.slide}>

@@ -10,6 +10,7 @@ import Order from './components/list/Order';
 import Record from './components/list/Record';
 import Photo from './components/list/Photo';
 import Check from './components/list/Check';
+import Bulletin from './components/list/Bulletin';
 
 import Details from './components/public/Details';
 
@@ -25,6 +26,7 @@ const AppRouters = (
         <Route path='check' component={Check} />
         <Route path='order' component={Order} />
         <Route path='photo' component={Photo}/>
+        <Route path='bulletin' component={Bulletin}/>
     </Route>
 )
 export default AppRouters;

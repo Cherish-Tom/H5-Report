@@ -58,7 +58,7 @@ class Head extends Component {
                 titleStyle={styles.title}
                 title={<MenuTotal items={CONFIG.customer} />}
                 iconStyleRight={{marginTop: 0}}
-                iconStyleLeft={{marginTop: 0}}
+                iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
                 iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}
             />
@@ -70,17 +70,17 @@ class Lists extends React.Component{
         return(
             <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} >
                 {this.props.data&&this.props.data.map((item, index) => (
-                    <a href={`/customer/list/${item.number}`} key={index}>
+                    <a href={`/customer/list/${item.basic.number}`} key={index}>
                         <ListItem
                             style={styles.back}
                             key={index}
                             primaryText={
-                                <p><span style={styles.textColor}>{item.name}</span></p>
+                                <p><span style={styles.textColor}>{item.basic.name}</span></p>
                             }
                             secondaryText={
                                 <p>
-                                    <span style={styles.textColor}>{item.id}&nbsp;&nbsp;{item.created_at.substring(0, 10)}</span><br />
-                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.price}</span>
+                                    <span style={styles.textColor}>{item.basic.id}&nbsp;&nbsp;{item.basic.created_at.substr(0, 10)}</span><br />
+                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.basic.sales_price}</span>
                                 </p>
                             }
                             secondaryTextLines={2}
