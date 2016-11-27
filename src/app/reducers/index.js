@@ -1,24 +1,33 @@
-import { REQUEST_ISSUES, RECEIVE_ISSUES } from '../constants/ActionType';
-import { fetchIssues, receiveIssues } from '../actions/index';
-// import * as actions from '../actions';
-let defaultIssuesStore = {
-    isFetching: false,
-    items: []
-};
 
-function postIssues(defaultIssuesState, action) {
+import { TOPICS, TOPIC } from '../actions';
+import { combineReducers } from 'redux'
+
+
+const postReddit = (state = {}, action) => {
     switch (action.type) {
-        case REQUEST_ISSUES:
-            return Object.assign({}, defaultIssuesState, {
-                isFetching: true
-            });
-        case RECEIVE_ISSUES:
-            return Object.assign({}, defaultIssuesState, {
-                isFetching: false,
-                items: action.posts
-            });
-        default:
-            return defaultIssuesStore;
+      case TOPICS:
+          return {
+              ['results']: {
+                  type: action.type,
+                  topics: action.results
+              }
+          }
+      case TOPIC:
+          return {
+              ['results']: {
+                  type: action.type,
+                  topic: action.results.topic,
+                  replies: action.results.replies
+              }
+          }
+      default:
+          return state
     }
 }
-export default postIssues;
+
+
+const rootReducer = combineReducers({
+    postReddit
+})
+
+export default rootReducer

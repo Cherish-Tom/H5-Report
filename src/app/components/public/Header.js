@@ -15,11 +15,13 @@ const styles={
     height:45,
     lineHeight:'45px',
     color: grey900,
+    flex: '1 1 auto'
    },
    bar:{
        height:45,
        lineHeight:'45px',
-       backgroundColor: '#fff'
+       backgroundColor: '#fff',
+       display: 'flex',
    }
 };
 class Header extends React.Component{

@@ -7,3 +7,13 @@ export const CONFIG = {
     work    : ['全部','日志','周计划','月计划','我发出的','我回复的','@我的','抄送给我的'],
     servers : ['全部','未处理','处理中','常用分类','服务看板','现场维修产品','带回检验产品','待处理']
 };
+
+
+export const CONFIG_ACTIONS = {
+  owner      : 'cobish',
+  repo       : 'cobish.github.io',
+  title      : 'cobish - 写给未来的自己',
+  titleLoad  : 'cobish - 正在加载...',
+  duoshuo    : 'cobish',
+  baiduAnaly : '84602bc3713ca2aeb0258c55adf6a333',
+};

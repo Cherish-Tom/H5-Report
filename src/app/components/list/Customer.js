@@ -1,9 +1,9 @@
-import React, { Component }from 'react';
+import React, { Component } from 'react';
 import {List, ListItem} from 'material-ui/List';
 import {Link, browserHistory} from 'react-router';
 import { connect } from 'react-redux';
-import { fetchIssuesIfNeeded } from '../../actions/index';
-
+import { bindActionCreators } from 'redux';
+import * as actions from '../../actions';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
@@ -91,15 +91,13 @@ class Lists extends React.Component{
         )
     }
 }
-class CustomerList extends Component {
+class Customer extends React.Component {
     constructor(props){
-        super(props)
-        this.state = {
-            data: []
-        }
+      super(props);
+      this.props.actions.fetchTopicsIfNeed({type: 'excellent'})
     }
-    componentDidMount(){
-        this.setState({data: dataList.customer})
+    componentDidMount() {
+
     }
     render() {
         return (
@@ -108,9 +106,31 @@ class CustomerList extends Component {
                     <Head />
                     <Search title='请输入客户名称或地址'/>
                 </div>
-                <Lists data={this.state.data} />
             </div>
         );
     }
 }
-export default CustomerList;
+
+
+const mapDispatchToProps = dispatch => ({
+    actions: bindActionCreators(actions, dispatch)
+})
+const mapStateToProps = state => {
+  const { postReddit } = state
+  let replies = [], topics = [], topic = {}, results = postReddit['results']
+  if (results) {
+    switch (results.type) {
+      case actions.TOPIC:
+        topic = results.topic
+        replies = results.replies
+        break
+      case actions.TOPICS:
+        topics = results.topics
+        break
+      default:
+        {}
+    }
+  }
+  return { results: { replies, topics, topic } }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Customer);

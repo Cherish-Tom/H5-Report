@@ -1,53 +1,82 @@
-import fetch from 'isomorphic-fetch';
+import 'whatwg-fetch';
 import { REQUEST_ISSUES, RECEIVE_ISSUES } from '../constants/ActionType';
-import { CONFIG } from '../constants/Config';
+import { CONFIG_ACTIONS } from '../constants/Config';
 
-//获取issues
-function requestIssues(filter, perPage) {
-    return {
-        trye: REQUEST_ISSUES,
-        filter,
-        perPage
-    };
+
+export const BASIC_URL = 'https://ruby-china.org/api/v3';
+export const TOPICS = 'TOPICS';
+export const TOPIC = 'TOPIC';
+
+const received = (type, json) => {
+    switch (type) {
+      case TOPICS:
+          return {
+              type: type,
+              results: json.topics
+          }
+      case TOPIC:
+          return {
+              type: type,
+              results: {
+                  replies: json.replies,
+                  topic: json.topic
+              }
+          }
+      default:
+          return {}
+    }
 }
 
-//接受issues
-function receiveIssues(json) {
-    return {
-        type: RECEIVE_ISSUES,
-        posts: json
-    };
+
+export const fetchTopics  = options => (dispatch) => {
+    console.log(options);
+    const type = 'TOPICS';
+    let url = `${BASIC_URL}/topics`;
+    let node = '';
+    if (options && options.node_id) {
+        node = `node_id=${options.node_id}`
+    }
+    if (options) {
+        url = `${BASIC_URL}/topics?${node}&limit=${options.limit||20}&type=${options.type||'last_actived'}&offset=${options.offset||0}`
+    }
+    console.log('url', url);
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(json => dispatch(received(type, json)))
 }
 
-//thunk action creater
-export function fetchIssues(filter, perPage) {
-    return dispatch => {
-        dispatch(requestIssues(filter, perPage));
-
-        let url = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/issues`,
-            href = `https://github.com/${CONFIG.owner}/${CONFIG.repo}/issues`;
-
-        url += '?filter=$(filter)&per_page=$(perPage)';
-
-        return fetch(url)
-            .then(response => response.json())
-            .then(json => dispatch(receiveIssues(json)))
-            .catch(e => {window.location.href = href});
-    };
+const shouldFetchTopics = state => {
+    const { postReddit } = state;
+    if (!postReddit) {
+        return
+    }
+    return !postReddit['results']
 }
 
-function shouldFetchIssues(state) {
-    if (!state) return true;
-    return !state.items.length;
-}
-
-//按需获取issues
-export function fetchIssuesIfNeeded(filter, perPage) {
-    return function(dispatch, getState) {
-        if( shouldFetchIssues(getState()) ) {
-            return dispatch(fetchIssues(filter, perPage));
+export const fetchTopicsIfNeed = options =>  {
+    return (dispatch, getState) => {
+        if (shouldFetchTopics(getState())) {
+            return dispatch(fetchTopics(options))
         } else {
             return Promise.resolve();
         }
-    };
+    }
+}
+
+
+export const fetchTopic = id => dispatch => {
+    const type = 'TOPIC';
+    const results = {'topic': {}, 'replies': []};
+    fetch(`${BASIC_URL}/topics/${id}`)
+        .then(response => response.json())
+        .then(json => {
+            results.topic = json.topic
+            fecth(`${BASIC_URL}/topics/${id}/replies`)
+                .then(response => response.json())
+                .then(json => {
+                    results.replies = json.replies;
+                    dispatch(received(type, results))
+                })
+        })
 }

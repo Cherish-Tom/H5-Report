@@ -1,32 +1,14 @@
-"use static";
-import React from 'react';
+import React, { Component } from 'react';
 import Header from '../public/Header';
 import {Link} from 'react-router';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-let StylePropable = require('material-ui/utils/stylePropable');
-let StyleResizable = require('material-ui/utils/styleResizable');
-import {
-  Colors,
-  getMuiTheme,
-  Spacing
-} from 'material-ui/styles';
-const Index = React.createClass({
-
-    getStyles() {
-        const styles={
-          appBar:{
-            position: 'fixed',
-            zIndex: 1001,
-            top: 0
-          }
-        }
-        return styles;
-    },
+class Index extends Component {
+  constructor(props){
+    super(props);
+  }
   render(){
-    const styles = this.getStyles();
     return(
       <div>
-            <Header style={styles.appBar} />
+            <Header />
             <nav>
               <ul className="menu">
                 <li><Link to="/customer"><i className="material-icons">&#xE7FB;</i><span>客户</span></Link></li>
@@ -44,7 +26,7 @@ const Index = React.createClass({
       </div>
     )
   }
-})
+}
 
 
 export default Index;

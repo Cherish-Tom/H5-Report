@@ -17,9 +17,7 @@ import Details from './components/public/Details';
 const AppRouters = (
     <Route path='/' component={Master}>
         <IndexRoute component={Index} />
-        <Route path='customer' component={Customer}>
-            <Route path='list/:id' component={Details} />
-        </Route>
+        <Route path='customer' component={Customer} />
         <Route path='contact' component={Contact} />
         <Route path='record' component={Record} />
         <Route path='audit' component={Audit} />
