@@ -25,6 +25,7 @@ const AppRouters = (
         <Route path='order' component={Order} />
         <Route path='photo' component={Photo}/>
         <Route path='bulletin' component={Bulletin}/>
+        <Route path='customer/:id' component={Details} />
     </Route>
 )
 export default AppRouters;

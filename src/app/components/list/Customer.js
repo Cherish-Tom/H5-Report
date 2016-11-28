@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import {List, ListItem} from 'material-ui/List';
 import {Link, browserHistory} from 'react-router';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as actions from '../../actions';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Add from 'material-ui/svg-icons/content/add';
 import {grey400, darkBlack, lightBlack, fullWhite} from 'material-ui/styles/colors';
 import Search from '../public/Search';
+import Template from '../public/template';
 import MenuTotal from '../public/MenuTotal';
-//头部选项
 import { CONFIG } from '../../constants/Config';
-//模拟数据来源
-import {dataList} from './data';
 const styles={
     textColor:{
         color: '#7888af',
@@ -22,7 +17,7 @@ const styles={
     },
     back:{
         backgroundColor: fullWhite,
-        margin: '12px',
+        margin: 8,
         borderRadius: 4,
         boxShadow:'rgba(0, 0, 0, 0.117647) 0px 1px 6px',
     },
@@ -65,27 +60,28 @@ class Head extends Component {
         )
     }
 }
-class Lists extends React.Component{
+class Lists extends React.Component {
     render(){
         return(
             <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} >
-                {this.props.data&&this.props.data.map((item, index) => (
-                    <a href={`/customer/list/${item.basic.number}`} key={index}>
+                {this.props.topics&&this.props.topics.map((topic, index) => (
+                    <Link to={`/customer/${topic.id}`} key={index}>
                         <ListItem
                             style={styles.back}
                             key={index}
                             primaryText={
-                                <p><span style={styles.textColor}>{item.basic.name}</span></p>
+                                <p><span style={styles.textColor}>{topic.title}</span></p>
                             }
+                            innerDivStyle={{padding: 8}}
                             secondaryText={
                                 <p>
-                                    <span style={styles.textColor}>{item.basic.id}&nbsp;&nbsp;{item.basic.created_at.substr(0, 10)}</span><br />
-                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;</span>{item.basic.sales_price}</span>
+                                    <span style={styles.textColor}>{topic.id}&nbsp;&nbsp;{topic.created_at.substr(0, 10)}</span><br />
+                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;&yen;</span>{topic.id}</span>
                                 </p>
                             }
                             secondaryTextLines={2}
                         />
-                    </a>
+                    </Link>
                 ))}
             </List>
         )
@@ -94,10 +90,7 @@ class Lists extends React.Component{
 class Customer extends React.Component {
     constructor(props){
       super(props);
-      this.props.actions.fetchTopicsIfNeed({type: 'excellent'})
-    }
-    componentDidMount() {
-
+      this.props.actions.fetchTopics({type: 'excellent'})
     }
     render() {
         return (
@@ -106,31 +99,11 @@ class Customer extends React.Component {
                     <Head />
                     <Search title='请输入客户名称或地址'/>
                 </div>
+                <Lists topics={this.props.results.topics}></Lists>
             </div>
         );
     }
 }
-
-
-const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(actions, dispatch)
-})
-const mapStateToProps = state => {
-  const { postReddit } = state
-  let replies = [], topics = [], topic = {}, results = postReddit['results']
-  if (results) {
-    switch (results.type) {
-      case actions.TOPIC:
-        topic = results.topic
-        replies = results.replies
-        break
-      case actions.TOPICS:
-        topics = results.topics
-        break
-      default:
-        {}
-    }
-  }
-  return { results: { replies, topics, topic } }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Customer);
+export default Template({
+    component: Customer
+});

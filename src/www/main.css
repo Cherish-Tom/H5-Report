@@ -322,3 +322,47 @@ input.photo_input:focus{
     display: none;
     opacity: 0;
 }
+.basic-msg{
+    background-color: #fff;
+    padding: 0 3px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+.basic-msg li{
+    line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.54);
+    padding-right: 6px;
+}
+.basic-msg li>span:last-child{
+    color: rgb(94, 149, 201);
+}
+.basic-msg li:not(:last-child){
+    border-bottom: 1px solid #ddd;
+}
+.basic-msg .address-info{
+    flex: auto;
+    margin-left: 15px;
+}
+.address-info textarea{
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    text-indent: 6px;
+    background-color: rgba(221, 221, 221, 0.5);
+}
+.address-info textarea:focus{
+    outline: 0;
+}
+.basic-msg>ul>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 3px 0;
+    color: rgba(0, 0, 0, 0.54);
+}

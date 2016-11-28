@@ -72,7 +72,7 @@ export const fetchTopic = id => dispatch => {
         .then(response => response.json())
         .then(json => {
             results.topic = json.topic
-            fecth(`${BASIC_URL}/topics/${id}/replies`)
+            fetch(`${BASIC_URL}/topics/${id}/replies`)
                 .then(response => response.json())
                 .then(json => {
                     results.replies = json.replies;

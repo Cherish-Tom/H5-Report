@@ -36,13 +36,16 @@ class MenuTotal extends Component {
             value: 0
         }
     }
-    toggleDropdownMenu(){
+    toggleDropdownMenu() {
          this.setState({ menuopen: ! this.state.menuopen })
     }
-    handleClick(event) {
-        console.log(event.currentTarget);
+    handleClick(event)
+    {
         this.setState({ menuopen: false })
         event.preventDefault();
+    }
+    handleChange(event, index, value){
+        this.setState({value: value})
     }
     render() {
         return (
@@ -52,7 +55,7 @@ class MenuTotal extends Component {
                     <span className="caret"></span>
                 </a>
 
-                <ul className='dropdown-menu' role='menu' value={this.state.value}>
+                <ul className='dropdown-menu' role='menu' value={this.state.value} onChange={this.handleChange}>
                     {this.props.items.map((item, index) => {
                         return  <li key={index} value={index} onClick={this.handleClick}>
                                     <a href='javascript:void(0);'>{item}{<Done style={styles.done} color='#fff'/>}</a>

@@ -50,9 +50,9 @@ class Header extends React.Component{
             <AppBar
                 titleStyle={styles.text}
                 style={styles.bar}
-                title={title}
+                title={this.props.title || title}
                 iconStyleRight={{marginTop:0}}
-                iconStyleLeft={{marginTop:0}}
+                iconStyleLeft={{marginTop:0,marginRight: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton>{leftIcons}</IconButton></Link>}
                 iconElementRight={<IconButton>{rightIcons}</IconButton>}
             />

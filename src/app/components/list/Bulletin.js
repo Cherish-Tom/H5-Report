@@ -72,7 +72,6 @@ class Bulletin extends React.Component {
                     <Head />
                     <Search />
                 </div>
-
             </div>
         )
     }

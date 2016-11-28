@@ -1,0 +1,11 @@
+.basic-msg{
+    background-color: #fff;
+    padding: 0 3px;
+    border-left: 4px;
+}
+.basic-msg li{
+    line-height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
