@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createHashHistory } from 'history';
+import { createHashHistory } from 'react-router/node_modules/history/lib';
 import rootReducer from './reducers';
 import {Router, browserHistory, useRouterHistory} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';

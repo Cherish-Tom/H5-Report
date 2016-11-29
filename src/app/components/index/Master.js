@@ -1,9 +1,6 @@
-import React, { Component, PropTypes, cloneElement } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import * as actions from '../../actions';
 import Template from '../public/template';
 const muiTheme =getMuiTheme({
     tabs: {

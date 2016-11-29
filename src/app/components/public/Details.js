@@ -55,7 +55,8 @@ class Details extends React.Component {
     }
     hanleSubmit() {
         let form = document.querySelector('form');
-        fetch('/users', {
+        let path = this.props.location.pathname;
+        fetch(`/${path}/iohoihaio/ihaiohfoiho`, {
             method: 'POST',
             body: new FormData(form)
         })
