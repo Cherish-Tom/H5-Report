@@ -332,14 +332,32 @@ input.photo_input:focus{
 }
 .basic-msg li{
     line-height: 40px;
+    height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: rgba(0, 0, 0, 0.54);
     padding-right: 6px;
 }
-.basic-msg li>span:last-child{
+.basic-msg li input, .basic-msg .address-info{
+    flex: auto;
+    margin-left: 15px;
+    height: 100%;
+}
+.basic-msg li input{
+    border: 0;
+    outline: 0;
+    height: 100%;
     color: rgb(94, 149, 201);
+    font-size: 14px;
+    text-align: right;
+    font-family: inherit;
+}
+.basic-msg li span:last-child {
+    color: rgb(94, 149, 201)
+}
+input[type='text']:disabled {
+    background-color: #fff
 }
 .basic-msg li:not(:last-child){
     border-bottom: 1px solid #ddd;

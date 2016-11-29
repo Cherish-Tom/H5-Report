@@ -17,7 +17,6 @@ const postReddit = (state = {}, action) => {
               ['results']: {
                   type: action.type,
                   topic: action.results.topic,
-                  replies: action.results.replies
               }
           }
       default:

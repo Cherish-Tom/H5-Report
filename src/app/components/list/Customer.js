@@ -65,18 +65,18 @@ class Lists extends React.Component {
         return(
             <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} >
                 {this.props.topics&&this.props.topics.map((topic, index) => (
-                    <Link to={`/customer/${topic.id}`} key={index}>
+                    <Link to={`/customer/${topic.accountid}`} key={index}>
                         <ListItem
                             style={styles.back}
                             key={index}
                             primaryText={
-                                <p><span style={styles.textColor}>{topic.title}</span></p>
+                                <p><span style={styles.textColor}>{topic.accountname}</span></p>
                             }
                             innerDivStyle={{padding: 8}}
                             secondaryText={
                                 <p>
-                                    <span style={styles.textColor}>{topic.id}&nbsp;&nbsp;{topic.created_at.substr(0, 10)}</span><br />
-                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;&yen;</span>{topic.id}</span>
+                                    <span style={styles.account_no}>S{topic.account_no}&nbsp;&nbsp;{topic.createdtime.substr(0, 10)}</span><br />
+                                    <span style={{darkBlack}}><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;&yen;</span>{topic.discount_rate}</span>
                                 </p>
                             }
                             secondaryTextLines={2}
@@ -90,7 +90,7 @@ class Lists extends React.Component {
 class Customer extends React.Component {
     constructor(props){
       super(props);
-      this.props.actions.fetchTopics({type: 'excellent'})
+      this.props.actions.fetchTopics({page: 1})
     }
     render() {
         return (
