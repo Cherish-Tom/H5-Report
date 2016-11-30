@@ -46,23 +46,45 @@ class DropMenu extends React.Component {
 }
 
 class Details extends React.Component {
-    constructor(props){
-        super(props);
+    constructor(props, context){
+        super(props, context);
         this.props.actions.fetchTopic(this.props.params.id);
         this.state = {
-            topic: this.props.results.topic
+            topic: {}
         }
     }
-    hanleSubmit() {
+    componentDidMount() {
+        this.setState({topic: this.props.results.topic});
+    }
+    hanleSubmit(event) {
+        event.preventDefault();
         let form = document.querySelector('form');
-        let path = this.props.location.pathname;
-        fetch(`/${path}/iohoihaio/ihaiohfoiho`, {
-            method: 'POST',
+        // $.ajax({
+        //     type: 'PUT',
+        //     cache: true,
+        //     url: 'http://192.168.123.162/oa/customer/14315',
+        //     data: {'sss':1},
+        //     async: false,
+        //     success: function(data) {
+        //         console.log(data);
+        //     },
+        //     error: function(request) {
+        //         console.log('error');
+        //     }
+        // })
+        fetch(`http://192.168.123.162/oa/customer/14315`, {
+            method: 'PUT',
             body: new FormData(form)
         })
+        .then(response => response.json)
+        .catch(e => console.log(e))
+    }
+    handleChange(event) {
+        const value = event.target.value;
+        const name = event.target.name;
     }
     render() {
-        const { topic } = this.state;
+        const {topic} = this.props.results;
         return (
             <div>
                 <div className="fiexded">
@@ -75,72 +97,123 @@ class Details extends React.Component {
                             <ul>
                                 <li>
                                     <span>网站:</span>
-                                    <input type='text' value= {1} name='data[website]' />
+                                    <input type='text' value= {topic.website} name='website' onChange={this.handleChange.bind(this)}/>
                                 </li>
                                 <li>
                                     <span>客户编号:</span>
-                                    <input type='text' value= {2}  name='data[account_no]'/>
+                                    <input type='text' value= {topic.account_no}  name='account_no' onChange={this.handleChange.bind(this)}/>
                                 </li>
                                 <li>
                                     <span>商户名称:</span>
-                                    <input type='text' value= {3} name='data[name]'/>
+                                    <input type='text' value= {topic.accountname} name='accountname' onChange={this.handleChange.bind(this)}/>
                                 </li>
                                 <li>
                                     <span>所属行业:</span>
-                                    <div><DropMenu /></div>
+                                    <input type='text' value= {topic.industry} name='industry' onChange={this.handleChange.bind(this)}/>
                                 </li>
                                 <li>
                                     <span>客户状态:</span>
-                                    <input type='text' value= {topic.rating} disabled/>
+                                    <input type='text' value= {topic.rating} name='rating' onChange={this.handleChange.bind(this)}/>
                                 </li>
                                 <li>
                                     <span>销售负责人:</span>
                                     <span>管理员</span>
                                 </li>
-                                <li><span>上级单位:</span><span>262</span></li>
-                                <li><span>客户类型:</span><span>普通客户</span></li>
+                                <li>
+                                    <span>上级单位:</span>
+                                    <input type='text' value= {topic.rating} name='rating' onChange={this.handleChange.bind(this)}/>
+                                </li>
+                                <li>
+                                    <span>客户类型:</span>
+                                    <span>{topic.account_type}</span>
+                                </li>
                                 <li>
                                     <span>公司传真:</span>
-                                    <input type='text' value= {topic.fax} disabled/>
+                                    <input type='text' value= {topic.fax} onChange={this.handleChange.bind(this)}/>
                                 </li>
-                                <li><span>创建时间:</span><span>2016-11-22 19:14:14</span></li>
-                                <li><span>客户来源:</span><span>市场活动</span></li>
-                                <li><span>修改时间:</span><span>2016-11-22 19:14:14</span></li>
-                                <li><span>公司性质:</span><span>民营企业</span></li>
-                                <li><span>重要等级:</span><span>3</span></li>
+                                <li>
+                                    <span>创建时间:</span>
+                                    <span>{topic.createdtime}</span>
+                                </li>
+                                <li>
+                                    <span>客户来源:</span>
+                                    <span>{topic.leadsource}</span>
+                                </li>
+                                <li>
+                                    <span>修改时间:</span>
+                                    <span>{topic.modifiedtime}</span>
+                                </li>
+                                <li>
+                                    <span>公司性质:</span>
+                                    <span>{topic.accountproperty}</span>
+                                </li>
+                                <li>
+                                    <span>重要等级:</span>
+                                    <span>{topic.important_level}</span>
+                                </li>
                                 <li><span>客户关系:</span><span>较好</span></li>
-                                <li><span>注册资金:</span><span>500-1000万</span></li>
+                                <li>
+                                    <span>注册资金:</span>
+                                    <span>{topic.registeredcapital}</span>
+                                </li>
                                 <li><span>创建人:</span><span>boss</span></li>
-                                <li><span>下次回访时间:</span><span></span></li>
-                                <li><span>最新订单日期:</span><span></span></li>
-                                <li><span>最新联系日期:</span><span>2016-11-22</span></li>
+                                <li>
+                                    <span>下次回访时间:</span>
+                                    <span>{topic.nextcontactdate}</span>
+                                </li>
+                                <li>
+                                    <span>最新订单日期:</span>
+                                    <span></span>
+                                </li>
+                                <li>
+                                    <span>最新联系日期:</span>
+                                    <span>{topic.lastcontactdate}</span>
+                                </li>
                                 <li><span>最新进展:</span><span></span></li>
                                 <li><span>审批人:</span><span></span></li>
                                 <li><span>保护结束时间:</span><span></span></li>
                                 <li><span>最新销售机会:</span><span></span></li>
                                 <li><span>领取日期:</span><span></span></li>
-                                <li><span>客户等级:</span><span>A</span></li>
-                                <li><span>是否公海:</span><span>0</span></li>
+                                <li>
+                                    <span>客户等级:</span>
+                                    <span>{topic.cf_1372}</span>
+                                </li>
+                                <li>
+                                    <span>是否公海:</span>
+                                    <span>{topic.cf_1509}</span>
+                                </li>
                                 <li><span>成立日期:</span><span></span></li>
                             </ul>
                         </div>
                         <Subheader style={styles.sub}>地址信息</Subheader>
                         <div className='basic-msg address-msg'>
                             <ul>
-                                <li><span>国家:</span><span>中国</span></li>
-                                <li><span>省份:</span><span>四川</span></li>
-                                <li><span>城市:</span><span>绵阳</span></li>
-                                <li><span>邮编:</span><span>621000</span></li>
+                                <li>
+                                    <span>国家:</span>
+                                    <span>{topic.bill_country}</span>
+                                </li>
+                                <li>
+                                    <span>省份:</span>
+                                    <span>{topic.bill_state}</span>
+                                </li>
+                                <li>
+                                    <span>城市:</span>
+                                    <span>{topic.bill_city}</span>
+                                </li>
+                                <li>
+                                    <span>邮编:</span>
+                                    <span>{topic.bill_code}</span>
+                                </li>
                                 <div>
                                     <span>地址:</span>
                                     <div className='address-info'>
-                                        <textarea rows='5' disabled></textarea>
+                                        <textarea rows='5' value={topic.bill_street} onChange={this.handleChange.bind(this)}></textarea>
                                     </div>
                                 </div>
                                 <div>
                                     <span>交通路线:</span>
                                     <div className='address-info'>
-                                        <textarea rows='5' disabled></textarea>
+                                        <textarea rows='5' value={topic.traffic} onChange={this.handleChange.bind(this)}></textarea>
                                     </div>
                                 </div>
                             </ul>
@@ -151,7 +224,7 @@ class Details extends React.Component {
                                 <div>
                                     <span>备注:</span>
                                     <div className='address-info'>
-                                        <textarea rows='5'  placeholder="this" disabled value="this"></textarea>
+                                        <textarea rows='5'  value={topic.description} onChange={this.handleChange.bind(this)}></textarea>
                                     </div>
                                 </div>
                             </ul>

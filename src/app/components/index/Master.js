@@ -16,9 +16,12 @@ const muiTheme =getMuiTheme({
 })
 class Master extends Component {
     render() {
+        const path = this.props.location.pathname;
         return(
             <MuiThemeProvider muiTheme={muiTheme}>
-                <div>{ this.props.children }</div>
+                <div>
+                    { this.props.children }
+                </div>
             </MuiThemeProvider>
         )
     }

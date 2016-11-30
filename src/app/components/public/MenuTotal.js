@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import Done from 'material-ui/svg-icons/action/done';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import Template from './template';
 const styles={
     menu:{
         top: 45
@@ -26,45 +27,50 @@ const styles={
         verticalAlign: 'middle',
     }
 };
-
 class MenuTotal extends Component {
     constructor(props){
         super(props);
-        this.handleClick = this.handleClick.bind(this);
         this.state={
             menuopen: false,
-            value: 0
+            value: 0,
+            title: '',
+            type: ''
         }
     }
     toggleDropdownMenu() {
          this.setState({ menuopen: ! this.state.menuopen })
     }
-    handleClick(event)
-    {
-        this.setState({ menuopen: false })
+    componentDidMount() {
+        this.setState({title: '全部', type: this.state.type || 'all'});
+    }
+    handleClick(type) {
+        this.setState({ menuopen: false,type: type });
+        this.props.actions.fetchTopics({type: type})
         event.preventDefault();
     }
-    handleChange(event, index, value){
-        this.setState({value: value})
-    }
     render() {
+        const layout = [];
+        const items = this.props.items;
+        for(let attr in items) {
+            layout.push(
+                    <li onClick={this.handleClick.bind(this,items[attr])} key={attr.hashcode}>
+                        <a href='javascript:void(0);'>{attr}{<Done style={styles.done} color='#fff'/>}</a>
+                    </li>)
+        }
         return (
             <div className={classname('dropdown-title',{open:this.state.menuopen})}>
                 <a href='javascript:void(0);' className='dropdown-toggle' onClick={()=>this.toggleDropdownMenu()}>
-                    全部
+                    {this.state.title   }
                     <span className="caret"></span>
                 </a>
-
-                <ul className='dropdown-menu' role='menu' value={this.state.value} onChange={this.handleChange}>
-                    {this.props.items.map((item, index) => {
-                        return  <li key={index} value={index} onClick={this.handleClick}>
-                                    <a href='javascript:void(0);'>{item}{<Done style={styles.done} color='#fff'/>}</a>
-                                </li>
-                    })}
+                <ul className='dropdown-menu' role='menu' value={this.state.value}>
+                    {layout}
                 </ul>
             </div>
         );
     }
 }
 
-export default MenuTotal;
+export default Template({
+    component: MenuTotal
+});

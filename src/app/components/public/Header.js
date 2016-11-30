@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
-
 import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
-import Setting from 'material-ui/svg-icons/action/settings';
+import Settings from 'material-ui/svg-icons/action/settings';
 import AccessTime from 'material-ui/svg-icons/device/access-time';
-
 import {browserHistory, Link} from 'react-router';
 import {grey100, grey900} from 'material-ui/styles/colors';
 const styles={
@@ -35,7 +33,7 @@ class Header extends React.Component{
         switch(pathname) {
             case '/':
                 title = '卓谷科技'
-                rightIcons = <Setting color="#555"/>
+                rightIcons = <Settings color="#555"/>
                 break;
             case '/photo':
                 title = '拍照'
@@ -45,18 +43,22 @@ class Header extends React.Component{
                 title = '签到考勤'
                 leftIcons = <ArrowBaclIcon color={color}/>
                 rightIcons = <AccessTime color={color}/>
+                break;
+            case '/setting':
+                title = '设置'
+                leftIcons = <ArrowBaclIcon color={color}/>
+                break;
         }
         return (
-            <AppBar
-                titleStyle={styles.text}
-                style={styles.bar}
-                title={this.props.title || title}
-                iconStyleRight={{marginTop:0}}
-                iconStyleLeft={{marginTop:0,marginRight: 0}}
-                iconElementLeft={<Link to={browserHistory}><IconButton>{leftIcons}</IconButton></Link>}
-                iconElementRight={<IconButton>{rightIcons}</IconButton>}
-            />
-
+                <AppBar
+                    titleStyle={styles.text}
+                    style={styles.bar}
+                    title={this.props.title || title}
+                    iconStyleRight={{marginTop:0}}
+                    iconStyleLeft={{marginTop:0,marginRight: 0}}
+                    iconElementLeft={<Link to={browserHistory}><IconButton>{leftIcons}</IconButton></Link>}
+                    iconElementRight={<Link to='/setting'><IconButton>{rightIcons}</IconButton></Link>}
+                />
         )
     }
 }

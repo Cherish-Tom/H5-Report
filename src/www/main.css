@@ -22,7 +22,14 @@ body {
 input,textarea,select {
 	box-sizing: border-box;
 }
-
+.warp{
+    background:
+        linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,1)),
+        url(images/background.jpg) no-repeat;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
 nav .menu {
 	list-style: none;
 	margin-top: 2%;
@@ -145,7 +152,8 @@ a.dropdown-toggle{
     transform: rotate(0);
 }
 .open .dropdown-menu{
-    display: block;
+    visibility: visible;;
+    opacity: 1;
 }
 .open a{
     color: rgb(94, 149, 201);
@@ -162,13 +170,13 @@ a.dropdown-toggle{
     border-width: 1px 1px 0 1px;
     border-style: solid;
     border-color: #585858 #585858 transparent #585858;
-    position: relative;
     border-radius: 4px;
-    display: none;
+    visibility: hidden;
     list-style: none;
     position: absolute;
     left: 12.5%;
-    width: none!important
+    opacity: 0;
+    transition: all .15s ease-in-out
 }
 .dropdown-menu:before{
     content: '';
