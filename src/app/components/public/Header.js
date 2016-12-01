@@ -19,7 +19,6 @@ const styles={
        height:45,
        lineHeight:'45px',
        backgroundColor: '#fff',
-       display: 'flex',
    }
 };
 class Header extends React.Component{
@@ -27,13 +26,13 @@ class Header extends React.Component{
         super(props)
     }
     render(){
-        const pathname = window.location.pathname;
+        const pathname = this.props.path;
         const color = '#5e95c9'
         let title, leftIcons, rightIcons;
         switch(pathname) {
             case '/':
                 title = '卓谷科技'
-                rightIcons = <Settings color="#555"/>
+                rightIcons = <Link to='/setting'><IconButton><Settings color='#555'/></IconButton></Link>
                 break;
             case '/photo':
                 title = '拍照'
@@ -42,11 +41,12 @@ class Header extends React.Component{
             case '/check':
                 title = '签到考勤'
                 leftIcons = <ArrowBaclIcon color={color}/>
-                rightIcons = <AccessTime color={color}/>
+                rightIcons = <IconButton><AccessTime color={color}/></IconButton>
                 break;
             case '/setting':
                 title = '设置'
                 leftIcons = <ArrowBaclIcon color={color}/>
+                rightIcons = <IconButton><AccessTime color='#fff'/></IconButton>
                 break;
         }
         return (
@@ -57,7 +57,7 @@ class Header extends React.Component{
                     iconStyleRight={{marginTop:0}}
                     iconStyleLeft={{marginTop:0,marginRight: 0}}
                     iconElementLeft={<Link to={browserHistory}><IconButton>{leftIcons}</IconButton></Link>}
-                    iconElementRight={<Link to='/setting'><IconButton>{rightIcons}</IconButton></Link>}
+                    iconElementRight={rightIcons}
                 />
         )
     }

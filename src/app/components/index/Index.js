@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import Header from '../public/Header';
 import {Link} from 'react-router';
 class Index extends Component {
-  constructor(props){
-    super(props);
-  }
   render(){
     return(
       <div className='warp'>
-            <Header />
+            <Header path={this.props.location.pathname}/>
             <nav>
               <ul className="menu">
                 <li><Link to="customer"><i className="material-icons">&#xE7FB;</i><span>客户</span></Link></li>
