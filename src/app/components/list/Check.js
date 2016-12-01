@@ -2,7 +2,6 @@ import React from 'react';
 import Header from '../public/Header';
 import SwipeableViews from 'react-swipeable-views';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import RaisedButton from 'material-ui/RaisedButton';
 const styles = {
     back:{
         'borderTop': '1px solid #5e95c9',
