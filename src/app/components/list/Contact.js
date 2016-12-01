@@ -59,7 +59,7 @@ class Head extends React.Component {
                 style={styles.bar}
                 title={<MenuTotal items={CONFIG.contact}/>}
                 titleStyle={styles.title}
-                iconStyleLeft={{marginTop: 0}}
+                iconStyleLeft={{marginTop: 0,marginRight: 0}}
                 iconStyleRight={{marginTop: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
                 iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}

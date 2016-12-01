@@ -26,6 +26,4 @@ class Master extends Component {
         )
     }
 }
-export default Template({
-    component: Master
-});
+export default Master

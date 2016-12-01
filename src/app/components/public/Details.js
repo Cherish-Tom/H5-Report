@@ -1,13 +1,10 @@
 import React from 'react';
 import Header from './Header';
 import 'whatwg-fetch';
-import { data } from '../list/data';
 import Subheader from 'material-ui/Subheader';
 import Template from './template';
 import IconButton from 'material-ui/IconButton';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 const styles = {
     sub: {
         lineHeight: '30px',
@@ -17,74 +14,22 @@ const styles = {
         color: 'rgba(0, 0, 0, 0.54)'
     }
 }
-class DropMenu extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {value: 1};
-    }
-    handleChange (event, index, value) {
-        this.setState({value});
-    }
-    render(){
-        return(
-            <DropDownMenu
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-                underlineStyle={{display: 'none'}}
-                style={{height: 40, lineHeight: '40px', color: 'rgb(94, 149, 201)'}}
-                menuStyle={{lineHeight: '40', color: 'rgb(94, 149, 201)'}}
-                iconStyle={{display: 'none'}}
-            >
-                <MenuItem value={1} primaryText="Never" />
-                <MenuItem value={2} primaryText="Every Night" />
-                <MenuItem value={3} primaryText="Weeknights" />
-                <MenuItem value={4} primaryText="Weekends" />
-                <MenuItem value={5} primaryText="Weekly" />
-            </DropDownMenu>
-        )
-    }
-}
-
 class Details extends React.Component {
-    constructor(props, context){
-        super(props, context);
+    constructor(props){
+        super(props);
         this.props.actions.fetchTopic(this.props.params.id);
-        this.state = {
-            topic: {}
-        }
-    }
-    componentDidMount() {
-        this.setState({topic: this.props.results.topic});
     }
     hanleSubmit(event) {
         event.preventDefault();
         let form = document.querySelector('form');
-        // $.ajax({
-        //     type: 'PUT',
-        //     cache: true,
-        //     url: 'http://192.168.123.162/oa/customer/14315',
-        //     data: {'sss':1},
-        //     async: false,
-        //     success: function(data) {
-        //         console.log(data);
-        //     },
-        //     error: function(request) {
-        //         console.log('error');
-        //     }
-        // })
-        fetch(`http://192.168.123.162/oa/customer/14315`, {
-            method: 'PUT',
+        let path = window.location.pathname;
+        fetch(`http://192.168.123.162/oa${path}`, {
+            method: 'POST',
             body: new FormData(form)
         })
-        .then(response => response.json)
-        .catch(e => console.log(e))
-    }
-    handleChange(event) {
-        const value = event.target.value;
-        const name = event.target.name;
     }
     render() {
-        const {topic} = this.props.results;
+        const topic = this.props.results.topic;
         return (
             <div>
                 <div className="fiexded">
@@ -97,23 +42,23 @@ class Details extends React.Component {
                             <ul>
                                 <li>
                                     <span>网站:</span>
-                                    <input type='text' value= {topic.website} name='website' onChange={this.handleChange.bind(this)}/>
+                                    <input type='text' defaultValue= {topic.website} name='website' placeholder='点击填写'/>
                                 </li>
                                 <li>
                                     <span>客户编号:</span>
-                                    <input type='text' value= {topic.account_no}  name='account_no' onChange={this.handleChange.bind(this)}/>
+                                    <input type='text' defaultValue= {topic.account_no}  name='account_no'/>
                                 </li>
                                 <li>
                                     <span>商户名称:</span>
-                                    <input type='text' value= {topic.accountname} name='accountname' onChange={this.handleChange.bind(this)}/>
+                                    <input type='text' defaultValue= {topic.accountname} name='accountname' />
                                 </li>
                                 <li>
                                     <span>所属行业:</span>
-                                    <input type='text' value= {topic.industry} name='industry' onChange={this.handleChange.bind(this)}/>
+                                    <input type='text' defaultValue= {topic.industry} name='industry'/>
                                 </li>
                                 <li>
                                     <span>客户状态:</span>
-                                    <input type='text' value= {topic.rating} name='rating' onChange={this.handleChange.bind(this)}/>
+                                    <input type='text' defaultValue= {topic.rating} name='rating'/>
                                 </li>
                                 <li>
                                     <span>销售负责人:</span>
@@ -121,7 +66,7 @@ class Details extends React.Component {
                                 </li>
                                 <li>
                                     <span>上级单位:</span>
-                                    <input type='text' value= {topic.rating} name='rating' onChange={this.handleChange.bind(this)}/>
+                                    <input type='text' defaultValue= {topic.rating} name='rating'/>
                                 </li>
                                 <li>
                                     <span>客户类型:</span>
@@ -129,7 +74,7 @@ class Details extends React.Component {
                                 </li>
                                 <li>
                                     <span>公司传真:</span>
-                                    <input type='text' value= {topic.fax} onChange={this.handleChange.bind(this)}/>
+                                    <input type='text' defaultValue= {topic.fax}/>
                                 </li>
                                 <li>
                                     <span>创建时间:</span>
@@ -207,13 +152,13 @@ class Details extends React.Component {
                                 <div>
                                     <span>地址:</span>
                                     <div className='address-info'>
-                                        <textarea rows='5' value={topic.bill_street} onChange={this.handleChange.bind(this)}></textarea>
+                                        <textarea rows='5' defaultValue={topic.bill_street}></textarea>
                                     </div>
                                 </div>
                                 <div>
                                     <span>交通路线:</span>
                                     <div className='address-info'>
-                                        <textarea rows='5' value={topic.traffic} onChange={this.handleChange.bind(this)}></textarea>
+                                        <textarea rows='5' defaultValue={topic.traffic}></textarea>
                                     </div>
                                 </div>
                             </ul>
@@ -224,7 +169,7 @@ class Details extends React.Component {
                                 <div>
                                     <span>备注:</span>
                                     <div className='address-info'>
-                                        <textarea rows='5'  value={topic.description} onChange={this.handleChange.bind(this)}></textarea>
+                                        <textarea rows='5'  defaultValue={topic.description}></textarea>
                                     </div>
                                 </div>
                             </ul>
@@ -246,7 +191,7 @@ class Details extends React.Component {
                                 </li>
                             </ul>
                         </div>
-                        <button type='submit'>sssss</button>
+                        <input type="submit" value="Submit" />
                     </form>
                 </div>
             </div>

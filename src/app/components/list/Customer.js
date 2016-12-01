@@ -53,7 +53,7 @@ class Head extends Component {
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<MenuTotal items={CONFIG.customer}/>}
+                title={<MenuTotal items={CONFIG.customer} path = {this.props.path}/>}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
@@ -67,7 +67,7 @@ class Lists extends React.Component {
         return(
             <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} >
                 {this.props.topics&&this.props.topics.map((topic, index) => (
-                    <Link to={`/customer/${topic.parentid}`} key={index}>
+                    <Link to={`/customer/${topic.accountid}`} key={index}>
                         <ListItem
                             style={styles.back}
                             key={index}
@@ -92,7 +92,6 @@ class Lists extends React.Component {
 class Customer extends React.Component {
     constructor(props){
       super(props);
-      this.props.actions.fetchTopics({type: 'all'});
       this.state = {
           title: ''
       }
@@ -104,7 +103,7 @@ class Customer extends React.Component {
         return (
             <div>
                 <div className="fiexded">
-                    <Head title={this.state.title}/>
+                    <Head title={this.state.title} path={this.props.location.pathname}/>
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <Lists topics={this.props.results.topics}></Lists>
@@ -113,5 +112,5 @@ class Customer extends React.Component {
     }
 }
 export default Template({
-    component: Customer
+    component: Customer,
 });

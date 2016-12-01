@@ -34,33 +34,36 @@ class MenuTotal extends Component {
             menuopen: false,
             value: 0,
             title: '',
-            type: ''
+            type: '',
         }
+        this.props.actions.fetchTopics({type: this.state.type, path:this.props.path})
     }
     toggleDropdownMenu() {
          this.setState({ menuopen: ! this.state.menuopen })
     }
     componentDidMount() {
-        this.setState({title: '全部', type: this.state.type || 'all'});
+        const path = window.location.pathname;
+        this.setState({title: '全部', type: this.state.type});
     }
-    handleClick(type) {
-        this.setState({ menuopen: false,type: type });
-        this.props.actions.fetchTopics({type: type})
+    handleClick(type,event) {
+        const title = event.target.childNodes[1].nodeValue;
+        this.setState({ menuopen: false,type: type ,title: title});
+        this.props.actions.fetchTopics({type: type, path:this.props.path})
         event.preventDefault();
     }
     render() {
         const layout = [];
         const items = this.props.items;
-        for(let attr in items) {
+        for (let attr in items) {
             layout.push(
-                    <li onClick={this.handleClick.bind(this,items[attr])} key={attr.hashcode}>
+                    <li onClick={this.handleClick.bind(this, items[attr])} key={attr.charCodeAt(0).toString(16)}>
                         <a href='javascript:void(0);'>{attr}{<Done style={styles.done} color='#fff'/>}</a>
                     </li>)
         }
         return (
             <div className={classname('dropdown-title',{open:this.state.menuopen})}>
                 <a href='javascript:void(0);' className='dropdown-toggle' onClick={()=>this.toggleDropdownMenu()}>
-                    {this.state.title   }
+                    {this.state.title}
                     <span className="caret"></span>
                 </a>
                 <ul className='dropdown-menu' role='menu' value={this.state.value}>
