@@ -13,25 +13,15 @@ import Record from './components/list/Record';
 import Photo from './components/list/Photo';
 import Check from './components/list/Check';
 import Bulletin from './components/list/Bulletin';
+import Work from './components/list/Work';
 import Details from './components/public/Details';
+import Fastnew from './components/public/Fastnew';
+import New from './components/public/New';
 const AppRouters = (
     <Route path='/' component={Master}>
         <IndexRoute component={Index} />
-<<<<<<< HEAD
-        <Route path='/customer' component={Customer} />
-        <Route path='/setting' component={Setting}>
-            <Route path='/about' component={About} />
+        <Route path='customer'  component={Customer}>
         </Route>
-        <Route path='/contact' component={Contact} />
-        <Route path='/record' component={Record} />
-        <Route path='/audit' component={Audit} />
-        <Route path='/check' component={Check} />
-        <Route path='/order' component={Order} />
-        <Route path='/photo' component={Photo} />
-        <Route path='/bulletin' component={Bulletin} />
-        <Route path='/customer/:id' component={Details} />
-=======
-        <Route path='customer' component={Customer} />
         <Route path='setting' component={Setting}>
             <Route path='/about' component={About} />
         </Route>
@@ -42,8 +32,8 @@ const AppRouters = (
         <Route path='order' component={Order} />
         <Route path='photo' component={Photo} />
         <Route path='bulletin' component={Bulletin} />
+        <Route path='work' component={Work} />
         <Route path='customer/:id' component={Details} />
->>>>>>> 45c2f93e51384d60f5d81e795eb086c5285b8128
     </Route>
 )
 export default AppRouters;

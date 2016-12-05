@@ -13,11 +13,14 @@ const Main = (mySetting) => {
         defaultSetting[key] = mySetting[key]
     }
     class Index extends Component {
-        constructor(props, content){
-            super(props,content);
+        constructor(props, context){
+            super(props,context);
         }
         render(){
-            return  <this.props.defaultSetting.component {...this.props} state={this.props.state}/>;
+            return  <this.props.defaultSetting.component {...this.props} />;
+        }
+        shouldComponentUpdate(nextProps, nextState) {
+            return !(this.props === nextProps) || !(this.state === nextState)
         }
     }
     Index.defaultProps = { defaultSetting }

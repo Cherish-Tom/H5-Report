@@ -34,21 +34,19 @@ class MenuTotal extends Component {
             menuopen: false,
             value: 0,
             title: '',
-            type: '',
         }
-        this.props.actions.fetchTopics({type: this.state.type, path:this.props.path})
     }
     toggleDropdownMenu() {
          this.setState({ menuopen: ! this.state.menuopen })
     }
     componentDidMount() {
-        const path = window.location.pathname;
-        this.setState({title: '全部', type: this.state.type});
+        this.setState({title: '全部'});
     }
-    handleClick(type,event) {
+    handleClick(type, event) {
         const title = event.target.childNodes[1].nodeValue;
+        const path = window.location.pathname;
         this.setState({ menuopen: false,type: type ,title: title});
-        this.props.actions.fetchTopics({type: type, path:this.props.path})
+        this.props.actions.fetchTopics({url: path, type: type});
         event.preventDefault();
     }
     render() {
@@ -74,6 +72,4 @@ class MenuTotal extends Component {
     }
 }
 
-export default Template({
-    component: MenuTotal
-});
+export default Template({component: MenuTotal})

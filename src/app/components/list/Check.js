@@ -110,7 +110,7 @@ class Map extends React.Component {
         let  map = new BMap.Map(id);
         let  point = new BMap.Point(104.703213, 31.496506);
         map.addControl(new BMap.NavigationControl());
-        map.centerAndZoom(point, 20);
+        map.centerAndZoom(point, 17);
         map.enableScrollWheelZoom();
         function setLocal(result) {
             const cityName = result.name;

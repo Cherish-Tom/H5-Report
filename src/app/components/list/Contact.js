@@ -57,7 +57,7 @@ class Head extends React.Component {
         return(
             <AppBar
                 style={styles.bar}
-                title={<MenuTotal items={CONFIG.contact}/>}
+                title={<MenuTotal items={CONFIG.contact} />}
                 titleStyle={styles.title}
                 iconStyleLeft={{marginTop: 0,marginRight: 0}}
                 iconStyleRight={{marginTop: 0}}

@@ -7,10 +7,9 @@ class Setting extends React.Component {
         super(props, contxt);
     }
     render() {
-        const path = this.props.location.pathname;
         return (
             <div className='warp'>
-                  <Header title='设置'/>
+                  <Header title='设置' path={this.props.location.pathname}/>
                   <div className='container'>
                       <div className='setting'>
                           <a href='/setting/about'>关于我们</a>
@@ -26,7 +25,6 @@ class Setting extends React.Component {
                           style={{height: 45, fontSize: 16}}
                       />
                   </div>
-
             </div>
         )
     }

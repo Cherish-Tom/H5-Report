@@ -92,18 +92,19 @@ class Lists extends React.Component {
 class Customer extends React.Component {
     constructor(props){
       super(props);
-      this.state = {
-          title: ''
-      }
+
     }
-    componentDidMount() {
-        this.setState({title: '客户列表'})
+    shouldComponentUpdate(nextProps, nextState) {
+        return !(this.props === nextProps) || !(this.state === nextState)
+    }
+    componentWillMount() {
+        this.props.actions.fetchTopics({url: 'customer'});
     }
     render() {
         return (
             <div>
                 <div className="fiexded">
-                    <Head title={this.state.title} path={this.props.location.pathname}/>
+                    <Head path={this.props.location.pathname} />
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <Lists topics={this.props.results.topics}></Lists>
@@ -112,5 +113,5 @@ class Customer extends React.Component {
     }
 }
 export default Template({
-    component: Customer,
+    component: Customer
 });

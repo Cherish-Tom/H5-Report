@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from './Header';
 import 'whatwg-fetch';
 import Subheader from 'material-ui/Subheader';
 import Template from './template';
 import IconButton from 'material-ui/IconButton';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
+import DatePicker from 'material-ui/DatePicker';
+import { BASIC_URL } from '../../constants/Config';
 const styles = {
     sub: {
         lineHeight: '30px',
@@ -14,19 +16,29 @@ const styles = {
         color: 'rgba(0, 0, 0, 0.54)'
     }
 }
-class Details extends React.Component {
+class Details extends Component {
     constructor(props){
         super(props);
-        this.props.actions.fetchTopic(this.props.params.id);
+        this.state = {
+            topic: {}
+        }
+        this.handleChange = (event) => {
+            let name = event.target.name;
+            let value = event.target.value;
+        }
     }
     hanleSubmit(event) {
         event.preventDefault();
         let form = document.querySelector('form');
         let path = window.location.pathname;
-        fetch(`http://192.168.123.162/oa${path}`, {
+        fetch(`${BASIC_URL}/${path}`, {
             method: 'POST',
             body: new FormData(form)
         })
+    }
+    componentDidMount() {
+        this.props.actions.fetchTopic(this.props.params.id);
+        this.setState({topic: this.props.results.topic})
     }
     render() {
         const topic = this.props.results.topic;
@@ -41,24 +53,24 @@ class Details extends React.Component {
                         <div className='basic-msg'>
                             <ul>
                                 <li>
-                                    <span>网站:</span>
-                                    <input type='text' defaultValue= {topic.website} name='website' placeholder='点击填写'/>
+                                    <label>网站:</label>
+                                    <input type='text' defaultValue={topic.website} name='website'  placeholder='点击填写'/>
                                 </li>
                                 <li>
                                     <span>客户编号:</span>
-                                    <input type='text' defaultValue= {topic.account_no}  name='account_no'/>
+                                    <input type='text' defaultValue={topic.account_no}  name='account_no'/>
                                 </li>
                                 <li>
                                     <span>商户名称:</span>
-                                    <input type='text' defaultValue= {topic.accountname} name='accountname' />
+                                    <input type='text' defaultValue={topic.accountname} name='accountname' />
                                 </li>
                                 <li>
                                     <span>所属行业:</span>
-                                    <input type='text' defaultValue= {topic.industry} name='industry'/>
+                                    <input type='text' defaultValue={topic.industry} name='industry'/>
                                 </li>
                                 <li>
                                     <span>客户状态:</span>
-                                    <input type='text' defaultValue= {topic.rating} name='rating'/>
+                                    <input type='text' defaultValue={topic.rating} name='rating'/>
                                 </li>
                                 <li>
                                     <span>销售负责人:</span>
@@ -198,6 +210,4 @@ class Details extends React.Component {
         )
     }
 }
-export default Template({
-    component: Details
-})
+export default Template({component: Details})
