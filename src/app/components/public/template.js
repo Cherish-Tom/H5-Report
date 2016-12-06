@@ -17,7 +17,7 @@ const Main = (mySetting) => {
             super(props,context);
         }
         render(){
-            return  <this.props.defaultSetting.component {...this.props} />;
+            return  <this.props.defaultSetting.component {...this.props} state={this.props.state}/>;
         }
         shouldComponentUpdate(nextProps, nextState) {
             return !(this.props === nextProps) || !(this.state === nextState)
@@ -28,24 +28,21 @@ const Main = (mySetting) => {
         return {actions: bindActionCreators(actions, dispatch)}
     }
     const mapStateToProps = state => {
-        const { postReddit } = state
-        let replies = [], topics = [], topic = {}, results = postReddit['results']
-        if (results) {
-            switch (results.type) {
-                case actions.TOPIC:
-                    topic = results.topic
-                    replies = results.replies
-                    break
-                case actions.TOPICS:
-                    topics = results.topics
+        const { postDate , requestData } = state
+        let topics = [], topic = {}
+        switch (postDate.type) {
+            case actions.TOPIC:
+                topic = postDate.topic
                 break
-                default:
-                    {}
-            }
+            case actions.TOPICS:
+                topics = postDate.topics
+                break
+            default:
+                {}
         }
-        return { results: { replies, topics, topic } }
+        return { topics, topic , requestData}
     }
-    return connect(mapStateToProps, mapDispatchToProps)(Index);
+    return connect(mapStateToProps, actions)(Index);
 }
 
 export default Main;

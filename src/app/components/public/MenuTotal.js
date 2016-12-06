@@ -46,7 +46,7 @@ class MenuTotal extends Component {
         const title = event.target.childNodes[1].nodeValue;
         const path = window.location.pathname;
         this.setState({ menuopen: false,type: type ,title: title});
-        this.props.actions.fetchTopics({url: path, type: type});
+        this.props.fetchTopics({url: path, type: type});
         event.preventDefault();
     }
     render() {

@@ -11,13 +11,13 @@ const received = (type, json) => {
       case TOPICS:
           return {
               type: type,
-              results: json.data
+              results: json
           }
       case TOPIC:
           return {
               type: type,
               results: {
-                  topic: json.data
+                  topic: json
               }
           }
       default:
@@ -30,7 +30,7 @@ export const fetchTopics  = options => (dispatch) => {
     const type = 'TOPICS';
     let url = '';
     if (options) {
-        url = `${BASIC_URL}/${options.url}?type=${options.type||'all'}&page=${options.page||1}&limit=${options.limit||20}`
+        url = `${BASIC_URL}/${options.url}?type=${options.type||'all'}&page=${options.page||1}&limit=${options.limit||7}`
     }
     return fetch(url)
         .then(response => response.json())
@@ -43,16 +43,13 @@ export const fetchTopic = id => dispatch => {
         .then(response => response.json())
         .then(json => dispatch(received(type, json)))
 }
-
-
-
 const getDataStart = path => {
-    return {
-        type: GET_DATA_START,
-        path
-    }
+  return {
+    type: GET_DATA_START,
+    path
+  }
 }
-const getDataSuccess = (path, json, success) => {
+const getDataSuccess = (path, json, success, name) => {
   return {
     type: GET_DATA_SUCCESS,
     path ,
@@ -60,20 +57,13 @@ const getDataSuccess = (path, json, success) => {
     success
   }
 }
-
-export const getData = (path, postData, json, success) => {
+export const getDate = (path, postData, success, name) => {
     let url = BASIC_URL + path + Tool.paramType(postData);
     return dispatch => {
-        dispatch(getDataStart(postData))
-        return fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            mode: 'no-cors'
-        })
-        .then(response => response.json())
-        .then(json => dispatch(getDataSuccess(path, json, success)))
-        .catch(error => console.log(error))
+        dispatch(getDataStart(postData));
+        return fetch(url)
+                .then(response => response.json())
+                .then(json => dispatch(getDataSuccess(path, json, success, name)))
+                .catch(error => console.log(error))
     }
 }

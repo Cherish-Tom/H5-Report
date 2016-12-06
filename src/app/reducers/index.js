@@ -1,32 +1,31 @@
-
 import { TOPICS, TOPIC } from '../actions';
-import { combineReducers } from 'redux'
+import { GET_DATA_START, GET_DATA_SUCCESS } from '../actions';
 
-
-const postReddit = (state = {}, action) => {
+export const postDate = (state = {}, action) => {
     switch (action.type) {
       case TOPICS:
           return {
-              ['results']: {
-                  type: action.type,
-                  topics: action.results
-              }
+              type: action.type,
+              topics: action.results
           }
       case TOPIC:
           return {
-              ['results']: {
-                  type: action.type,
-                  topic: action.results.topic,
-              }
+              type: action.type,
+              topic: action.results.topic,
           }
       default:
           return state
     }
 }
-
-
-const rootReducer = combineReducers({
-    postReddit
-})
-
-export default rootReducer
+export const requestData = (state = {}, action = {}) => {
+    switch(action.type){
+        case GET_DATA_START:
+            return state
+        case GET_DATA_SUCCESS:
+            action.success(action.json)
+            state[action.name] = action.json
+            return state
+        default:
+            return state
+    }
+}
