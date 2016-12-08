@@ -16,7 +16,7 @@ Tool.getStyles = (obj, attr) => {
     }
 }
 
-Tool.nextPage = (dom, currentPage, totalPage, callback, shouldUpdata) => {
+Tool.nextPage = (element, currentPage, totalPage, callback, shouldUpdata) => {
     let updata       = shouldUpdata,
         page         = currentPage,
         height       = 0,
@@ -26,15 +26,15 @@ Tool.nextPage = (dom, currentPage, totalPage, callback, shouldUpdata) => {
         oldScrollTop = 0,
         time         = null;
 
-    dom.addEventListener('touchstart', () => {
+    element.addEventListener('touchstart', () => {
         height = dom.offsetHeight;
         setTop = dom.offsetTop;
         bottom = parseInt(Tool.getStyles(dom, 'marginBottom'));
     }, false)
-    dom.addEventListener('touchmove', () => {
+    element.addEventListener('touchmove', () => {
         loadMore();
     }, false)
-    dom.addEventListener('touchend', () => {
+    element.addEventListener('touchend', () => {
         oldScrollTop = document.body.scrollTop;
         moveEnd()
     }, false)

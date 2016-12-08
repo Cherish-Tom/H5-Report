@@ -81,9 +81,9 @@ const changeTopic = {};
 class Details extends Component {
     constructor(props, context){
         super(props, context);
-        this.props.fetchTopic(this.props.params.id);
+        this.props.fetchPost(this.props.location.pathname);
         this.state = {
-            topic: {},
+            data: {},
             disable: true
         }
         this.handleChange = (event) => {
@@ -114,7 +114,7 @@ class Details extends Component {
         }
     }
     render() {
-        const topic = Object.assign({}, this.props.topic.data, this.state.topic);
+        const topic = Object.assign({}, this.props.state.data.data, this.state.data);
         return (
             <div>
                 <div className="fiexded">
@@ -303,4 +303,6 @@ class Details extends Component {
 Details.childContextTypes = {
     disable: React.PropTypes.bool.isRequired
 }
-export default Template({component: Details})
+export default Template({
+    component: Details,
+})
