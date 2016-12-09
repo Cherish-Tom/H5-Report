@@ -5,7 +5,6 @@ import * as actions from '../../actions';
 import { is, fromJS} from 'immutable';
 const Main = (mySetting) => {
     let defaultSetting = {
-        id       : '',
         url      : '',
         data     : {},
         component: <div></div>
@@ -22,6 +21,9 @@ const Main = (mySetting) => {
                 return false
             }
             return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
+        }
+        componentDidMount(){
+            this.props.fetchPosts({url: this.props.defaultSetting.url})
         }
         render(){
             return  <this.props.defaultSetting.component {...this.props} state={this.props.state.toJS()} />;

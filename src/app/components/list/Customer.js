@@ -52,9 +52,12 @@ class Head extends Component {
     }
 }
 class Lists extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
+    }
     render(){
         return(
-            <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} >
+            <List  >
                 {this.props.datas.map((data, index) => (
                     <Link to={`/customer/${data.accountid}`} key={index}>
                         <ListItem
@@ -80,12 +83,11 @@ class Lists extends Component {
 }
 class Customer extends Component {
     constructor(props, context){
-        super(props, context);
-        this.props.fetchPosts({url: 'customer'})
+        super(props, context)
         this.state = {
             data: [],
             currentPage: 1,
-            totalPage: this.props.state.data.pages,
+            totalPage: 2,
             limit: 8,
             shouldUpdata: true
         }
@@ -97,26 +99,27 @@ class Customer extends Component {
             this.props.getDate('/customer', {page: currentPage, type: 'all'}, (res) => {
                 this.state.currentPage = currentPage;
                 this.state.shouldUpdata = true;
-                if(res.http_code === 200) {
-                    this.state.data = this.state.data.concat(res.data.data)
-                    this.setState(this.state.data)
+                if(res.code === 200) {
+                    this.setState({data: this.state.data.concat(res.data)})
                 } else {
-
+                    console.log(res.code);
                 }
             }, 'nextPage')
         }
     }
-    getChildContext() {
-        return {
-            getDate: this.props.getDate
-        }
-    }
-    shouldComponentUpdate(netxProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
     }
+    componentWillReceiveProps(nextProps){
+        let { data } = nextProps.state;
+        this.state.data = data.data || [];
+        this.state.currentPage = data.current || 1;
+        this.state.totalPage = data.pages || 1;
+    }
     render() {
-        if(this.state.currentPage < this.state.totalPage) {
-            Tool.nextPage(this.refs.container, this.state.currentPage, this.state.totalPage, this.nextPage, this.state.shouldUpdata)
+        const {currentPage, totalPage, shouldUpdata} = this.state
+        if(currentPage < totalPage) {
+            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
         }
         return (
             <div>
@@ -124,14 +127,14 @@ class Customer extends Component {
                     <Head path={this.props.location.pathname} />
                     <Search title='请输入客户名称或地址'/>
                 </div>
-                <div ref='container'><Lists datas={this.props.state.data.data} ></Lists></div>
+                <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
+                    <Lists ref='container' datas = {this.state.data}/>
+                </div>
             </div>
         );
     }
 }
-Customer.childContextTypes = {
-    getDate: React.PropTypes.func
-}
 export default Template({
-    component: Customer
+    component: Customer,
+    url: 'customer'
 });
