@@ -21,14 +21,20 @@ const receivePosts = (path, json) => {
 export const fetchPosts = options => {
     let url = '';
     if (options && options.url) {
-         url = `${BASIC_URL}/${options.url}/?type=${options.type||'all'}&limit=${options.limit||20}&page=${options.page|| 1}`;
+         url = `${BASIC_URL}/${options.url}/?type=${options.type||'all'}&limit=${options.limit||8}&page=${options.page|| 1}`;
     }
-    console.log('url', url);
     return dispatch => {
         dispatch(requestPosts(options.url));
         return fetch(url)
-            .then(response =>response.json())
-            .then(json => dispatch(receivePosts(options.url, json)))
+            // .then(response =>response.json())
+            // .then(json => dispatch(receivePosts(options.url, json)))
+            .then(response => {
+                if(response.ok){
+                    response.json().then(json => dispatch(receivePosts(options.url, json)))
+                } else {
+                    console.log(response.status);
+                }
+            })
             .catch(error => console.log(error))
     }
 }
@@ -63,17 +69,14 @@ const getDataSuccess = (path, json, success, name) => {
   }
 }
 export const getDate = (path, postData, success, name) => {
-    // let url = `${BASIC_URL}/${path}/${Tool.paramType(postData)}`
     let url = BASIC_URL + path + Tool.paramType(postData);
     return dispatch => {
         dispatch(getDataStart(path));
-        console.log('url',url);
         return fetch(url)
                 .then(response => {
                     if(response.ok) {
                         response.json().then(json => dispatch(getDataSuccess(path, json, success, name)))
                     } else {
-                        console.log(response);
                         console.error("Looks like the response wasn't perfect, got status", response.status);
                     }
                 })

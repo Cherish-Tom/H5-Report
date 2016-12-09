@@ -9,8 +9,9 @@ import Search from '../public/Search';
 import Template from '../public/template';
 import MenuTotal from '../public/MenuTotal';
 import { CONFIG } from '../../constants/Config';
-import {Tool} from '../../constants/Tools';
+import { Tool } from '../../constants/Tools';
 import { is, fromJS} from 'immutable';
+import CircularProgress from 'material-ui/CircularProgress';
 const styles={
     textColor:{
         color: '#7888af',
@@ -96,7 +97,7 @@ class Customer extends Component {
                 return
             }
             this.state.shouldUpdata = false
-            this.props.getDate('/customer', {page: currentPage, type: 'all'}, (res) => {
+            this.props.getDate('/customer', { type: 'all', limit: 8, page: currentPage}, (res) => {
                 this.state.currentPage = currentPage;
                 this.state.shouldUpdata = true;
                 if(res.code === 200) {
@@ -112,15 +113,17 @@ class Customer extends Component {
     }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
-        this.state.data = data.data || [];
-        this.state.currentPage = data.current || 1;
-        this.state.totalPage = data.pages || 1;
+        this.state.data = data && data.data || [];
+        this.state.currentPage = data && data.current || 1;
+        this.state.totalPage = data && data.pages || 1;
     }
-    render() {
+    componentDidMount(){
         const {currentPage, totalPage, shouldUpdata} = this.state
         if(currentPage < totalPage) {
             Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
         }
+    }
+    render() {
         return (
             <div>
                 <div className="fiexded">
@@ -128,10 +131,11 @@ class Customer extends Component {
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
-                    <Lists ref='container' datas = {this.state.data}/>
+                    <Lists ref='container' datas = {this.state.data} />
                 </div>
             </div>
-        );
+        )
+
     }
 }
 export default Template({

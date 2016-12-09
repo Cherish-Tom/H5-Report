@@ -3,8 +3,6 @@ import Header from '../public/Header';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ClassNames from 'classnames';
-require('isomorphic-fetch');
-require('es6-promise').polyfill();
 class Photo extends React.Component {
     constructor(props){
         super(props)
