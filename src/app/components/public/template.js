@@ -22,9 +22,9 @@ const Main = (mySetting) => {
             }
             return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
         }
-        componentDidMount(){
-            this.props.fetchPosts({url: this.props.defaultSetting.url})
-        }
+        // componentDidMount(){
+        //
+        // }
         render(){
             return  <this.props.defaultSetting.component {...this.props} state={this.props.state.toJS()} />;
         }

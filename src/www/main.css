@@ -352,12 +352,12 @@ input.photo_input:focus{
     color: rgba(0, 0, 0, 0.54);
     padding-right: 6px;
 }
-.basic-msg li input, .basic-msg .address-info{
+.basic-msg li>input, .basic-msg .address-info{
     flex: auto;
     margin-left: 15px;
     height: 100%;
 }
-.basic-msg li input{
+.basic-msg li>input{
     border: 0;
     outline: 0;
     height: 100%;

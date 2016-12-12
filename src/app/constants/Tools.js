@@ -29,7 +29,7 @@ Tool.nextPage = (element, currentPage, totalPage, callback, shouldUpdata) => {
     element.addEventListener('touchstart', () => {
         height = element.offsetHeight;
         setTop = element.offsetTop;
-        bottom = parseInt(Tool.getStyles(dom, 'marginBottom'));
+        bottom = parseInt(Tool.getStyles(element, 'marginBottom'));
     }, false)
     element.addEventListener('touchmove', () => {
         loadMore();

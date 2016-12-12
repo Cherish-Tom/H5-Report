@@ -24,10 +24,8 @@ export const fetchPosts = options => {
          url = `${BASIC_URL}/${options.url}/?type=${options.type||'all'}&limit=${options.limit||8}&page=${options.page|| 1}`;
     }
     return dispatch => {
-        dispatch(requestPosts(options.url));
+        dispatch(requestPosts(options.url))
         return fetch(url)
-            // .then(response =>response.json())
-            // .then(json => dispatch(receivePosts(options.url, json)))
             .then(response => {
                 if(response.ok){
                     response.json().then(json => dispatch(receivePosts(options.url, json)))
@@ -38,18 +36,16 @@ export const fetchPosts = options => {
             .catch(error => console.log(error))
     }
 }
-export const fetchPost = path => {
+export const fetchPost = (path, id) => {
     let url = '';
     if (path) {
-         url = `${BASIC_URL}/${path}`;
+         url = `${BASIC_URL}/${path}/${id}`;
     }
     return dispatch => {
-        dispatch(requestPosts(path));
-        return  fetch(url, {
-                    mode: 'no-cors'
-                })
+        dispatch(requestPosts(id))
+        return  fetch(url)
                 .then(response =>response.json())
-                .then(json => dispatch(receivePosts(path, json)))
+                .then(json => dispatch(receivePosts(id, json)))
                 .catch(error => console.log(error))
     }
 }

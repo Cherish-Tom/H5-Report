@@ -85,12 +85,14 @@ class Lists extends Component {
 class Customer extends Component {
     constructor(props, context){
         super(props, context)
+        this.props.fetchPosts({url: 'customer'})
         this.state = {
             data: [],
             currentPage: 1,
             totalPage: 2,
             limit: 8,
-            shouldUpdata: true
+            shouldUpdata: true,
+            isFetching: false
         }
         this.getNextPage = (currentPage) => {
             if(!this.state.shouldUpdata) {
@@ -108,14 +110,12 @@ class Customer extends Component {
             }, 'nextPage')
         }
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
-    }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
         this.state.data = data && data.data || [];
         this.state.currentPage = data && data.current || 1;
         this.state.totalPage = data && data.pages || 1;
+        this.state.isFetching = nextProps.state.isFetching || false;
     }
     componentDidMount(){
         const {currentPage, totalPage, shouldUpdata} = this.state
@@ -131,7 +131,9 @@ class Customer extends Component {
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
-                    <Lists ref='container' datas = {this.state.data} />
+                    {
+                        this.props.state.isFetching ? <CircularProgress style={{position: 'fixed', top: '40%', left: '40%'}}/> : <Lists ref='container' datas = {this.state.data} />
+                    }
                 </div>
             </div>
         )
