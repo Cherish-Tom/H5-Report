@@ -38,12 +38,15 @@ const styles={
     }
 }
 class Head extends Component {
+    constructor(props, context){
+        super(props, context)
+    }
     render() {
         return(
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<MenuTotal items={CONFIG.customer} path = {this.props.path}/>}
+                title={<MenuTotal items={CONFIG.customer} path = {this.props.path} {...this.context}/>}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
@@ -51,6 +54,10 @@ class Head extends Component {
             />
         )
     }
+}
+Head.contextTypes = {
+    fetchPosts: React.PropTypes.any,
+    type: React.PropTypes.string
 }
 class Lists extends Component {
     shouldComponentUpdate(nextProps, nextState) {
@@ -92,7 +99,8 @@ class Customer extends Component {
             totalPage: 2,
             limit: 8,
             shouldUpdata: true,
-            isFetching: false
+            isFetching: false,
+            type: 'all'
         }
         this.getNextPage = (currentPage) => {
             if(!this.state.shouldUpdata) {
@@ -123,11 +131,17 @@ class Customer extends Component {
             Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
         }
     }
+    getChildContext(){
+        return {
+            fetchPosts: this.props.fetchPosts,
+            type: this.state.type
+        }
+    }
     render() {
         return (
             <div>
                 <div className="fiexded">
-                    <Head path={this.props.location.pathname} />
+                    <Head path={this.props.location.pathname}/>
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
@@ -139,6 +153,10 @@ class Customer extends Component {
         )
 
     }
+}
+Customer.childContextTypes = {
+    fetchPosts: React.PropTypes.any,
+    type: React.PropTypes.string
 }
 export default Template({
     component: Customer,

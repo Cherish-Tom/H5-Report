@@ -10,22 +10,12 @@ import IconButton from 'material-ui/IconButton';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import DatePicker from 'material-ui/DatePicker';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 import { BASIC_URL } from '../../constants/Config';
+import Picklist from '../public/Picklist';
 const styles = {
     sub: {
         lineHeight: '30px',
         paddingLeft: 0
-    },
-    icon: {
-        color: 'rgba(0, 0, 0, 0.54)'
-    },
-    back:{
-        backgroundColor: '#fff',
-        margin: 8,
-        borderRadius: 4,
-        boxShadow:'rgba(0, 0, 0, 0.117647) 0px 1px 6px'
     },
     head: {
         textAlign: 'center',
@@ -54,7 +44,6 @@ const styles = {
 class Head extends Component {
     constructor(props, context){
         super(props, context)
-
     }
     render() {
         return(
@@ -78,30 +67,6 @@ class Head extends Component {
 }
 Head.contextTypes = {
     disable: React.PropTypes.bool.isRequired
-}
-
-class Picklist extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            value: 0
-        }
-        this.handleChange = (value) => {
-            this.setState({value: valule})
-        }
-    }
-    render(){
-        return(
-            <div>
-                <DropDownMenu value={this.state.value} onChange={this.handleChange}>
-                    {this.props.list.map((item, index) => {
-                        return <MenuItem value={index} primaryText={item[this.props.name]} key={index}/>
-                    })}
-                </DropDownMenu>
-            </div>
-        )
-
-    }
 }
 const changeTopic = {};
 class Details extends Component {
@@ -160,7 +125,7 @@ class Details extends Component {
         for(let key in typeList){
             layout.push
             (
-                <div>
+                <div key={key}>
                     <Subheader style={styles.sub}>{typeList[key].blocklabel}</Subheader>
                     <div className='basic-msg'>
                         <ul>
@@ -168,7 +133,7 @@ class Details extends Component {
                                 if(field.fieldtype === 'picklist'){
                                     return  <li key={index}>
                                                 <label>{field.fieldlabel}：</label>
-                                                {data.extra[field.fieldname] instanceof Array && data.extra[field.fieldname].lenght > 0 ? <Picklist list={data.extra[field.fieldname]} name={field.fieldname}/> : <span></span>}
+                                                { data.extra[field.fieldname] ? <Picklist list={data.extra[field.fieldname]} {...field} value={data[field.fieldname]}/> : <span name={field.fieldname}></span>}
                                             </li>
                                 } else if(field.fieldtype='reference'){
                                     return  <li key={index}>
