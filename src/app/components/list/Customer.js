@@ -46,10 +46,10 @@ class Head extends Component {
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<MenuTotal items={CONFIG.customer} path = {this.props.path} {...this.context}/>}
+                title={<MenuTotal items={CONFIG.customer} {...this.props} {...this.context}/>}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
-                iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
+                iconElementLeft={<IconButton onClick={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>}
                 iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}
             />
         )
@@ -57,7 +57,8 @@ class Head extends Component {
 }
 Head.contextTypes = {
     fetchPosts: React.PropTypes.any,
-    type: React.PropTypes.string
+    type: React.PropTypes.string,
+    router: React.PropTypes.object
 }
 class Lists extends Component {
     shouldComponentUpdate(nextProps, nextState) {
@@ -117,6 +118,9 @@ class Customer extends Component {
                 }
             }, 'nextPage')
         }
+        this.chooseType = () => {
+
+        }
     }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
@@ -146,7 +150,7 @@ class Customer extends Component {
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
                     {
-                        this.props.state.isFetching ? <CircularProgress style={{position: 'fixed', top: '40%', left: '40%'}}/> : <Lists ref='container' datas = {this.state.data} />
+                        this.props.state.isFetching ? <CircularProgress style={{position: 'fixed', top: '40%', left: '40%'}} size={20}/> : <Lists ref='container' datas = {this.state.data} />
                     }
                 </div>
             </div>

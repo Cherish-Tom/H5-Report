@@ -42,10 +42,10 @@ export const fetchPost = (path, id) => {
          url = `${BASIC_URL}/${path}/${id}`;
     }
     return dispatch => {
-        dispatch(requestPosts(id))
+        dispatch(requestPosts(path + '/' + id))
         return  fetch(url)
                 .then(response =>response.json())
-                .then(json => dispatch(receivePosts(id, json)))
+                .then(json => dispatch(receivePosts((path + '/' + id), json)))
                 .catch(error => console.log(error))
     }
 }

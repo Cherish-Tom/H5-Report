@@ -373,7 +373,7 @@ input.photo_input:focus{
     margin-left: 15px;
     height: 100%;
 }
-.basic-msg li>input{
+.basic-msg li input{
     border: 0;
     outline: 0;
     height: 100%;
@@ -381,6 +381,10 @@ input.photo_input:focus{
     font-size: 14px!important;
     text-align: right;
     font-family: inherit;
+}
+.basic-msg li>input,.basic-msg li>div,.basic-msg li>span{
+    flex: auto;
+    text-align: right;
 }
 .basic-msg li span:last-child {
     color: rgb(94, 149, 201)

@@ -22,9 +22,6 @@ const Main = (mySetting) => {
             }
             return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
         }
-        // componentDidMount(){
-        //
-        // }
         render(){
             return  <this.props.defaultSetting.component {...this.props} state={this.props.state.toJS()} />;
         }

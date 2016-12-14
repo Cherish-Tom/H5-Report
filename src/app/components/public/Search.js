@@ -31,20 +31,34 @@ const styles={
 class Search extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            value: ''
+        }
+        this.handleChange = (event) => {
+            let value = this.reds.getValue.getValue()
+            this.setState({value: value})
+            console.log(value);
+        }
     }
     render() {
         return (
             <div>
                 <TextField
                     className="search_text"
+                    name='search'
+                    id='search'
+                    type='text'
+                    ref='getValue'
                 	fullWidth={true}
                     inputStyle={styles.inputs}
                 	hintText={this.props.title}
                     underlineShow={false}
                     hintStyle={styles.hin}
+                    value={this.state.value}
                     floatingLabelText={<SearchIcon color="rgba(0, 0, 0, 0.298039)"/>}
                     floatingLabelStyle={{left: 20}}
                     floatingLabelFixed={true}
+                    onChange={this.handleChange}
                 />
             </div>
         )

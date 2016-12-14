@@ -15,7 +15,7 @@ export default class Picklist extends Component{
     }
     render(){
         return(
-            <div name={this.props.fieldname} value={this.state.value}>
+            <div name={this.props.fieldname} value={this.state.value} data-type={this.props.fieldtype}>
                 <DropDownMenu
                     value={this.state.value}
                     onChange={this.handleChange}
@@ -29,7 +29,7 @@ export default class Picklist extends Component{
                     style={{height: 40}}
                      >
                     {this.props.list.map((item, index) => {
-                        return <MenuItem value={item[this.props.fieldname + '_name']} primaryText={item[this.props.fieldname + '_name']} key={index} style={{borderBottom: '1px solid #d7d7d7', lineHeight: '40px'}}/>
+                        return <MenuItem value={item[this.props.fieldname + '_name'] ? item[this.props.fieldname + '_name'] : ''} primaryText={item[this.props.fieldname + '_name']} key={index} style={{borderBottom: '1px solid #d7d7d7', lineHeight: '40px'}}/>
                     })}
                 </DropDownMenu>
             </div>

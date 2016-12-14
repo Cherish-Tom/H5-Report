@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import Header from './Header';
 import 'whatwg-fetch';
 import Subheader from 'material-ui/Subheader';
-import {Link, browserHistory} from 'react-router';
 import AppBar from 'material-ui/AppBar';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Template from './template';
 import IconButton from 'material-ui/IconButton';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
-import DatePicker from 'material-ui/DatePicker';
 import { BASIC_URL } from '../../constants/Config';
-import Picklist from '../public/Picklist';
+import Picklist from './Picklist';
+import DatePick from './DatePick';
 const styles = {
     sub: {
         lineHeight: '30px',
@@ -39,6 +41,21 @@ const styles = {
     },
     disable: {
         color: 'rgba(0, 0, 0, 0.5)'
+    },
+    dialog: {
+        color: '#33b5e5',
+        borderBottom: '2px solid #33b5e5',
+        padding: '16px 18px'
+    },
+    body: {
+        paddingTop: 12,
+    },
+    actions:{
+        borderTop: '1px solid #ddd',
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }
 class Head extends Component {
@@ -54,35 +71,78 @@ class Head extends Component {
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={this.context.disable ?
-                        <Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link> :
-                        <div style={styles.edit}>取消</div>
+                        <div style={styles.edit}>取消</div> :
+                        <IconButton onClick={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>
                     }
                 iconElementRight={this.context.disable ?
-                        <IconButton onClick={this.props.onClick}><ExitToApp color="#5e95c9"/></IconButton> :
-                        <div onClick={this.props.onClick} style={styles.edit}>保存</div>
+                        <div onClick={this.props.onClick} style={styles.edit}>保存</div> :
+                        <IconButton onClick={this.props.onClick}><ExitToApp color="#5e95c9"/></IconButton>
                 }
             />
         )
     }
 }
 Head.contextTypes = {
-    disable: React.PropTypes.bool.isRequired
+    disable: React.PropTypes.bool.isRequired,
+    router: React.PropTypes.object
 }
 const changeTopic = {};
+class Alert extends Component {
+    constructor(props, context){
+        super(props, context)
+        this.state = {
+            open: this.props.open
+        }
+        this.handleClose = () => {
+            this.setState({open: false})
+        }
+    }
+    render(){
+        const actions = [
+             <FlatButton
+               label="取消"
+               primary={true}
+               style={{flex: 1, borderRight: '1px solid #ddd'}}
+               onTouchTap={this.handleClose}
+             />,
+             <FlatButton
+               label="确认"
+               primary={true}
+               style={{flex: 1}}
+             />
+       ];
+        return(
+            <Dialog
+                title='确认保存'
+                titleStyle={styles.dialog}
+                actions={actions}
+                modal={false}
+                open={this.props.open}
+                bodyStyle={styles.body}
+                actionsContainerStyle={styles.actions}
+            >
+                {this.props.msg || '确认保存当前修改?'}
+            </Dialog>
+        )
+    }
+}
+Alert.contextTypes = {
+    disable: React.PropTypes.bool.isRequired
+}
 class Details extends Component {
     constructor(props, context){
         super(props, context);
         this.props.fetchPost('customer', this.props.params.id)
         this.state = {
             data: {},
-            disable: true,
+            disable: false,
             typeList: {}
         }
         this.handleChange = (event) => {
             const name = event.target.name;
             const value = event.target.value;
             changeTopic[name] = value;
-            this.setState({topic: changeTopic})
+            this.setState({data: Object.assign({}, this.state.data, changeTopic)})
         }
         this.editChange = (event) => {
             this.setState({disable: !this.state.disable})
@@ -99,7 +159,7 @@ class Details extends Component {
             })
         }
     }
-    componentWillMount(){
+    componentDidMount(){
         fetch(`http://192.168.123.162/oa/modules/6`)
         .then(response => {
             if(response.ok){
@@ -120,8 +180,7 @@ class Details extends Component {
     }
     render() {
         let layout = [];
-        const data = this.state.data;
-        const typeList = this.state.typeList;
+        const {data, typeList, disable} = this.state;
         for(let key in typeList){
             layout.push
             (
@@ -133,17 +192,28 @@ class Details extends Component {
                                 if(field.fieldtype === 'picklist'){
                                     return  <li key={index}>
                                                 <label>{field.fieldlabel}：</label>
-                                                { data.extra[field.fieldname] ? <Picklist list={data.extra[field.fieldname]} {...field} value={data[field.fieldname]}/> : <span name={field.fieldname}></span>}
+                                                { data.pick_list[field.fieldname] ? <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> : <span name={field.fieldname} data-type={field.fieldtype}></span>}
                                             </li>
-                                } else if(field.fieldtype='reference'){
+                                } else if(field.fieldtype === 'reference'){
                                     return  <li key={index}>
                                                 <label>{field.fieldlabel}：</label>
-                                                <span name={field.fieldname}>{data[field.fieldname]}</span>
+                                                <span name={field.fieldname} data-type={field.fieldtype}>{data[field.fieldname]}</span>
+                                            </li>
+                                } else if (field.fieldtype === 'data'){
+                                    return <li key={index}>
+                                                <label>{field.fieldlabel}：</label>
+                                                <DatePick date={new Date(data[field.fieldname])} name={field.fieldname} />
                                             </li>
                                 } else {
                                     return  <li key={index}>
                                                 <label>{field.fieldlabel}：</label>
-                                                <input type='text' value={data[field.fieldname]} onChange={this.handleChange} name={field.fieldname}/>
+                                                <input type='text'
+                                                    value={data[field.fieldname] ? data[field.fieldname] : ''}
+                                                    onChange={this.handleChange}
+                                                    name={field.fieldname}
+                                                    data-type={field.fieldtype}
+                                                    placeholder='点击编辑'
+                                                />
                                             </li>
                                 }
                             })}
@@ -163,6 +233,7 @@ class Details extends Component {
                         {layout}
                     </form>
                 </div>
+                <Alert open={disable} />
             </div>
         )
     }
