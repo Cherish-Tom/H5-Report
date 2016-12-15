@@ -8,10 +8,10 @@ import Add from 'material-ui/svg-icons/content/add';
 import Search from '../public/Search';
 import Template from '../public/template';
 import MenuTotal from '../public/MenuTotal';
+import Loading from '../public/Loading';
 import { CONFIG } from '../../constants/Config';
 import { Tool } from '../../constants/Tools';
 import { is, fromJS} from 'immutable';
-import CircularProgress from 'material-ui/CircularProgress';
 const styles={
     textColor:{
         color: '#7888af',
@@ -66,12 +66,12 @@ class Lists extends Component {
     }
     render(){
         return(
-            <List  >
-                {this.props.datas.map((data, index) => (
-                    <Link to={`/customer/${data.accountid}`} key={index}>
+            <List>
+                {this.props.datas.map((data) => (
+                    <Link to={`/customer/${data.accountid}`} key={data.accountid}>
                         <ListItem
                             style={styles.back}
-                            key={index}
+                            key={data.accountid}
                             primaryText={
                                 <p><span style={styles.textColor}>{data.accountname}</span></p>
                             }
@@ -150,7 +150,7 @@ class Customer extends Component {
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
                     {
-                        this.props.state.isFetching ? <CircularProgress style={{position: 'fixed', top: '40%', left: '40%'}} size={20}/> : <Lists ref='container' datas = {this.state.data} />
+                        this.props.state.isFetching ? <Loading /> : <Lists ref='container' datas = {this.state.data} />
                     }
                 </div>
             </div>

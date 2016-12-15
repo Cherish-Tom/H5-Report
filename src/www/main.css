@@ -193,7 +193,8 @@ a.dropdown-toggle{
     position: absolute;
     left: 12.5%;
     opacity: 0;
-    transition: all .15s ease-in-out
+    transition: all .15s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px
 }
 .dropdown-menu:before,
 .create_menu::before{
@@ -202,21 +203,24 @@ a.dropdown-toggle{
     height: 0;
     position: absolute;
     border-bottom: 6px solid #7f7f7f;
-    top: -4px;
+    top: -6px;
     left: 50%;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
+    z-index: -1;
 }
 .create_menu::before{
     left: 70%;
+}
+.dropdown-menu li:not(:last-child) a{
+    border-bottom: 1px solid #585858;
+    position: relative;
 }
 .dropdown-menu li a{
     display: inline-block;
     color: #fff;
     font-size: 14px;
     display: block;
-    border-bottom: 1px solid #585858;
-    position: relative;
 }
 .created_at{
     font-size: 12px;
@@ -359,7 +363,7 @@ input.photo_input:focus{
     margin-bottom: 15px;
     font-size: 14px;
 }
-.basic-msg li{
+.basic-msg .list-item{
     line-height: 40px;
     height: 40px;
     display: flex;
@@ -368,12 +372,12 @@ input.photo_input:focus{
     color: rgba(0, 0, 0, 0.54);
     padding-right: 6px;
 }
-.basic-msg li>input, .basic-msg .address-info{
+.basic-msg .list-item>input, .basic-msg .address-info{
     flex: auto;
     margin-left: 15px;
     height: 100%;
 }
-.basic-msg li input{
+.basic-msg .list-item input{
     border: 0;
     outline: 0;
     height: 100%;
@@ -382,17 +386,17 @@ input.photo_input:focus{
     text-align: right;
     font-family: inherit;
 }
-.basic-msg li>input,.basic-msg li>div,.basic-msg li>span{
+.basic-msg .list-item>input,.basic-msg .list-item>div,.basic-msg .list-item>span{
     flex: auto;
     text-align: right;
 }
-.basic-msg li span:last-child {
+.basic-msg .list-item span:last-child {
     color: rgb(94, 149, 201)
 }
 input[type='text']:disabled {
     background-color: #fff
 }
-.basic-msg li:not(:last-child){
+.basic-msg .list-item:not(:last-child){
     border-bottom: 1px solid #ddd;
 }
 .basic-msg .address-info{
@@ -410,7 +414,7 @@ input[type='text']:disabled {
 .address-info textarea:focus{
     outline: 0;
 }
-.basic-msg>ul>div{
+.basic-msg .list-item{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;

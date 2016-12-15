@@ -1,10 +1,6 @@
 import React, { Component }from 'react';
 import classname from 'classnames';
-import Paper from 'material-ui/Paper';
 import Done from 'material-ui/svg-icons/action/done';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-import Template from './template';
 const styles={
     menu:{
         top: 45
@@ -32,28 +28,29 @@ class MenuTotal extends Component {
         super(props);
         this.state={
             menuopen: false,
-            value: 0,
+            value:  'all',
             title: '全部',
             type: 'all'
         }
+        this.handleClick = (event) => {
+            event.preventDefault()
+            const type = event.target.getAttribute('value')
+            this.setState({menuopen: false, value: type, title: event.target.text})
+            this.props.fetchPosts({url: this.props.path, type: type})
+            this.refs.focusedItem.style = styles.select
+            event.stopPropagation()
+        }
     }
     toggleDropdownMenu() {
-         this.setState({ menuopen: ! this.state.menuopen })
-    }
-    handleClick(type, event) {
-        const title = event.target.childNodes[1].nodeValue;
-        const path = window.location.pathname.replace('/', '');
-        this.setState({ menuopen: false,type: type ,title: title});
-        this.props.fetchPosts({url: path, type: type});
-        event.preventDefault();
+        this.setState({ menuopen: ! this.state.menuopen })
     }
     render() {
         const layout = [];
-        const items = this.props.items;
-        for (let attr in items) {
+        for (let attr in this.props.items) {
+            const isFocused = attr === this.state.value
             layout.push(
-                    <li onClick={this.handleClick.bind(this, items[attr])} key={attr.charCodeAt(0).toString(16)}>
-                        <a href='javascript:void(0);'>{attr}{<Done style={styles.done} color='#fff'/>}</a>
+                    <li key={attr} ref={isFocused ? 'focusedItem' : ''} onClick={this.handleClick} style={{backgroundColor: isFocused ? '#fac057': ''}}>
+                        <a href='javascript:void(0);' value={attr}>{this.props.items[attr]}{isFocused ? <Done style={styles.done} color='#fff'/> : ''}</a>
                     </li>)
         }
         return (
@@ -62,7 +59,7 @@ class MenuTotal extends Component {
                     {this.state.title}
                     <span className="caret"></span>
                 </a>
-                <ul className='dropdown-menu' role='menu' value={this.state.value}>
+                <ul className='dropdown-menu' value={this.state.value} >
                     {layout}
                 </ul>
             </div>

@@ -14,6 +14,8 @@ import ExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import { BASIC_URL } from '../../constants/Config';
 import Picklist from './Picklist';
 import DatePick from './DatePick';
+import Alert from './Alert';
+import Loading from './Loading';
 const styles = {
     sub: {
         lineHeight: '30px',
@@ -41,21 +43,6 @@ const styles = {
     },
     disable: {
         color: 'rgba(0, 0, 0, 0.5)'
-    },
-    dialog: {
-        color: '#33b5e5',
-        borderBottom: '2px solid #33b5e5',
-        padding: '16px 18px'
-    },
-    body: {
-        paddingTop: 12,
-    },
-    actions:{
-        borderTop: '1px solid #ddd',
-        textAlign: 'center',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
     }
 }
 class Head extends Component {
@@ -72,11 +59,11 @@ class Head extends Component {
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={this.context.disable ?
                         <div style={styles.edit}>取消</div> :
-                        <IconButton onClick={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>
+                        <IconButton onTouchTap={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>
                     }
                 iconElementRight={this.context.disable ?
-                        <div onClick={this.props.onClick} style={styles.edit}>保存</div> :
-                        <IconButton onClick={this.props.onClick}><ExitToApp color="#5e95c9"/></IconButton>
+                        <div onClick={this.props.onSave} style={styles.edit}>保存</div> :
+                        <IconButton onTouchTap={this.props.editChange}><ExitToApp color="#5e95c9"/></IconButton>
                 }
             />
         )
@@ -87,48 +74,6 @@ Head.contextTypes = {
     router: React.PropTypes.object
 }
 const changeTopic = {};
-class Alert extends Component {
-    constructor(props, context){
-        super(props, context)
-        this.state = {
-            open: this.props.open
-        }
-        this.handleClose = () => {
-            this.setState({open: false})
-        }
-    }
-    render(){
-        const actions = [
-             <FlatButton
-               label="取消"
-               primary={true}
-               style={{flex: 1, borderRight: '1px solid #ddd'}}
-               onTouchTap={this.handleClose}
-             />,
-             <FlatButton
-               label="确认"
-               primary={true}
-               style={{flex: 1}}
-             />
-       ];
-        return(
-            <Dialog
-                title='确认保存'
-                titleStyle={styles.dialog}
-                actions={actions}
-                modal={false}
-                open={this.props.open}
-                bodyStyle={styles.body}
-                actionsContainerStyle={styles.actions}
-            >
-                {this.props.msg || '确认保存当前修改?'}
-            </Dialog>
-        )
-    }
-}
-Alert.contextTypes = {
-    disable: React.PropTypes.bool.isRequired
-}
 class Details extends Component {
     constructor(props, context){
         super(props, context);
@@ -136,7 +81,8 @@ class Details extends Component {
         this.state = {
             data: {},
             disable: false,
-            typeList: {}
+            typeList: {},
+            open: false
         }
         this.handleChange = (event) => {
             const name = event.target.name;
@@ -146,6 +92,11 @@ class Details extends Component {
         }
         this.editChange = (event) => {
             this.setState({disable: !this.state.disable})
+            event.stopPropagation();
+            event.preventDefault();
+        }
+        this.handleSave = (event) => {
+            this.setState({open: true})
             event.stopPropagation();
             event.preventDefault();
         }
@@ -175,49 +126,46 @@ class Details extends Component {
     }
     getChildContext() {
         return {
-            disable: this.state.disable
+            disable: this.state.disable,
         }
     }
     render() {
         let layout = [];
-        const {data, typeList, disable} = this.state;
+        const {data, typeList, disable, open} = this.state;
         for(let key in typeList){
             layout.push
             (
                 <div key={key}>
                     <Subheader style={styles.sub}>{typeList[key].blocklabel}</Subheader>
                     <div className='basic-msg'>
-                        <ul>
                             {typeList[key].fields.map((field, index) => {
                                 if(field.fieldtype === 'picklist'){
-                                    return  <li key={index}>
+                                    return  <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
                                                 { data.pick_list[field.fieldname] ? <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> : <span name={field.fieldname} data-type={field.fieldtype}></span>}
-                                            </li>
+                                            </div>
                                 } else if(field.fieldtype === 'reference'){
-                                    return  <li key={index}>
+                                    return  <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
                                                 <span name={field.fieldname} data-type={field.fieldtype}>{data[field.fieldname]}</span>
-                                            </li>
+                                            </div>
                                 } else if (field.fieldtype === 'data'){
-                                    return <li key={index}>
+                                    return <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
                                                 <DatePick date={new Date(data[field.fieldname])} name={field.fieldname} />
-                                            </li>
+                                            </div>
                                 } else {
-                                    return  <li key={index}>
+                                    return  <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
                                                 <input type='text'
                                                     value={data[field.fieldname] ? data[field.fieldname] : ''}
                                                     onChange={this.handleChange}
                                                     name={field.fieldname}
                                                     data-type={field.fieldtype}
-                                                    placeholder='点击编辑'
                                                 />
-                                            </li>
+                                            </div>
                                 }
                             })}
-                        </ul>
                     </div>
                 </div>
             )
@@ -226,14 +174,17 @@ class Details extends Component {
         return (
             <div>
                 <div className="fiexded">
-                    <Head onClick={this.editChange}/>
+                    <Head editChange={this.editChange} onSave={this.handleSave}/>
                 </div>
-                <div style={{padding: '45px 6px 0 6px'}} >
-                    <form onSubmit={this.hanleSubmit} >
-                        {layout}
-                    </form>
-                </div>
-                <Alert open={disable} />
+                {
+                    this.props.state.isFetching ? <Loading /> :
+                    <div style={{padding: '45px 6px 0 6px'}} >
+                        <form onSubmit={this.hanleSubmit} >
+                            {layout}
+                        </form>
+                    </div>
+                }
+                <Alert open={open}/>
             </div>
         )
     }

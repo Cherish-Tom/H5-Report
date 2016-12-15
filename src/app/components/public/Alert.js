@@ -22,18 +22,15 @@ const styles={
         flex: 1
     }
 }
-export default class Alert extends Component{
-    constructor(props){
-        super(props)
-        // this.state = {
-        //     open: false
-        // }
-        // this.handleOpen = () => {
-        //     this.setState({open: true});
-        // }
-        // this.handleClose = () => {
-        //     this.setState({open: false});
-        // }
+export default class Alert extends Component {
+    constructor(props, context){
+        super(props, context)
+        this.state = {
+            open: false
+        }
+        this.handleClose = () => {
+            this.setState({open: false})
+        }
     }
     render(){
         const actions = [
@@ -41,6 +38,7 @@ export default class Alert extends Component{
                label="取消"
                primary={true}
                style={{flex: 1, borderRight: '1px solid #ddd'}}
+               onTouchTap={this.handleClose}
              />,
              <FlatButton
                label="确认"
@@ -53,8 +51,7 @@ export default class Alert extends Component{
                 title='确认保存'
                 titleStyle={styles.title}
                 actions={actions}
-                modal={false}
-                open={this.porps.open}
+                open={this.props.open}
                 bodyStyle={styles.body}
                 actionsContainerStyle={styles.actions}
             >

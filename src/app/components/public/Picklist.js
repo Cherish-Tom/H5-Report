@@ -29,7 +29,13 @@ export default class Picklist extends Component{
                     style={{height: 40}}
                      >
                     {this.props.list.map((item, index) => {
-                        return <MenuItem value={item[this.props.fieldname + '_name'] ? item[this.props.fieldname + '_name'] : ''} primaryText={item[this.props.fieldname + '_name']} key={index} style={{borderBottom: '1px solid #d7d7d7', lineHeight: '40px'}}/>
+                        return <MenuItem
+                                    value={item[this.props.fieldname + '_name'] ? item[this.props.fieldname + '_name'] : ''}
+                                    primaryText={item[this.props.fieldname + '_name']}
+                                    key={index}
+                                    style={{borderBottom: '1px solid #d7d7d7', lineHeight: '40px'}}
+                                    desktop={true}
+                                    />
                     })}
                 </DropDownMenu>
             </div>

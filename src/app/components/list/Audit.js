@@ -65,6 +65,7 @@ class Cell extends React.Component {
         const { id , name, created_at, sales_price, sales_director} = this.props;
         return(
             <ListItem
+                key={id}
                 style={styles.boxback}
                 innerDivStyle={{padding: '6px 6px 6px 80px'}}
                 children={<span style={styles.child}>销售订单</span>}
@@ -118,7 +119,7 @@ class Audit extends React.Component {
                     <List>
                         {
                             this.state.data.map((item, index) => {
-                                return <Cell {...item.basic} key={index}/>
+                                return <List><Cell {...item.basic} key={index}/></List>
                             })
                         }
                     </List>

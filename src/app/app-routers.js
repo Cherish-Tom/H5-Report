@@ -20,20 +20,20 @@ import New from './components/public/New';
 const AppRouters = (
     <Route path='/' component={Master}>
         <IndexRoute component={Index} />
-        <Route path='customer'  component={Customer}>
+        <Route path='/customer'  component={Customer}>
         </Route>
-        <Route path='setting' component={Setting}>
+        <Route path='/setting' component={Setting}>
             <Route path='/about' component={About} />
         </Route>
-        <Route path='contact' component={Contact} />
-        <Route path='record' component={Record} />
-        <Route path='audit' component={Audit} />
-        <Route path='check' component={Check} />
-        <Route path='order' component={Order} />
-        <Route path='photo' component={Photo} />
-        <Route path='bulletin' component={Bulletin} />
-        <Route path='work' component={Work} />
-        <Route path='customer/:id' component={Details} />
+        <Route path='/contact' component={Contact} />
+        <Route path='/record' component={Record} />
+        <Route path='/audit' component={Audit} />
+        <Route path='/check' component={Check} />
+        <Route path='/order' component={Order} />
+        <Route path='/photo' component={Photo} />
+        <Route path='/bulletin' component={Bulletin} />
+        <Route path='/work' component={Work} />
+        <Route path='/customer/:id' component={Details} />
     </Route>
 )
 export default AppRouters;
