@@ -77,7 +77,7 @@ const changeTopic = {};
 class Details extends Component {
     constructor(props, context){
         super(props, context);
-        this.props.fetchPost('customer', this.props.params.id)
+        this.props.fetchPost(this.props.location.query.url, this.props.params.id, this.props.location.query.mode)
         this.state = {
             data: {},
             disable: false,
@@ -110,19 +110,9 @@ class Details extends Component {
             })
         }
     }
-    componentDidMount(){
-        fetch(`http://192.168.123.162/oa/modules/6`)
-        .then(response => {
-            if(response.ok){
-                response.json().then(json => this.setState({typeList: json.data}))
-            } else {
-                console.log(response.status);
-            }
-        })
-        .catch(error => console.log(error));
-    }
     componentWillReceiveProps(nextProps){
-        this.state.data = nextProps.state.data.data;
+        this.state.data = nextProps.state.data.topic;
+        this.state.typeList = nextProps.state.data.replies;
     }
     getChildContext() {
         return {
@@ -142,26 +132,38 @@ class Details extends Component {
                                 if(field.fieldtype === 'picklist'){
                                     return  <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
-                                                { data.pick_list[field.fieldname] ? <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> : <span name={field.fieldname} data-type={field.fieldtype}></span>}
+                                                {
+                                                    disable ?
+                                                        <div>
+                                                            {data.pick_list.hasOwnProperty(field.fieldname) ? <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> : <span name={field.fieldname} data-type={field.fieldtype}></span>}
+                                                            {<ChevronRight color='#6d6c6c' style={{width: 20, height: 20}}/>}
+                                                        </div>
+                                                        :
+                                                        <span>{data[field.fieldname]}</span>
+                                                }
                                             </div>
                                 } else if(field.fieldtype === 'reference'){
                                     return  <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
-                                                <span name={field.fieldname} data-type={field.fieldtype}>{data[field.fieldname]}</span>
+                                                <span data-type={field.fieldtype}>{data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ''}</span>
                                             </div>
                                 } else if (field.fieldtype === 'data'){
                                     return <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
-                                                <DatePick date={new Date(data[field.fieldname])} name={field.fieldname} />
+                                                <div>
+                                                    <DatePick date={data.hasOwnProperty(field.fieldname) ? new Date(data[field.fieldname]) : null} name={field.fieldname} />
+                                                    {disable ? <ChevronRight color='#6d6c6c' style={{width: 20, height: 20}}/> : null}
+                                                </div>
                                             </div>
                                 } else {
                                     return  <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
                                                 <input type='text'
-                                                    value={data[field.fieldname] ? data[field.fieldname] : ''}
+                                                    value={data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ' '}
                                                     onChange={this.handleChange}
                                                     name={field.fieldname}
                                                     data-type={field.fieldtype}
+                                                    disabled={disable ? false : 'disabled'}
                                                 />
                                             </div>
                                 }

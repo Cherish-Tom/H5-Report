@@ -1,10 +1,9 @@
 import React, { Component }from 'react';
 import classname from 'classnames';
 import Done from 'material-ui/svg-icons/action/done';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 const styles={
-    menu:{
-        top: 45
-    },
     under:{
         opacity: 0
     },
@@ -13,14 +12,16 @@ const styles={
     },
     select: {
         backgroundColor: '#fac057',
+        color: '#fff'
     },
     done: {
-        position: 'absolute',
-        right: 12,
-        top: 5,
+        margin: '6px 12px',
         width: 20,
         height: 20,
+        top: 0,
+        right: 12,
         verticalAlign: 'middle',
+        color: '#fff'
     }
 };
 class MenuTotal extends Component {
@@ -32,12 +33,10 @@ class MenuTotal extends Component {
             title: '全部',
             type: 'all'
         }
-        this.handleClick = (event) => {
+        this.handleMenuItemTouchTap = (event, item, index) =>{
+            this.setState({menuopen: false, value: item.props.value, title: item.props.primaryText})
+            this.props.fetchPosts({url: this.props.path, type: item.props.value})
             event.preventDefault()
-            const type = event.target.getAttribute('value')
-            this.setState({menuopen: false, value: type, title: event.target.text})
-            this.props.fetchPosts({url: this.props.path, type: type})
-            this.refs.focusedItem.style = styles.select
             event.stopPropagation()
         }
     }
@@ -46,22 +45,38 @@ class MenuTotal extends Component {
     }
     render() {
         const layout = [];
+        const menuStyle = this.state.menuopen ? {position: 'fixed', top: 45, left: '15%' , width: '70%'} : {position: 'fixed', top: 45, left: -10000, width: '70%'}
         for (let attr in this.props.items) {
             const isFocused = attr === this.state.value
+            const rightIconElement = isFocused ? <Done style={styles.done} color={'rgba(255, 255, 255, 1)'}/> : null
             layout.push(
-                    <li key={attr} ref={isFocused ? 'focusedItem' : ''} onClick={this.handleClick} style={{backgroundColor: isFocused ? '#fac057': ''}}>
-                        <a href='javascript:void(0);' value={attr}>{this.props.items[attr]}{isFocused ? <Done style={styles.done} color='#fff'/> : ''}</a>
-                    </li>)
+                    <MenuItem
+                        value={attr}
+                        primaryText={this.props.items[attr]}
+                        rightIcon={rightIconElement}
+                        key={attr}
+                        style={{ color: '#fff', borderBottom: '1px solid #585858'}}
+                    />
+                )
         }
         return (
+
             <div className={classname('dropdown-title',{open:this.state.menuopen})}>
                 <a href='javascript:void(0);' className='dropdown-toggle' onClick={()=>this.toggleDropdownMenu()}>
                     {this.state.title}
                     <span className="caret"></span>
                 </a>
-                <ul className='dropdown-menu' value={this.state.value} >
+                <Menu
+                    className='dropdown-menu'
+                    value={this.state.value}
+                    desktop={true}
+                    onItemTouchTap={this.handleMenuItemTouchTap}
+                    listStyle={{paddingTop: 0, paddingBottom: 0}}
+                    selectedMenuItemStyle={styles.select}
+                    style={menuStyle}
+                >
                     {layout}
-                </ul>
+                </Menu>
             </div>
         );
     }

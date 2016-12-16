@@ -36,16 +36,23 @@ export const fetchPosts = options => {
             .catch(error => console.log(error))
     }
 }
-export const fetchPost = (path, id) => {
-    let url = '';
-    if (path) {
-         url = `${BASIC_URL}/${path}/${id}`;
-    }
+export const fetchPost = (path, id, mode) => {
+    const url = path && `${BASIC_URL}/${path}/${id}`
+    const modeUrl = mode && `${BASIC_URL}/modules/${mode}`
+    const results = {topic: {}, replies: {}}
     return dispatch => {
         dispatch(requestPosts(path + '/' + id))
         return  fetch(url)
                 .then(response =>response.json())
-                .then(json => dispatch(receivePosts((path + '/' + id), json)))
+                .then(json => {
+                    results.topic = json.data
+                    fetch(modeUrl)
+                    .then(response => response.json())
+                    .then(json => {
+                        results.replies = json.data
+                        dispatch(receivePosts((path + '/' + id), results))
+                    })
+                })
                 .catch(error => console.log(error))
     }
 }

@@ -34,6 +34,9 @@ const AppRouters = (
         <Route path='/bulletin' component={Bulletin} />
         <Route path='/work' component={Work} />
         <Route path='/customer/:id' component={Details} />
+        <Route path='/contact/:id' component={Details} />
+        <Route path='/record/:id' component={Details} />
+        <Route path='/order/:id' component={Details} />
     </Route>
 )
 export default AppRouters;

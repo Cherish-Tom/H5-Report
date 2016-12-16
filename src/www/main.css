@@ -122,10 +122,10 @@ nav .menu a i {
 .contact_primary{
     color: #7888af;
 }
-.contact_list>div:nth-child(2n+1){
+.contact_list>a:nth-child(2n+1)>div{
     background-color: #fff;
 }
-.contact_list>div:nth-child(2n){
+.contact_list>a:nth-child(2n)>div{
     background-color: #efeef4;
 }
 .contact_second{
@@ -169,7 +169,7 @@ a.dropdown-toggle{
     transform: rotate(0);
 }
 .open .dropdown-menu{
-    visibility: visible;;
+    display: block;
     opacity: 1;
 }
 .open a{
@@ -181,17 +181,11 @@ a.dropdown-toggle{
 }
 .dropdown-menu{
     background-color: #7f7f7f;
-    line-height: 34px;
-    width: 75%;
-    margin: 0 auto;
     border-width: 1px 1px 0 1px;
     border-style: solid;
     border-color: #585858 #585858 transparent #585858;
     border-radius: 4px;
-    visibility: hidden;
-    list-style: none;
-    position: absolute;
-    left: 12.5%;
+    display: none;
     opacity: 0;
     transition: all .15s ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px
@@ -363,15 +357,6 @@ input.photo_input:focus{
     margin-bottom: 15px;
     font-size: 14px;
 }
-.basic-msg .list-item{
-    line-height: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: rgba(0, 0, 0, 0.54);
-    padding-right: 6px;
-}
 .basic-msg .list-item>input, .basic-msg .address-info{
     flex: auto;
     margin-left: 15px;
@@ -389,6 +374,9 @@ input.photo_input:focus{
 .basic-msg .list-item>input,.basic-msg .list-item>div,.basic-msg .list-item>span{
     flex: auto;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 .basic-msg .list-item span:last-child {
     color: rgb(94, 149, 201)
@@ -418,8 +406,9 @@ input[type='text']:disabled {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 3px 0;
     color: rgba(0, 0, 0, 0.54);
+    height: 40px;
+    line-height: 40px;
 }
 .container{
   width: 80%;

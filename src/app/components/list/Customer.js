@@ -49,7 +49,7 @@ class Head extends Component {
                 title={<MenuTotal items={CONFIG.customer} {...this.props} {...this.context}/>}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
-                iconElementLeft={<IconButton onClick={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>}
+                iconElementLeft={<IconButton onTouchTap={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>}
                 iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}
             />
         )
@@ -68,7 +68,7 @@ class Lists extends Component {
         return(
             <List>
                 {this.props.datas.map((data) => (
-                    <Link to={`/customer/${data.accountid}`} key={data.accountid}>
+                    <Link to={{pathname:`/customer/${data.accountid}`, query: {url: 'customer', mode: 6}}} key={data.accountid}>
                         <ListItem
                             style={styles.back}
                             key={data.accountid}
@@ -97,8 +97,7 @@ class Customer extends Component {
         this.state = {
             data: [],
             currentPage: 1,
-            totalPage: 2,
-            limit: 8,
+            totalPage: 1,
             shouldUpdata: true,
             isFetching: false,
             type: 'all'
@@ -145,7 +144,7 @@ class Customer extends Component {
         return (
             <div>
                 <div className="fiexded">
-                    <Head path={this.props.location.pathname}/>
+                    <Head path={this.props.location.pathname} />
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>

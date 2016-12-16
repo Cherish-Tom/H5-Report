@@ -9,7 +9,7 @@ import Add from 'material-ui/svg-icons/content/add';
 import Search from '../public/Search';
 import MenuTotal from '../public/MenuTotal';
 import {CONFIG} from '../../constants/Config';
-import {dataList} from './data'
+import Template from '../public/template'
 const styles={
     textColor:{
         color: '#7888af',
@@ -33,12 +33,15 @@ const styles={
     }
 }
 class Head extends React.Component {
+    constructor(props, context){
+        super(props, context)
+    }
     render() {
         return(
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<MenuTotal items={CONFIG.order} />}
+                title={<MenuTotal items={CONFIG.order} {...this.context}/>}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0}}
                 iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
@@ -47,35 +50,75 @@ class Head extends React.Component {
         )
     }
 }
+Head.contextTypes={
+    fetchPosts: React.PropTypes.any
+}
 class ViewCell extends React.Component {
 	render(){
 		return (
-			<ListItem
-				style={styles.back}
-				primaryText={
-					<p><span style={styles.textColor}>{this.props.name}</span></p>
-				}
-				secondaryText={
-					<p>
-						<span style={styles.textColor}>{this.props.id}&nbsp;&nbsp;{this.props.created_at.substr(0, 10)}</span><br />
-						<span ><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;¥</span>{this.props.sales_price}</span>
-					</p>
-				}
-				secondaryTextLines={2}
-			/>
+			<Link to={{pathname:`/order/${this.props.salesorderid}`, query: {url: 'orders', mode: 22}}}>
+                <ListItem
+                    style={styles.back}
+                    primaryText={
+                        <p><span style={styles.textColor}>{this.props.name}</span></p>
+                    }
+                    secondaryText={
+                        <p>
+                            <span style={styles.textColor}>{this.props.id}&nbsp;&nbsp;{this.props.created_at.substr(0, 10)}</span><br />
+                            <span ><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;¥</span>{this.props.sales_price}</span>
+                        </p>
+                    }
+                    secondaryTextLines={2}
+                />
+            </Link>
 		)
 	}
 }
-class Record extends React.Component {
-	constructor(props){
-		super(props)
+class Order extends React.Component {
+	constructor(props, context){
+		super(props, context)
+        this.props.fetchPosts({url: 'orders'})
 		this.state = {
-			data: []
+			data: [],
+            currentPage: 1,
+            totalPage: 1,
+            isFetching: false,
+            shouldUpdata: false
 		}
+        this.getNextPage = (currentPage) => {
+            if(!this.state.shouldUpdata) {
+                return
+            }
+            this.state.shouldUpdata = false
+            this.props.getDate('/orders', { type: 'all', limit: 8, page: currentPage}, (res) => {
+                this.state.currentPage = currentPage;
+                this.state.shouldUpdata = true;
+                if(res.code === 200) {
+                    this.setState({data: this.state.data.concat(res.data)})
+                } else {
+                    console.log(res.code);
+                }
+            }, 'nextPage')
+        }
 	}
-	componentDidMount(){
-		this.setState({data: dataList.customer})
-	}
+    componentDidMount(){
+        const {currentPage, totalPage, shouldUpdata} = this.state
+        if(currentPage < totalPage) {
+            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        let { data } = nextProps.state;
+        this.state.data = data && data.data || [];
+        this.state.currentPage = data && data.current || 1;
+        this.state.totalPage = data && data.pages || 1;
+        this.state.isFetching = nextProps.state.isFetching || false;
+    }
+    getChildContext(){
+        return{
+            fetchPosts: this.props.fetchPosts
+        }
+    }
 	render(){
 		return(
 			<div>
@@ -86,7 +129,7 @@ class Record extends React.Component {
 				<List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
 					{
 						this.state.data.map((item, index) => {
-							return <ViewCell {...item.basic} key={index} />
+							return <ViewCell {...item} key={index} />
 						})
 					}
 				</List>
@@ -94,6 +137,10 @@ class Record extends React.Component {
 		)
 	}
 }
+Order.childContextTypes={
+    fetchPosts: React.PropTypes.any
+}
 
-
-export default Record;
+export default Template({
+    component: Order
+});
