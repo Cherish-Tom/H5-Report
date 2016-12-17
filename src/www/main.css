@@ -4,7 +4,23 @@ html {
 button{
     font-family: inherit!important;
 }
-* {
+::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #ccc;
+    height: 50px;
+    outline-offset: -2px;
+    outline: 2px solid #efefef;
+    -webkit-border-radius: 4px;
+    border: 2px solid #fff;
+}
+::-webkit-scrollbar-track-piece{
+    background-color: #efefef;
+    -webkit-border-radius: 0;
+}
+html, body, div, header, nav, head, span, object, iframe, section, aside, article, figure, h1, h2, h3, h4, img, ol, ul, dl, p {
 	margin:0;
 	padding:0;
 }
@@ -106,10 +122,10 @@ nav .menu a i {
 .contact_primary{
     color: #7888af;
 }
-.contact_list>div:nth-child(2n+1){
+.contact_list>a:nth-child(2n+1)>div{
     background-color: #fff;
 }
-.contact_list>div:nth-child(2n){
+.contact_list>a:nth-child(2n)>div{
     background-color: #efeef4;
 }
 .contact_second{
@@ -153,7 +169,7 @@ a.dropdown-toggle{
     transform: rotate(0);
 }
 .open .dropdown-menu{
-    visibility: visible;;
+    display: block;
     opacity: 1;
 }
 .open a{
@@ -165,19 +181,14 @@ a.dropdown-toggle{
 }
 .dropdown-menu{
     background-color: #7f7f7f;
-    line-height: 34px;
-    width: 75%;
-    margin: 0 auto;
     border-width: 1px 1px 0 1px;
     border-style: solid;
     border-color: #585858 #585858 transparent #585858;
     border-radius: 4px;
-    visibility: hidden;
-    list-style: none;
-    position: absolute;
-    left: 12.5%;
+    display: none;
     opacity: 0;
-    transition: all .15s ease-in-out
+    transition: all .15s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px
 }
 .dropdown-menu:before,
 .create_menu::before{
@@ -186,21 +197,24 @@ a.dropdown-toggle{
     height: 0;
     position: absolute;
     border-bottom: 6px solid #7f7f7f;
-    top: -4px;
+    top: -6px;
     left: 50%;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
+    z-index: -1;
 }
 .create_menu::before{
     left: 70%;
+}
+.dropdown-menu li:not(:last-child) a{
+    border-bottom: 1px solid #585858;
+    position: relative;
 }
 .dropdown-menu li a{
     display: inline-block;
     color: #fff;
     font-size: 14px;
     display: block;
-    border-bottom: 1px solid #585858;
-    position: relative;
 }
 .created_at{
     font-size: 12px;
@@ -343,21 +357,12 @@ input.photo_input:focus{
     margin-bottom: 15px;
     font-size: 14px;
 }
-.basic-msg li{
-    line-height: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: rgba(0, 0, 0, 0.54);
-    padding-right: 6px;
-}
-.basic-msg li input, .basic-msg .address-info{
+.basic-msg .list-item>input, .basic-msg .address-info{
     flex: auto;
     margin-left: 15px;
     height: 100%;
 }
-.basic-msg li input{
+.basic-msg .list-item input{
     border: 0;
     outline: 0;
     height: 100%;
@@ -366,13 +371,20 @@ input.photo_input:focus{
     text-align: right;
     font-family: inherit;
 }
-.basic-msg li span:last-child {
+.basic-msg .list-item>input,.basic-msg .list-item>div,.basic-msg .list-item>span{
+    flex: auto;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.basic-msg .list-item span:last-child {
     color: rgb(94, 149, 201)
 }
 input[type='text']:disabled {
     background-color: #fff
 }
-.basic-msg li:not(:last-child){
+.basic-msg .list-item:not(:last-child){
     border-bottom: 1px solid #ddd;
 }
 .basic-msg .address-info{
@@ -390,12 +402,13 @@ input[type='text']:disabled {
 .address-info textarea:focus{
     outline: 0;
 }
-.basic-msg>ul>div{
+.basic-msg .list-item{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 3px 0;
     color: rgba(0, 0, 0, 0.54);
+    height: 40px;
+    line-height: 40px;
 }
 .container{
   width: 80%;

@@ -8,8 +8,8 @@ import IconButton from 'material-ui/IconButton';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import Add from 'material-ui/svg-icons/content/add';
-import {dataList} from './data';
 import {CONFIG} from '../../constants/Config';
+import Template from '../public/template'
 const styles = {
     title:{
         textAlign: 'center',
@@ -45,11 +45,17 @@ const styles = {
     }
 }
 class Head extends Component {
+<<<<<<< HEAD
+=======
+    constructor(props, context){
+        super(props, context)
+    }
+>>>>>>> 78f1d1fa0fca8729b74db764609ede3b5ec89a24
     render() {
         return(
             <AppBar
                 style={styles.bar}
-                title={<MenuTotal items={CONFIG.record}/>}
+                title={<MenuTotal items={CONFIG.record} {...this.context}/>}
                 titleStyle={styles.title}
                 iconStyleLeft={{marginTop: 0}}
                 iconStyleRight={{marginTop: 0}}
@@ -60,33 +66,78 @@ class Head extends Component {
         )
     }
 }
+<<<<<<< HEAD
 class ViewCell extends Component {
     render(){
+=======
+Head.contextTypes={
+    fetchPosts: React.PropTypes.any
+}
+class ViewCell extends React.Component {
+    render() {
+>>>>>>> 78f1d1fa0fca8729b74db764609ede3b5ec89a24
         return (
-            <ListItem
-                style={styles.back}
-                innerDivStyle={styles.inner}
-                primaryText = {<p style={styles.textColor}>{this.props.name}</p>}
-                secondaryText={<p className="contact_second">
-                    <span className='company'>{this.props.company}</span>
-                    <span className='position'>{this.props.prople}</span>
-                </p>}
-                rightIconButton={<IconButton style={styles.btn}><span className="created_at">{this.props.created_at.substring(0, 10)}</span><ChevronRight color='#a4e6cf'/></IconButton>}
-            />
+            <Link to={{pathname:`/record/${this.props.contactrecordID}`, query:{url: 'records', mode: 55}}}>
+                <ListItem
+                    style={styles.back}
+                    innerDivStyle={styles.inner}
+                    primaryText = {<p style={styles.textColor}>{this.props.Subject}</p>}
+                    secondaryText={<p className="contact_second">
+                        <span className='company'>{this.props.accountname}</span>
+                        <span className='position'>{this.props.lastname}</span>
+                    </p>}
+                    rightIconButton={<IconButton style={styles.btn}><span className="created_at">{this.props.lastcontactdate}</span><ChevronRight color='#a4e6cf'/></IconButton>}
+                />
+            </Link>
         )
 
     }
 }
 
 class Record extends Component {
-    constructor(props){
-        super(props);
+    constructor(props, context){
+        super(props, context);
+        this.props.fetchPosts({url: 'records'})
         this.state = {
-            data: []
+            data: [],
+            currentPage: 1,
+            totalPage: 1,
+            isFetching: false,
+            shouldUpdata: false
+        }
+        this.getNextPage = (currentPage) => {
+            if(!this.state.shouldUpdata) {
+                return
+            }
+            this.state.shouldUpdata = false
+            this.props.getDate('/records', { type: 'all', limit: 8, page: currentPage}, (res) => {
+                this.state.currentPage = currentPage;
+                this.state.shouldUpdata = true;
+                if(res.code === 200) {
+                    this.setState({data: this.state.data.concat(res.data)})
+                } else {
+                    console.log(res.code);
+                }
+            }, 'nextPage')
         }
     }
-    componentDidMount() {
-        this.setState({data: dataList.record});
+    componentDidMount(){
+        const {currentPage, totalPage, shouldUpdata} = this.state
+        if(currentPage < totalPage) {
+            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        let { data } = nextProps.state;
+        this.state.data = data && data.data || [];
+        this.state.currentPage = data && data.current || 1;
+        this.state.totalPage = data && data.pages || 1;
+        this.state.isFetching = nextProps.state.isFetching || false;
+    }
+    getChildContext(){
+        return{
+            fetchPosts: this.props.fetchPosts
+        }
     }
     render(){
         return (
@@ -95,7 +146,7 @@ class Record extends Component {
                     <Head />
                     <Search title="请输入电话号码或者联系人" />
                 </div>
-                <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
+                <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref="container">
                     {
                         this.state.data.map((item, index) => {
                             return <ViewCell {...item} key={index} />
@@ -106,4 +157,9 @@ class Record extends Component {
         )
     }
 }
-export default Record;
+Record.childContextTypes={
+    fetchPosts: React.PropTypes.any
+}
+export default Template({
+    component: Record
+});

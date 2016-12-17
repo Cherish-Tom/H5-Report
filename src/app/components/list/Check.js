@@ -63,7 +63,7 @@ class Check extends React.Component {
         const mapHeight = height - 104;
         return (
             <div>
-                <Header />
+                <Header path={this.props.location.pathname}/>
                 <Tabs onChange={this.handleChange} value={this.state.slideIndex} style={styles.back} inkBarStyle={styles.ink}>
                     <Tab label="我的签到" value={0} style={styles.lable}/>
                     <Tab label="下属签到" value={1} style={styles.lable}/>

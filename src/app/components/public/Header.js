@@ -34,11 +34,12 @@ class Header extends React.Component{
                 title = '卓谷科技'
                 rightIcons = <Link to='/setting'><IconButton><Settings color='#555'/></IconButton></Link>
                 break;
-            case '/photo':
+            case 'photo':
                 title = '拍照'
                 leftIcons = <ArrowBaclIcon color={color}/>
+                rightIcons = <IconButton><AccessTime color='#fff'/></IconButton>
                 break;
-            case '/check':
+            case 'check':
                 title = '签到考勤'
                 leftIcons = <ArrowBaclIcon color={color}/>
                 rightIcons = <IconButton><AccessTime color={color}/></IconButton>
@@ -56,13 +57,13 @@ class Header extends React.Component{
                     title={this.props.title || title}
                     iconStyleRight={{marginTop:0}}
                     iconStyleLeft={{marginTop:0,marginRight: 0}}
-                    iconElementLeft={<Link to={browserHistory}><IconButton>{leftIcons}</IconButton></Link>}
+                    iconElementLeft={<IconButton onTouchTap={this.context.router.goBack}>{leftIcons}</IconButton>}
                     iconElementRight={rightIcons}
                 />
         )
     }
 }
-Header.defaultProps={
-    title:'卓谷科技'
+Header.contextTypes = {
+    router: React.PropTypes.object
 }
 export default Header;

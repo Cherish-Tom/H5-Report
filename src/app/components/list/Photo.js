@@ -51,7 +51,7 @@ class Photo extends React.Component {
         const {data_uri, opacity, open} = this.state;
         return(
             <div>
-                <Header pathname={pathname}/>
+                <Header path={pathname}/>
                 <div style={{padding: '12px 6px 30px 6px'}}>
                     <form encType="multipart/form-data" onSubmit={()=>this.handleSubmit(this)} method="post">
                         <input type='text' placeholder='请选择客户' className='photo_input'/>
@@ -72,9 +72,6 @@ class Photo extends React.Component {
                         </div>
                     </form>
                 </div>
-
-                {/*弹出层*/}
-
                 <div>
                     <div className={ClassNames('overlay',{open: this.state.open})}></div>
                     <div className={ClassNames('click_element',{open: this.state.open})}>

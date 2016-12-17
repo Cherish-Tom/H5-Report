@@ -22,13 +22,11 @@ const receivePosts = (path, json) => {
 export const fetchPosts = options => {
     let url = '';
     if (options && options.url) {
-         url = `${BASIC_URL}/${options.url}/?type=${options.type||'all'}&limit=${options.limit||8}&page=${options.page|| 1}`;
+         url = `${BASIC_URL}/${options.url}?type=${options.type||'all'}&limit=${options.limit||8}&page=${options.page|| 1}`;
     }
     return dispatch => {
         dispatch(requestPosts(options.url))
         return fetch(url)
-            // .then(response =>response.json())
-            // .then(json => dispatch(receivePosts(options.url, json)))
             .then(response => {
                 if(response.ok){
                     response.json().then(json => dispatch(receivePosts(options.url, json)))
@@ -39,18 +37,23 @@ export const fetchPosts = options => {
             .catch(error => console.log(error))
     }
 }
-export const fetchPost = path => {
-    let url = '';
-    if (path) {
-         url = `${BASIC_URL}/${path}`;
-    }
+export const fetchPost = (path, id, mode) => {
+    const url = path && `${BASIC_URL}/${path}/${id}`
+    const modeUrl = mode && `${BASIC_URL}/modules/${mode}`
+    const results = {topic: {}, replies: {}}
     return dispatch => {
-        dispatch(requestPosts(path));
-        return  fetch(url, {
-                    mode: 'no-cors'
-                })
+        dispatch(requestPosts(path + '/' + id))
+        return  fetch(url)
                 .then(response =>response.json())
-                .then(json => dispatch(receivePosts(path, json)))
+                .then(json => {
+                    results.topic = json.data
+                    fetch(modeUrl)
+                    .then(response => response.json())
+                    .then(json => {
+                        results.replies = json.data
+                        dispatch(receivePosts((path + '/' + id), results))
+                    })
+                })
                 .catch(error => console.log(error))
     }
 }

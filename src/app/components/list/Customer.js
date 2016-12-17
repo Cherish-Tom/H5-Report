@@ -8,10 +8,10 @@ import Add from 'material-ui/svg-icons/content/add';
 import Search from '../public/Search';
 import Template from '../public/template';
 import MenuTotal from '../public/MenuTotal';
+import Loading from '../public/Loading';
 import { CONFIG } from '../../constants/Config';
 import { Tool } from '../../constants/Tools';
 import { is, fromJS} from 'immutable';
-import CircularProgress from 'material-ui/CircularProgress';
 const styles={
     textColor:{
         color: '#7888af',
@@ -38,19 +38,27 @@ const styles={
     }
 }
 class Head extends Component {
+    constructor(props, context){
+        super(props, context)
+    }
     render() {
         return(
             <AppBar
                 style={styles.head}
                 titleStyle={styles.title}
-                title={<MenuTotal items={CONFIG.customer} path = {this.props.path}/>}
+                title={<MenuTotal items={CONFIG.customer} {...this.props} {...this.context}/>}
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
-                iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
+                iconElementLeft={<IconButton onTouchTap={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>}
                 iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}
             />
         )
     }
+}
+Head.contextTypes = {
+    fetchPosts: React.PropTypes.any,
+    type: React.PropTypes.string,
+    router: React.PropTypes.object
 }
 class Lists extends Component {
     shouldComponentUpdate(nextProps, nextState) {
@@ -58,12 +66,12 @@ class Lists extends Component {
     }
     render(){
         return(
-            <List  >
-                {this.props.datas.map((data, index) => (
-                    <Link to={`/customer/${data.accountid}`} key={index}>
+            <List>
+                {this.props.datas.map((data) => (
+                    <Link to={{pathname:`/customer/${data.accountid}`, query: {url: 'customer', mode: 6}}} key={data.accountid}>
                         <ListItem
                             style={styles.back}
-                            key={index}
+                            key={data.accountid}
                             primaryText={
                                 <p><span style={styles.textColor}>{data.accountname}</span></p>
                             }
@@ -85,13 +93,21 @@ class Lists extends Component {
 class Customer extends Component {
     constructor(props, context){
         super(props, context)
+        this.props.fetchPosts({url: 'customer'})
         this.state = {
             data: [],
             currentPage: 1,
+<<<<<<< HEAD
             totalPage: 2,
             limit: 8,
             shouldUpdata: true,
             isFetching: false
+=======
+            totalPage: 1,
+            shouldUpdata: true,
+            isFetching: false,
+            type: 'all'
+>>>>>>> 78f1d1fa0fca8729b74db764609ede3b5ec89a24
         }
         this.getNextPage = (currentPage) => {
             if(!this.state.shouldUpdata)return
@@ -106,9 +122,9 @@ class Customer extends Component {
                 }
             }, 'nextPage')
         }
-    }
-    shouldComponentUpdate(nextProps, nextState) {
-        return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
+        this.chooseType = () => {
+
+        }
     }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
@@ -123,6 +139,12 @@ class Customer extends Component {
             Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
         }
     }
+    getChildContext(){
+        return {
+            fetchPosts: this.props.fetchPosts,
+            type: this.state.type
+        }
+    }
     render() {
         return (
             <div>
@@ -131,12 +153,18 @@ class Customer extends Component {
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
-                    <Lists ref='container' datas = {this.state.data} />
+                    {
+                        this.props.state.isFetching ? <Loading /> : <Lists ref='container' datas = {this.state.data} />
+                    }
                 </div>
             </div>
         )
 
     }
+}
+Customer.childContextTypes = {
+    fetchPosts: React.PropTypes.any,
+    type: React.PropTypes.string
 }
 export default Template({
     component: Customer,

@@ -1,5 +1,5 @@
 {
-  "name": "OAzoogooo",
+  "name": "OA-react",
   "version": "0.15.0",
   "description": "Sample project that uses Material-UI",
   "repository": {
@@ -32,12 +32,14 @@
     "classnames": "^2.2.5",
     "es6-promise": "^4.0.5",
     "immutable": "^3.8.1",
+    "intl": "^1.2.5",
+    "intl-locales-supported": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "material-ui": "^0.15.0",
     "react": "^15.0.1",
-    "react-baidu-map": "^1.3.5",
     "react-dom": "^15.0.1",
     "react-motion": "^0.4.5",
+    "react-router": "^2.6.1",
     "react-tap-event-plugin": "^1.0.0",
     "whatwg-fetch": "^2.0.1"
   }
