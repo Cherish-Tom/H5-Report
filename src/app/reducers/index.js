@@ -1,4 +1,4 @@
-import { GET_DATA_START, GET_DATA_SUCCESS } from '../actions';
+import { GET_DATA_START, GET_DATA_SUCCESS } from '../constants/ActionType';
 import { REQUEST_POSTS, RECEIVE_POSTS } from '../constants/ActionType';
 import Immutable from 'immutable'
 const defaultState = Immutable.fromJS({data: {}, isFetching: false})

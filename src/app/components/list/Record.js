@@ -44,7 +44,7 @@ const styles = {
         textAlign: 'right'
     }
 }
-class Head extends React.Component {
+class Head extends Component {
     render() {
         return(
             <AppBar
@@ -60,7 +60,7 @@ class Head extends React.Component {
         )
     }
 }
-class ViewCell extends React.Component {
+class ViewCell extends Component {
     render(){
         return (
             <ListItem

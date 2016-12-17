@@ -90,12 +90,11 @@ class Customer extends Component {
             currentPage: 1,
             totalPage: 2,
             limit: 8,
-            shouldUpdata: true
+            shouldUpdata: true,
+            isFetching: false
         }
         this.getNextPage = (currentPage) => {
-            if(!this.state.shouldUpdata) {
-                return
-            }
+            if(!this.state.shouldUpdata)return
             this.state.shouldUpdata = false
             this.props.getDate('/customer', { type: 'all', limit: 8, page: currentPage}, (res) => {
                 this.state.currentPage = currentPage;
@@ -116,6 +115,7 @@ class Customer extends Component {
         this.state.data = data && data.data || [];
         this.state.currentPage = data && data.current || 1;
         this.state.totalPage = data && data.pages || 1;
+        this.state.isFetching = nextProps.state.isFetching || false;
     }
     componentDidMount(){
         const {currentPage, totalPage, shouldUpdata} = this.state

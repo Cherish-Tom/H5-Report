@@ -1,9 +1,10 @@
-import 'whatwg-fetch';
+import 'isomorphic-fetch'
+require('es6-promise').polyfill();
 import { REQUEST_POSTS, RECEIVE_POSTS } from '../constants/ActionType';
+import { GET_DATA_START, GET_DATA_SUCCESS } from '../constants/ActionType';
 import { BASIC_URL } from '../constants/Config';
 import { Tool } from '../constants/Tools'
-export const GET_DATA_START = 'GET_DATA_START';
-export const GET_DATA_SUCCESS = 'GET_DATA_SUCCESS'
+
 
 const requestPosts = path => {
     return {
@@ -24,7 +25,7 @@ export const fetchPosts = options => {
          url = `${BASIC_URL}/${options.url}/?type=${options.type||'all'}&limit=${options.limit||8}&page=${options.page|| 1}`;
     }
     return dispatch => {
-        dispatch(requestPosts(options.url));
+        dispatch(requestPosts(options.url))
         return fetch(url)
             // .then(response =>response.json())
             // .then(json => dispatch(receivePosts(options.url, json)))
