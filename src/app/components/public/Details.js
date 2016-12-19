@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import 'whatwg-fetch';
+require('es6-promise').polyfill();
+import fetch from 'isomorphic-fetch';
 import Subheader from 'material-ui/Subheader';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
@@ -43,6 +44,11 @@ const styles = {
     },
     disable: {
         color: 'rgba(0, 0, 0, 0.5)'
+    },
+    chevron: {
+        margin: '10px 0',
+        width: 20,
+        height: 20
     }
 }
 class Head extends Component {
@@ -58,12 +64,12 @@ class Head extends Component {
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={this.context.disable ?
-                        <div style={styles.edit}>取消</div> :
+                        <div onTouchTap={this.props.handleSave} style={styles.edit}>取消</div> :
                         <IconButton onTouchTap={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>
                     }
                 iconElementRight={this.context.disable ?
-                        <div onClick={this.props.onSave} style={styles.edit}>保存</div> :
-                        <IconButton onTouchTap={this.props.editChange}><ExitToApp color="#5e95c9"/></IconButton>
+                        <div onTouchTap={this.props.handleSave} style={styles.edit}>保存</div> :
+                        <IconButton onTouchTap={this.props.toogleEdit}><ExitToApp color="#5e95c9"/></IconButton>
                 }
             />
         )
@@ -82,32 +88,33 @@ class Details extends Component {
             data: {},
             disable: false,
             typeList: {},
-            open: false
+            open: false,
         }
-        this.handleChange = (event) => {
+        this.handleChange = (event, idx, v) => {
             const name = event.target.name;
             const value = event.target.value;
             changeTopic[name] = value;
             this.setState({data: Object.assign({}, this.state.data, changeTopic)})
         }
-        this.editChange = (event) => {
+        this.toogleEdit = () => {
             this.setState({disable: !this.state.disable})
-            event.stopPropagation();
-            event.preventDefault();
         }
-        this.handleSave = (event) => {
+        this.handleSave = (event, type) => {
             this.setState({open: true})
-            event.stopPropagation();
-            event.preventDefault();
         }
-        this.hanleSubmit = (event) => {
+        this.handleClose = () => {
+            this.setState({open: false})
+        }
+        this.handleSubmit = (event) => {
             event.preventDefault();
             let form = document.querySelector('form');
-            let path = window.location.pathname;
-            fetch(`${BASIC_URL}/${path}`, {
+            console.log(new FormData(form));
+            let path = this.props.location.pathname
+            fetch(`${BASIC_URL}${path}`, {
                 method: 'POST',
                 body: new FormData(form)
             })
+            this.setState({open: false})
         }
     }
     componentWillReceiveProps(nextProps){
@@ -135,17 +142,18 @@ class Details extends Component {
                                                 {
                                                     disable ?
                                                         <div>
-                                                            {data.pick_list.hasOwnProperty(field.fieldname) ? <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> : <span name={field.fieldname} data-type={field.fieldtype}></span>}
-                                                            {<ChevronRight color='#6d6c6c' style={{width: 20, height: 20}}/>}
+                                                            {data.pick_list.hasOwnProperty(field.fieldname) ?
+                                                                <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> :
+                                                                <span name={field.fieldname} data-type={field.fieldtype}></span>}
+                                                            {<ChevronRight color='#6d6c6c' style={styles.chevron}/>}
                                                         </div>
-                                                        :
-                                                        <span>{data[field.fieldname]}</span>
+                                                        : <span>{data[field.fieldname]}</span>
                                                 }
                                             </div>
                                 } else if(field.fieldtype === 'reference'){
                                     return  <div key={index} className='list-item'>
                                                 <label>{field.fieldlabel}：</label>
-                                                <span data-type={field.fieldtype}>{data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ''}</span>
+                                                <span data-type={field.fieldtype} name={field.fieldname}>{data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ''}</span>
                                             </div>
                                 } else if (field.fieldtype === 'data'){
                                     return <div key={index} className='list-item'>
@@ -176,17 +184,17 @@ class Details extends Component {
         return (
             <div>
                 <div className="fiexded">
-                    <Head editChange={this.editChange} onSave={this.handleSave}/>
+                    <Head toogleEdit={this.toogleEdit}  handleSave={this.handleSave}/>
                 </div>
                 {
                     this.props.state.isFetching ? <Loading /> :
                     <div style={{padding: '45px 6px 0 6px'}} >
-                        <form onSubmit={this.hanleSubmit} >
+                        <form onSubmit={this.handleSubmit}>
                             {layout}
                         </form>
                     </div>
                 }
-                <Alert open={open}/>
+                <Alert open={open} handleClose={this.handleClose} handleSave={this.handleSave} onSubmit={this.handleSubmit} toogleEdit={this.toogleEdit}/>
             </div>
         )
     }

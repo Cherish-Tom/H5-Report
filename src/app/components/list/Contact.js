@@ -100,7 +100,7 @@ class ContactList extends React.Component {
                 return
             }
             this.state.shouldUpdata = false
-            this.props.getDate('/orders', { type: 'all', limit: 8, page: currentPage}, (res) => {
+            this.props.getDate('/contacts', { type: 'all', limit: 8, page: currentPage}, (res) => {
                 this.state.currentPage = currentPage;
                 this.state.shouldUpdata = true;
                 if(res.code === 200) {
@@ -116,12 +116,6 @@ class ContactList extends React.Component {
             fetchPosts: this.props.fetchPosts
         }
     }
-    componentDidMount(){
-        const {currentPage, totalPage, shouldUpdata} = this.state
-        if(currentPage < totalPage) {
-            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
-        }
-    }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
         this.state.data = data && data.data || [];
@@ -130,6 +124,10 @@ class ContactList extends React.Component {
         this.state.isFetching = nextProps.state.isFetching || false;
     }
     render() {
+        const {currentPage, totalPage, shouldUpdata} = this.state
+        if(currentPage < totalPage) {
+            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
+        }
         return (
             <div>
                 <div className="fiexded" >

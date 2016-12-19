@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../public/Header';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router';
 import Template from '../public/template';
 class Setting extends React.Component {
     constructor(props,contxt){
@@ -12,9 +13,9 @@ class Setting extends React.Component {
                   <Header title='设置' path={this.props.location.pathname}/>
                   <div className='container'>
                       <div className='setting'>
-                          <a href='/setting/about'>关于我们</a>
-                          <a href='#' style={{margin: '10px 0'}}>意见反馈</a>
-                          <a href='#'>清除缓存</a>
+                          <Link to='/setting/about'>关于我们</Link>
+                          <Link to='#' style={{margin: '10px 0'}}>意见反馈</Link>
+                          <Link to='#'>清除缓存</Link>
                       </div>
                       <RaisedButton
                           label='退出登录'

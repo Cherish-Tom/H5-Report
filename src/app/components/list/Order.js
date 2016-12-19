@@ -9,6 +9,7 @@ import Add from 'material-ui/svg-icons/content/add';
 import Search from '../public/Search';
 import MenuTotal from '../public/MenuTotal';
 import {CONFIG} from '../../constants/Config';
+import {Tool} from '../../constants/Tools';
 import Template from '../public/template'
 const styles={
     textColor:{
@@ -60,12 +61,12 @@ class ViewCell extends React.Component {
                 <ListItem
                     style={styles.back}
                     primaryText={
-                        <p><span style={styles.textColor}>{this.props.name}</span></p>
+                        <p><span style={styles.textColor}>{this.props.last_name}</span></p>
                     }
                     secondaryText={
                         <p>
-                            <span style={styles.textColor}>{this.props.id}&nbsp;&nbsp;{this.props.created_at.substr(0, 10)}</span><br />
-                            <span ><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;¥</span>{this.props.sales_price}</span>
+                            <span style={styles.textColor}>S{this.props.id}&nbsp;&nbsp;{this.props.modifiedtime.substring(0, 10)}</span><br />
+                            <span ><span>金额：&nbsp;&nbsp;&nbsp;&nbsp;¥</span>{this.props.listprice}</span>
                         </p>
                     }
                     secondaryTextLines={2}
@@ -83,7 +84,7 @@ class Order extends React.Component {
             currentPage: 1,
             totalPage: 1,
             isFetching: false,
-            shouldUpdata: false
+            shouldUpdata: true
 		}
         this.getNextPage = (currentPage) => {
             if(!this.state.shouldUpdata) {
@@ -101,12 +102,6 @@ class Order extends React.Component {
             }, 'nextPage')
         }
 	}
-    componentDidMount(){
-        const {currentPage, totalPage, shouldUpdata} = this.state
-        if(currentPage < totalPage) {
-            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
-        }
-    }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
         this.state.data = data && data.data || [];
@@ -120,19 +115,25 @@ class Order extends React.Component {
         }
     }
 	render(){
+        const {currentPage, totalPage, shouldUpdata} = this.state
+        if(currentPage < totalPage) {
+            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
+        }
 		return(
 			<div>
 				<div className="fiexded">
 					<Head />
 					<Search />
 				</div>
-				<List style={{backgroundColor: '#efeef4',paddingTop: '93px'}}>
-					{
-						this.state.data.map((item, index) => {
-							return <ViewCell {...item} key={index} />
-						})
-					}
-				</List>
+				<div  style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
+                    <List>
+                        {
+                            this.state.data.map((item, index) => {
+                                return <ViewCell {...item} key={index} />
+                            })
+                        }
+                    </List>
+                </div>
 			</div>
 		)
 	}

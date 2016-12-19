@@ -442,23 +442,15 @@ input[type='text']:disabled {
     z-index: 2000;
     border-radius: 4px;
 }
-.create_menu::before{
-    content: '';
-    width: 0;
-    height: 0;
-
-}
-.create_menu ul{
-    list-style: none;
-}
-.create_menu li:not(:last-child){
+.create_menu div:not(:last-child){
     border-bottom: 1px solid #585858;
 }
 .create_menu a{
     color: #fff;
-    padding: 0 14px;
+    padding: 0 20px;
     display: block;
     font-size: 14px;
+    text-align: center;
 }
 .work-content{
     background-color: #fff;

@@ -48,7 +48,7 @@ class MenuTotal extends Component {
         const menuStyle = this.state.menuopen ? {position: 'fixed', top: 45, left: '15%' , width: '70%'} : {position: 'fixed', top: 45, left: -10000, width: '70%'}
         for (let attr in this.props.items) {
             const isFocused = attr === this.state.value
-            const rightIconElement = isFocused ? <Done style={styles.done} color={'rgba(255, 255, 255, 1)'}/> : null
+            const rightIconElement = isFocused ? <Done style={styles.done} color='#fff'/> : null
             layout.push(
                     <MenuItem
                         value={attr}

@@ -56,7 +56,7 @@ class Head extends Component {
                 titleStyle={styles.title}
                 iconStyleLeft={{marginTop: 0}}
                 iconStyleRight={{marginTop: 0}}
-                iconElementLeft={<Link to={browserHistory}><IconButton><ArrowBaclIcon color="#5e95c9"/></IconButton></Link>}
+                iconElementLeft={<IconButton onTouchTap={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>}
                 iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}
             >
             </AppBar>
@@ -64,7 +64,8 @@ class Head extends Component {
     }
 }
 Head.contextTypes={
-    fetchPosts: React.PropTypes.any
+    fetchPosts: React.PropTypes.any,
+    router: React.PropTypes.object
 }
 class ViewCell extends React.Component {
     render() {

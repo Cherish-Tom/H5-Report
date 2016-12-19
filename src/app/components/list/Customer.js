@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {List, ListItem} from 'material-ui/List';
-import {Link, browserHistory} from 'react-router';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
+import {Link} from 'react-router';
+import {AppBar,IconButton,List, ListItem} from 'material-ui';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
 import Add from 'material-ui/svg-icons/content/add';
 import Search from '../public/Search';
@@ -50,7 +48,7 @@ class Head extends Component {
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={<IconButton onTouchTap={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>}
-                iconElementRight={<IconButton><Add color="#5e95c9"/></IconButton>}
+                iconElementRight={<IconButton onTouchTap={this.props.openMenu}><Add color="#5e95c9"/></IconButton>}
             />
         )
     }
@@ -100,7 +98,8 @@ class Customer extends Component {
             totalPage: 1,
             shouldUpdata: true,
             isFetching: false,
-            type: 'all'
+            type: 'all',
+            open: false
         }
         this.getNextPage = (currentPage) => {
             if(!this.state.shouldUpdata) {
@@ -120,6 +119,9 @@ class Customer extends Component {
         this.chooseType = () => {
 
         }
+        this.openMenu = () => {
+            this.setState({open: !this.state.open})
+        }
     }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
@@ -128,12 +130,6 @@ class Customer extends Component {
         this.state.totalPage = data && data.pages || 1;
         this.state.isFetching = nextProps.state.isFetching || false;
     }
-    componentDidMount(){
-        const {currentPage, totalPage, shouldUpdata} = this.state
-        if(currentPage < totalPage) {
-            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
-        }
-    }
     getChildContext(){
         return {
             fetchPosts: this.props.fetchPosts,
@@ -141,10 +137,14 @@ class Customer extends Component {
         }
     }
     render() {
+        const {currentPage, totalPage, shouldUpdata} = this.state
+        if(currentPage < totalPage) {
+            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
+        }
         return (
             <div>
                 <div className="fiexded">
-                    <Head path={this.props.location.pathname} />
+                    <Head path={this.props.location.pathname} openMenu={this.openMenu}/>
                     <Search title='请输入客户名称或地址'/>
                 </div>
                 <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
@@ -152,6 +152,12 @@ class Customer extends Component {
                         this.props.state.isFetching ? <Loading /> : <Lists ref='container' datas = {this.state.data} />
                     }
                 </div>
+
+                <div className='create_menu' style={{display: this.state.open ? 'block' : 'none'}}>
+                    <div><Link to={{pathname: '/customer/new', query: {mode: 6}}}>创建</Link></div>
+                    <div><Link to='/customer/fastnew'>快速创建</Link></div>
+                </div>
+
             </div>
         )
 

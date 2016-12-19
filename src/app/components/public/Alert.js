@@ -23,27 +23,19 @@ const styles={
     }
 }
 export default class Alert extends Component {
-    constructor(props, context){
-        super(props, context)
-        this.state = {
-            open: false
-        }
-        this.handleClose = () => {
-            this.setState({open: false})
-        }
-    }
     render(){
         const actions = [
              <FlatButton
                label="取消"
                primary={true}
                style={{flex: 1, borderRight: '1px solid #ddd'}}
-               onTouchTap={this.handleClose}
+               onTouchTap={this.props.handleClose}
              />,
              <FlatButton
                label="确认"
                primary={true}
                style={{flex: 1}}
+               onTouchTap={this.props.onSubmit}
              />
        ];
         return(
