@@ -1,10 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import { REQUEST_POSTS, RECEIVE_POSTS } from '../constants/ActionType';
+import { GET_DATA_START, GET_DATA_SUCCESS } from '../constants/ActionType';
 import { BASIC_URL } from '../constants/Config';
 import { Tool } from '../constants/Tools';
-export const GET_DATA_START = 'GET_DATA_START';
-export const GET_DATA_SUCCESS = 'GET_DATA_SUCCESS'
-
 const requestPosts = path => {
     return {
         type: REQUEST_POSTS,

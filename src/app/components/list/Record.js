@@ -67,8 +67,8 @@ Head.contextTypes={
     fetchPosts: React.PropTypes.any,
     router: React.PropTypes.object
 }
-class ViewCell extends React.Component {
-    render() {
+class ViewCell extends Component {
+    render(){
         return (
             <Link to={{pathname:`/record/${this.props.contactrecordID}`, query:{url: 'records', mode: 55}}}>
                 <ListItem

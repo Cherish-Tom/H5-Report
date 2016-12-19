@@ -9,3 +9,7 @@ export const REQUEST_ARTICLE = 'REQUEST_ARTICLE';
 
 // 接收文章
 export const RECEIVE_ARTICLE = 'RECEIVE_ARTICLE';
+
+
+export const GET_DATA_START = 'GET_DATA_START';
+export const GET_DATA_SUCCESS = 'GET_DATA_SUCCESS'

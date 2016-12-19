@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import ReactTransitionGroup from 'react-addons-transition-group'
 import Template from '../public/template';
 const muiTheme =getMuiTheme({
     tabs: {

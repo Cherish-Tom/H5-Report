@@ -95,16 +95,14 @@ class Customer extends Component {
         this.state = {
             data: [],
             currentPage: 1,
-            totalPage: 1,
+            totalPage: 2,
+            limit: 8,
             shouldUpdata: true,
             isFetching: false,
-            type: 'all',
             open: false
         }
         this.getNextPage = (currentPage) => {
-            if(!this.state.shouldUpdata) {
-                return
-            }
+            if(!this.state.shouldUpdata)return
             this.state.shouldUpdata = false
             this.props.getDate('/customer', { type: 'all', limit: 8, page: currentPage}, (res) => {
                 this.state.currentPage = currentPage;
@@ -157,7 +155,6 @@ class Customer extends Component {
                     <div><Link to={{pathname: '/customer/new', query: {mode: 6}}}>创建</Link></div>
                     <div><Link to='/customer/fastnew'>快速创建</Link></div>
                 </div>
-
             </div>
         )
 
