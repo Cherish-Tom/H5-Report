@@ -130,56 +130,57 @@ class Details extends Component {
         let layout = [];
         const {data, typeList, disable, open} = this.state;
         for(let key in typeList){
-            layout.push
-            (
-                <div key={key}>
-                    <Subheader style={styles.sub}>{typeList[key].blocklabel}</Subheader>
-                    <div className='basic-msg'>
-                            {typeList[key].fields.map((field, index) => {
-                                if(field.fieldtype === 'picklist'){
-                                    return  <div key={index} className='list-item'>
-                                                <label>{field.fieldlabel}：</label>
-                                                {
-                                                    disable ?
-                                                        <div>
-                                                            {data.pick_list.hasOwnProperty(field.fieldname) ?
-                                                                <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> :
-                                                                <span name={field.fieldname} data-type={field.fieldtype}></span>}
-                                                            {<ChevronRight color='#6d6c6c' style={styles.chevron}/>}
-                                                        </div>
-                                                        : <span>{data[field.fieldname]}</span>
-                                                }
-                                            </div>
-                                } else if(field.fieldtype === 'reference'){
-                                    return  <div key={index} className='list-item'>
-                                                <label>{field.fieldlabel}：</label>
-                                                <span data-type={field.fieldtype} name={field.fieldname}>{data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ''}</span>
-                                            </div>
-                                } else if (field.fieldtype === 'data'){
-                                    return <div key={index} className='list-item'>
-                                                <label>{field.fieldlabel}：</label>
-                                                <div>
-                                                    <DatePick date={data.hasOwnProperty(field.fieldname) ? new Date(data[field.fieldname]) : null} name={field.fieldname} />
-                                                    {disable ? <ChevronRight color='#6d6c6c' style={{width: 20, height: 20}}/> : null}
+            if(key !== 'pick_list'){
+                layout.push
+                (
+                    <div key={key}>
+                        <Subheader style={styles.sub}>{typeList[key].blocklabel}</Subheader>
+                        <div className='basic-msg'>
+                                {typeList[key].fields&&typeList[key].fields.map((field, index) => {
+                                    if(field.fieldtype === 'picklist'){
+                                        return  <div key={index} className='list-item'>
+                                                    <label>{field.fieldlabel}：</label>
+                                                    {
+                                                        disable ?
+                                                            <div>
+                                                                {data.pick_list.hasOwnProperty(field.fieldname) ?
+                                                                    <Picklist list={data.pick_list[field.fieldname]} {...field} value={data[field.fieldname]}/> :
+                                                                    <span name={field.fieldname} data-type={field.fieldtype}></span>}
+                                                                {<ChevronRight color='#6d6c6c' style={styles.chevron}/>}
+                                                            </div>
+                                                            : <span>{data[field.fieldname]}</span>
+                                                    }
                                                 </div>
-                                            </div>
-                                } else {
-                                    return  <div key={index} className='list-item'>
-                                                <label>{field.fieldlabel}：</label>
-                                                <input type='text'
-                                                    value={data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ' '}
-                                                    onChange={this.handleChange}
-                                                    name={field.fieldname}
-                                                    data-type={field.fieldtype}
-                                                    disabled={disable ? false : 'disabled'}
-                                                />
-                                            </div>
-                                }
-                            })}
+                                    } else if(field.fieldtype === 'reference'){
+                                        return  <div key={index} className='list-item'>
+                                                    <label>{field.fieldlabel}：</label>
+                                                    <span data-type={field.fieldtype} name={field.fieldname}>{data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ''}</span>
+                                                </div>
+                                    } else if (field.fieldtype === 'data'){
+                                        return <div key={index} className='list-item'>
+                                                    <label>{field.fieldlabel}：</label>
+                                                    <div>
+                                                        <DatePick date={data.hasOwnProperty(field.fieldname) ? new Date(data[field.fieldname]) : null} name={field.fieldname} />
+                                                        {disable ? <ChevronRight color='#6d6c6c' style={{width: 20, height: 20}}/> : null}
+                                                    </div>
+                                                </div>
+                                    } else {
+                                        return  <div key={index} className='list-item'>
+                                                    <label>{field.fieldlabel}：</label>
+                                                    <input type='text'
+                                                        value={data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ' '}
+                                                        onChange={this.handleChange}
+                                                        name={field.fieldname}
+                                                        data-type={field.fieldtype}
+                                                        disabled={disable ? false : 'disabled'}
+                                                    />
+                                                </div>
+                                    }
+                                })}
+                        </div>
                     </div>
-                </div>
-            )
-
+                )
+            }
         }
         return (
             <div>

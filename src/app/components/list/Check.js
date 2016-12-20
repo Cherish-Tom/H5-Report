@@ -109,14 +109,17 @@ class Map extends React.Component {
     createBMap(id) {
         let  map = new BMap.Map(id);
         let  point = new BMap.Point(104.703213, 31.496506);
+        let  marker = new BMap.Marker(point)
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE);
         map.addControl(new BMap.NavigationControl());
         map.centerAndZoom(point, 17);
         map.enableScrollWheelZoom();
-        function setLocal(result) {
-            const cityName = result.name;
-            map.setCenter(cityName);
-        }
-        let  myCity = new BMap.LocalCity();
+        map.addOverlay(marker)
+        // function setLocal(result) {
+        //     const cityName = result.name;
+        //     map.setCenter(cityName);
+        // }
+        // let  myCity = new BMap.LocalCity();
         myCity.get(setLocal);
         map.addEventListener("click", function(e){
             var center = map.getCenter();
@@ -127,23 +130,23 @@ class Map extends React.Component {
         });
         return map
     }
-    addressToPoint(nextProps) {
-        const { onSelect } = this.props;
-        const { map } = this.state;
-        const marker = this.marker;
-        map.clearOverlays();
-        let myPoint = new BMap.Geocoder();
-        myPoint.getPoint(nextProps.mapArea + nextProps.storeAddress, function(poi) {
-            map.centerAndZoom(poi, 17);
-            map.addOverlay(marker(poi));
-            onSelect(poi)
-        }, nextProps.mapArea)
-    }
-    marker(poi) {
-        let marker = new BMap.Marker(poi);
-        marker.setAnimation(BMAP_ANIMATION_BOUNCE);
-        return marker
-    }
+    // addressToPoint(nextProps) {
+    //     const { onSelect } = this.props;
+    //     const { map } = this.state;
+    //     const marker = this.marker;
+    //     map.clearOverlays();
+    //     let myPoint = new BMap.Geocoder();
+    //     myPoint.getPoint(nextProps.mapArea + nextProps.storeAddress, function(poi) {
+    //         map.centerAndZoom(poi, 17);
+    //         map.addOverlay(marker(poi));
+    //         onSelect(poi)
+    //     }, nextProps.mapArea)
+    // }
+    // marker(poi) {
+    //     let marker = new BMap.Marker(poi);
+    //     marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+    //     return marker
+    // }
     render() {
         return (
             <div id={this.props.id} {...this.props}></div>

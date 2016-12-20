@@ -38,6 +38,9 @@ body {
 input,textarea,select {
 	box-sizing: border-box;
 }
+input:focus,textarea:focus,select:focus{
+    outline: 0
+}
 .warp{
     background:
         linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,1)),
@@ -61,7 +64,7 @@ nav .menu li{
 nav .menu li>a{
     display: inline-block;
     width: 100%;
-    padding: 16px 0;
+    padding: 20px 0;
     color: #fff;
 	font-size: 1.0rem;
     text-decoration: none;
@@ -116,16 +119,17 @@ nav .menu a i {
     left: 0;
     z-index: 1000;
 }
-.contact_list{
+.item_lists{
     padding-top: 93px!important;
+    background-color: #efeef4
 }
 .contact_primary{
     color: #7888af;
 }
-.contact_list>a:nth-child(2n+1)>div{
+.item_lists>a:nth-child(2n+1)>div{
     background-color: #fff;
 }
-.contact_list>a:nth-child(2n)>div{
+.item_lists>a:nth-child(2n)>div{
     background-color: #efeef4;
 }
 .contact_second{

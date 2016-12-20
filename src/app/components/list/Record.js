@@ -139,7 +139,7 @@ class Record extends Component {
                     <Head />
                     <Search title="请输入电话号码或者联系人" />
                 </div>
-                <List style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref="container">
+                <List className='item_lists' ref="container">
                     {
                         this.state.data.map((item, index) => {
                             return <ViewCell {...item} key={index} />

@@ -5,6 +5,7 @@ import Index from './components/index/Index';
 import Customer from './components/list/Customer';
 import Setting from './components/list/Setting';
 import About from './components/list/About';
+import Opinion from './components/list/Opinion';
 import Audit from './components/list/Audit';
 import Contact from './components/list/Contact';
 import Order from './components/list/Order';
@@ -34,6 +35,7 @@ const AppRouters = (
         <Route path='setting' component={My}>
             <IndexRoute component={Setting}/>
             <Route path='about' component={About} />
+            <Route path='opinion' component={Opinion} />
         </Route>
         <Route path='contact' component={My}>
             <IndexRoute component={Contact}/>

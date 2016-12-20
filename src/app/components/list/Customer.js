@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import {Link} from 'react-router';
 import {AppBar,IconButton,List, ListItem} from 'material-ui';
 import ArrowBaclIcon from 'material-ui/svg-icons/navigation/arrow-back';
@@ -102,7 +103,7 @@ class Customer extends Component {
             open: false
         }
         this.getNextPage = (currentPage) => {
-            if(!this.state.shouldUpdata)return
+            if(!this.state.shouldUpdata) return
             this.state.shouldUpdata = false
             this.props.getDate('/customer', { type: 'all', limit: 8, page: currentPage}, (res) => {
                 this.state.currentPage = currentPage;
@@ -114,11 +115,13 @@ class Customer extends Component {
                 }
             }, 'nextPage')
         }
-        this.chooseType = () => {
-
-        }
         this.openMenu = () => {
             this.setState({open: !this.state.open})
+        }
+    }
+    componentDidMount(){
+        if(this.state.currentPage < this.state.totalPage) {
+            Tool.nextPage(ReactDOM.findDOMNode(this.refs.container), this.state.currentPage, this.state.totalPage, this.getNextPage, this.state.shouldUpdata)
         }
     }
     componentWillReceiveProps(nextProps){
@@ -135,25 +138,21 @@ class Customer extends Component {
         }
     }
     render() {
-        const {currentPage, totalPage, shouldUpdata} = this.state
-        if(currentPage < totalPage) {
-            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
-        }
+
         return (
             <div>
                 <div className="fiexded">
                     <Head path={this.props.location.pathname} openMenu={this.openMenu}/>
                     <Search title='请输入客户名称或地址'/>
                 </div>
-                <div style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
+                <div className='item_lists'>
                     {
-                        this.props.state.isFetching ? <Loading /> : <Lists ref='container' datas = {this.state.data} />
+                        this.props.state.isFetching ? <Loading /> : <Lists  ref='container' datas = {this.state.data} />
                     }
                 </div>
-
                 <div className='create_menu' style={{display: this.state.open ? 'block' : 'none'}}>
                     <div><Link to={{pathname: '/customer/new', query: {mode: 6}}}>创建</Link></div>
-                    <div><Link to='/customer/fastnew'>快速创建</Link></div>
+                    <div><Link to={{pathname: '/customer/fastnew', query: {mode: 6}}}>快速创建</Link></div>
                 </div>
             </div>
         )
@@ -166,5 +165,4 @@ Customer.childContextTypes = {
 }
 export default Template({
     component: Customer,
-    url: 'customer'
 });

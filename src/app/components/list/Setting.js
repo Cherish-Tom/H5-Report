@@ -14,7 +14,7 @@ class Setting extends React.Component {
                   <div className='container'>
                       <div className='setting'>
                           <Link to='/setting/about'>关于我们</Link>
-                          <Link to='#' style={{margin: '10px 0'}}>意见反馈</Link>
+                          <Link to='/setting/opinion' style={{margin: '10px 0'}}>意见反馈</Link>
                           <Link to='#'>清除缓存</Link>
                       </div>
                       <RaisedButton

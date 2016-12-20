@@ -63,6 +63,7 @@ class ViewCell extends React.Component {
                     primaryText={
                         <p><span style={styles.textColor}>{this.props.last_name}</span></p>
                     }
+                    innerDivStyle={{padding: 8}}
                     secondaryText={
                         <p>
                             <span style={styles.textColor}>S{this.props.id}&nbsp;&nbsp;{this.props.modifiedtime.substring(0, 10)}</span><br />
@@ -125,8 +126,8 @@ class Order extends React.Component {
 					<Head />
 					<Search />
 				</div>
-				<div  style={{backgroundColor: '#efeef4',paddingTop: '93px'}} ref='container'>
-                    <List>
+				<div className='item_lists' ref='container'>
+                    <List style={{paddingTop: 0}}>
                         {
                             this.state.data.map((item, index) => {
                                 return <ViewCell {...item} key={index} />

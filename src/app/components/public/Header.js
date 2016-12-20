@@ -34,17 +34,15 @@ class Header extends React.Component{
                 title = '卓谷科技'
                 rightIcons = <Link to='/setting'><IconButton><Settings color='#555'/></IconButton></Link>
                 break;
-            case 'photo':
-                title = '拍照'
-                leftIcons = <ArrowBaclIcon color={color}/>
-                rightIcons = <IconButton><AccessTime color='#fff'/></IconButton>
-                break;
-            case 'check':
+            case '/check':
                 title = '签到考勤'
                 leftIcons = <ArrowBaclIcon color={color}/>
                 rightIcons = <IconButton><AccessTime color={color}/></IconButton>
                 break;
+            case '/photo':
             case '/setting':
+            case '/setting/about':
+            case '/setting/opinion':
                 title = '设置'
                 leftIcons = <ArrowBaclIcon color={color}/>
                 rightIcons = <IconButton><AccessTime color='#fff'/></IconButton>

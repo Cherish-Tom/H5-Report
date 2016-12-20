@@ -134,7 +134,7 @@ class ContactList extends React.Component {
                     <Head />
                     <Search title="请输入电话号码或者联系人"/>
                 </div>
-                <List className="contact_list" ref='container'>
+                <List className="item_lists" ref='container'>
                     {this.state.data&&this.state.data.map((item) => (
                         <Link to={{pathname:`/contact/${item.contactid}`, query:{url: 'contacts', mode: 4}}} key={item.contactid}>
                             <ListItem
@@ -180,6 +180,10 @@ class ContactList extends React.Component {
                         labelColor='#fff'
                     />
                 </Drawer>
+                <div className='create_menu' >
+                    <div><Link to={{pathname: '/contact/new', query: {mode: 6}}}>创建</Link></div>
+                    <div><Link to={{pathname: '/contact/fastnew', query: {mode: 6}}}>快速创建</Link></div>
+                </div>
             </div>
 
         );
