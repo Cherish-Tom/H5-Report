@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
-require('es6-promise').polyfill();
+// require('es6-promise').polyfill();
+import {Link} from 'react-router'
 import fetch from 'isomorphic-fetch';
 import Subheader from 'material-ui/Subheader';
 import AppBar from 'material-ui/AppBar';
@@ -64,7 +65,7 @@ class Head extends Component {
                 iconStyleRight={{marginTop: 0}}
                 iconStyleLeft={{marginTop: 0, marginRight: 0}}
                 iconElementLeft={this.context.disable ?
-                        <div onTouchTap={this.props.handleSave} style={styles.edit}>取消</div> :
+                        <div onTouchTap={this.props.handleCancel} style={styles.edit}>取消</div> :
                         <IconButton onTouchTap={this.context.router.goBack}><ArrowBaclIcon color="#5e95c9"/></IconButton>
                     }
                 iconElementRight={this.context.disable ?
@@ -77,7 +78,8 @@ class Head extends Component {
 }
 Head.contextTypes = {
     disable: React.PropTypes.bool.isRequired,
-    router: React.PropTypes.object
+    router: React.PropTypes.object,
+    handleSave: React.PropTypes.any
 }
 const changeTopic = {};
 class Details extends Component {
@@ -99,7 +101,10 @@ class Details extends Component {
         this.toogleEdit = () => {
             this.setState({disable: !this.state.disable})
         }
-        this.handleSave = (event, type) => {
+        this.handleSave = () => {
+            this.setState({open: true})
+        }
+        this.handleCancel = () => {
             this.setState({open: true})
         }
         this.handleClose = () => {
@@ -107,12 +112,14 @@ class Details extends Component {
         }
         this.handleSubmit = (event) => {
             event.preventDefault();
-            let form = document.querySelector('form');
-            console.log(new FormData(form));
+            let form = document.querySelector('form')
             let path = this.props.location.pathname
             fetch(`${BASIC_URL}${path}`, {
-                method: 'POST',
-                body: new FormData(form)
+                method: 'PUT',
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    'website': 'www.zoogooo.com'
+                })
             })
             this.setState({open: false})
         }
@@ -124,6 +131,7 @@ class Details extends Component {
     getChildContext() {
         return {
             disable: this.state.disable,
+            handleSave: this.handleSave
         }
     }
     render() {
@@ -154,7 +162,7 @@ class Details extends Component {
                                     } else if(field.fieldtype === 'reference'){
                                         return  <div key={index} className='list-item'>
                                                     <label>{field.fieldlabel}：</label>
-                                                    <span data-type={field.fieldtype} name={field.fieldname}>{data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ''}</span>
+                                                    <Link to={`/reference/${field.fieldname}`} >{data[field.fieldname]}</Link>
                                                 </div>
                                     } else if (field.fieldtype === 'data'){
                                         return <div key={index} className='list-item'>
@@ -185,7 +193,7 @@ class Details extends Component {
         return (
             <div>
                 <div className="fiexded">
-                    <Head toogleEdit={this.toogleEdit}  handleSave={this.handleSave}/>
+                    <Head toogleEdit={this.toogleEdit}  handleSave={this.handleSave} handleCancel={this.handleCancel}/>
                 </div>
                 {
                     this.props.state.isFetching ? <Loading /> :
@@ -201,7 +209,8 @@ class Details extends Component {
     }
 }
 Details.childContextTypes = {
-    disable: React.PropTypes.bool.isRequired
+    disable: React.PropTypes.bool.isRequired,
+    handleSave: React.PropTypes.any
 }
 export default Template({
     component: Details,

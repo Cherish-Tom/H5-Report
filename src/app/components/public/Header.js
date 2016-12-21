@@ -47,6 +47,11 @@ class Header extends React.Component{
                 leftIcons = <ArrowBaclIcon color={color}/>
                 rightIcons = <IconButton><AccessTime color='#fff'/></IconButton>
                 break;
+            default:
+                title = '最新更新人'
+                leftIcons = <ArrowBaclIcon color={color}/>
+                rightIcons = <IconButton><AccessTime color='#fff'/></IconButton>
+                break;
         }
         return (
                 <AppBar

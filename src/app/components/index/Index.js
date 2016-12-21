@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../public/Header';
 import {Link} from 'react-router';
-const ACTIVE ={
-    color: 'red'
-}
 class Index extends Component {
   render(){
     return(
@@ -11,7 +8,7 @@ class Index extends Component {
             <Header path={this.props.location.pathname}/>
             <nav>
               <ul className="menu">
-                <li><Link to="customer" activeStyle={ACTIVE} ><i className="material-icons">&#xE7FB;</i><span>客户</span></Link></li>
+                <li><Link to="customer"><i className="material-icons">&#xE7FB;</i><span>客户</span></Link></li>
                 <li><Link to="contact"><i className="material-icons">&#xE0BE;</i>联系人</Link></li>
                 <li><Link to="record"><i className="material-icons">&#xE8B0;</i>联系记录</Link></li>
                 <li><Link to="order"><i className="material-icons">&#xE8FE;</i>销售订单</Link></li>

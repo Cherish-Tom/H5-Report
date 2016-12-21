@@ -108,7 +108,7 @@ class Map extends React.Component {
     }
     createBMap(id) {
         let  map = new BMap.Map(id);
-        let  point = new BMap.Point(104.703213, 31.496506);
+        let  point = new BMap.Point(104.7024560001,31.4961330000);
         let  marker = new BMap.Marker(point)
         marker.setAnimation(BMAP_ANIMATION_BOUNCE);
         map.addControl(new BMap.NavigationControl());

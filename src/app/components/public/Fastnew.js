@@ -4,6 +4,9 @@ import {BASIC_URL} from '../../constants/Config'
 import {AppBar,IconButton,List,ListItem,Subheader} from 'material-ui';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import Picklist from '../public/Picklist'
+import Alert from './Alert';
+import Loading from './Loading'
+import fetch from 'isomorphic-fetch'
 const styles={
     head: {
         textAlign: 'center',
@@ -37,14 +40,32 @@ const styles={
     }
 }
 class Fastnew extends Component {
-    constructor(props){
-        super(props);
+    constructor(props, context){
+        super(props, context);
         this.props.fetchMoudle(this.props.location.query.mode, 'quick_create')
+        this.state = {
+            open: false,
+        }
+        this.toogleOpen = () => {
+            this.setState({open: true})
+        }
+        this.handleClose = () => {
+            this.setState({open: false})
+        }
         this.handleSubmit = (event) => {
-
+            const path = this.props.location.pathname.replace('/fastnew', '')
+            fetch(`${BASIC_URL}${path}`, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    'rating': '潜在客户',
+                    'leadsource': '电话来访'
+                })
+            })
+            this.setState({open: false})
+            event.preventDefault()
         }
     }
-
     render(){
         const data = this.props.state.data.data
         const layout = []
@@ -92,13 +113,17 @@ class Fastnew extends Component {
                     iconStyleRight={{marginTop: 0}}
                     iconStyleLeft={{marginTop: 0, marginRight: 0}}
                     iconElementLeft={<div onTouchTap={this.context.router.goBack} style={styles.edit}>取消</div>}
-                    iconElementRight={<div style={styles.edit}>确认</div>}
+                    iconElementRight={<div style={styles.edit} onTouchTap={this.toogleOpen}>确认</div>}
                 />
                 <div style={{padding: '45px 6px 0 6px'}}>
-                    <form onSubmit={this.handleSubmit}>
-                        {layout}
-                    </form>
+                    {
+                        this.props.state.isFetching ? <Loading /> :
+                        <form onSubmit={this.handleSubmit}>
+                            {layout}
+                        </form>
+                    }
                 </div>
+                <Alert onSubmit={this.handleSubmit} open={this.state.open} handleClose={this.handleClose}/>
             </div>
         )
     }

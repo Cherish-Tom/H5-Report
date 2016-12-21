@@ -23,7 +23,7 @@ const Main = (mySetting) => {
             return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
         }
         render(){
-            return  <this.props.defaultSetting.component {...this.props} state={this.props.state.toJS()} />;
+            return  <this.props.defaultSetting.component {...this.props} state={this.props.state.toJS()} />
         }
     }
     Index.defaultProps = { defaultSetting }

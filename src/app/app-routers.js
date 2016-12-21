@@ -17,6 +17,7 @@ import Work from './components/list/Work';
 import Details from './components/public/Details';
 import Fastnew from './components/public/Fastnew';
 import New from './components/public/New';
+import Reference from './components/public/Reference';
 const My = React.createClass({
     render(){
         return <div>{this.props.children}</div>
@@ -32,6 +33,7 @@ const AppRouters = (
             <Route path='fastnew' component={Fastnew} />
             <Route path=':id' component={Details} />
         </Route>
+        <Route path='reference/:type' component={Reference} />
         <Route path='setting' component={My}>
             <IndexRoute component={Setting}/>
             <Route path='about' component={About} />

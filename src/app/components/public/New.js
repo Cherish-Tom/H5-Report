@@ -41,7 +41,7 @@ class New extends Component {
         super(props);
         this.props.fetchMoudle(this.props.location.query.mode)
         this.handleSubmit = (event) => {
-
+            console.log(1);
         }
     }
     render(){

@@ -39,7 +39,7 @@ export const fetchPost = (path, id, mode) => {
     const modeUrl = mode && `${BASIC_URL}/modules/${mode}`
     const results = {topic: {}, replies: {}}
     return dispatch => {
-        dispatch(requestPosts(id))
+        dispatch(requestPosts(path + '/' + id))
         return  fetch(url)
                 .then(response =>response.json())
                 .then(json => {
@@ -48,7 +48,7 @@ export const fetchPost = (path, id, mode) => {
                     .then(response => response.json())
                     .then(json => {
                         results.replies = json.data
-                        dispatch(receivePosts(id, results))
+                        dispatch(receivePosts((path + '/' + id), results))
                     })
                 })
                 .catch(error => console.log(error))

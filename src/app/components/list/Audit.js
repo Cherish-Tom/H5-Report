@@ -15,10 +15,10 @@ import {dataList} from './data';
 
 const styles = {
     back:{
-        'borderTop': '1px solid #5e95c9',
-        'borderBottom': '1px solid #5e95c9',
-        'borderRight': '1px solid #5e95c9',
-        'overflow': 'hidden',
+        borderTop: '1px solid #5e95c9',
+        borderBottom: '1px solid #5e95c9',
+        borderRight: '1px solid #5e95c9',
+        overflow: 'hidden',
     },
     handline:{
         fontSize: 24,
@@ -53,6 +53,7 @@ const styles = {
         backgroundColor: "#fff",
         margin: '12px',
         borderRadius: 4,
+        margin: 8
     },
     child:{
         position: 'absolute',
@@ -115,11 +116,11 @@ class Audit extends React.Component {
                         <Tab label="近30天" value={2} style={styles.lable}/>
                     </Tabs>
                 </div>
-                <SwipeableViews index={this.state.slideIndex} onChangeIndex={this.handleChange} style={{paddingTop: 95}}>
+                <SwipeableViews index={this.state.slideIndex} onChangeIndex={this.handleChange} className='item_lists'>
                     <List>
                         {
                             this.state.data.map((item, index) => {
-                                return <List><Cell {...item.basic} key={index}/></List>
+                                return <Cell {...item.basic} key={index}/>
                             })
                         }
                     </List>

@@ -3,6 +3,7 @@ import classname from 'classnames';
 import Done from 'material-ui/svg-icons/action/done';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import {fullWhite} from 'material-ui/styles/colors';
 const styles={
     under:{
         opacity: 0
@@ -21,7 +22,8 @@ const styles={
         top: 0,
         right: 12,
         verticalAlign: 'middle',
-        color: '#fff'
+        color: fullWhite,
+        fill: fullWhite
     }
 };
 class MenuTotal extends Component {
@@ -48,7 +50,7 @@ class MenuTotal extends Component {
         const menuStyle = this.state.menuopen ? {position: 'fixed', top: 45, left: '15%' , width: '70%'} : {position: 'fixed', top: 45, left: -10000, width: '70%'}
         for (let attr in this.props.items) {
             const isFocused = attr === this.state.value
-            const rightIconElement = isFocused ? <Done style={styles.done} color='#fff'/> : null
+            const rightIconElement = isFocused ? <Done style={styles.done} /> : null
             layout.push(
                     <MenuItem
                         value={attr}

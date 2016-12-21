@@ -4,6 +4,26 @@ html {
 button{
     font-family: inherit!important;
 }
+.example-appear {
+    transform: translate(100%, 0);
+}
+
+.example-appear.example-appear-active {
+    transform: translate(0%, 0);
+    transition: transform 180ms linear;
+    /*will-change: transform*/
+}
+
+.example-leave {
+    transform: translate(0, 0)
+}
+
+.example-leave.example-leave-active {
+    transform: translate(100%, 0);
+    transition: opacity 180ms ease-in;
+}
+
+
 ::-webkit-scrollbar{
     width: 8px;
     height: 8px;
@@ -375,7 +395,10 @@ input.photo_input:focus{
     text-align: right;
     font-family: inherit;
 }
-.basic-msg .list-item>input,.basic-msg .list-item>div,.basic-msg .list-item>span{
+.basic-msg .list-item>input,
+.basic-msg .list-item>div,
+.basic-msg .list-item>span,
+.basic-msg .list-item>a{
     flex: auto;
     text-align: right;
     display: flex;
