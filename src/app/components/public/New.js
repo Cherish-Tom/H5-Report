@@ -88,7 +88,7 @@ class New extends Component {
                     title='快速创建'
                     iconStyleRight={{marginTop: 0}}
                     iconStyleLeft={{marginTop: 0, marginRight: 0}}
-                    iconElementLeft={<div onTouchTap={this.context.router.goBack} style={styles.edit}>取消</div>}
+                    iconElementLeft={<div onTouchTap={this.props.history.goBack} style={styles.edit}>取消</div>}
                     iconElementRight={<div style={styles.edit}>确认</div>}
                 />
                 <div style={{padding: '45px 6px 0 6px'}}>

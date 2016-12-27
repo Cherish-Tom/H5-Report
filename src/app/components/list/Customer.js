@@ -18,9 +18,7 @@ const styles={
     },
     back:{
         backgroundColor: '#fff',
-        margin: 8,
         borderRadius: 4,
-        boxShadow:'rgba(0, 0, 0, 0.117647) 0px 1px 6px',
     },
     head: {
         textAlign: 'center',
@@ -37,9 +35,6 @@ const styles={
     }
 }
 class Head extends Component {
-    constructor(props, context){
-        super(props, context)
-    }
     render() {
         return(
             <AppBar
@@ -65,8 +60,8 @@ class Lists extends Component {
     }
     render(){
         return(
-            <List>
-                {this.props.datas.map((data) => (
+            <List className='item_lists'>
+                {this.props.datas.map((data, index) => (
                     <Link to={{pathname:`/customer/${data.accountid}`, query: {url: 'customer', mode: 6}}} key={data.accountid}>
                         <ListItem
                             style={styles.back}
@@ -74,14 +69,7 @@ class Lists extends Component {
                             primaryText={
                                 <p><span style={styles.textColor}>{data.accountname}</span></p>
                             }
-                            innerDivStyle={{padding: 8}}
-                            secondaryText={
-                                <p>
-                                    <span style={styles.account_no}>S{data.account_no}&nbsp;&nbsp;{data.createdtime.substr(0, 10)}</span><br />
-                                    <span>金额：<span>&nbsp;&nbsp;&nbsp;&nbsp;&yen;</span>{data.discount_rate}</span>
-                                </p>
-                            }
-                            secondaryTextLines={2}
+                            innerDivStyle={{padding: '16px 30px 16px 16px', backgroundColor: (index % 2) ? '#efeef4': '#fff'}}
                         />
                     </Link>
                 ))}
@@ -105,7 +93,7 @@ class Customer extends Component {
         this.getNextPage = (currentPage) => {
             if(!this.state.shouldUpdata) return
             this.state.shouldUpdata = false
-            this.props.getDate('/customer', { type: 'all', limit: 8, page: currentPage}, (res) => {
+            this.props.getDate('/customer', { type: 'all', limit: 12, page: currentPage}, (res) => {
                 this.state.currentPage = currentPage;
                 this.state.shouldUpdata = true;
                 if(res.code === 200) {
@@ -144,11 +132,7 @@ class Customer extends Component {
                     <Head path={this.props.location.pathname} openMenu={this.openMenu}/>
                     <Search title='请输入客户名称或地址'/>
                 </div>
-                <div className='item_lists'>
-                    {
-                        this.props.state.isFetching ? <Loading /> : <Lists  ref='container' datas = {this.state.data} />
-                    }
-                </div>
+                <Lists ref='container' datas = {this.state.data} />
                 <div className='create_menu' style={{display: this.state.open ? 'block' : 'none'}}>
                     <div><Link to={{pathname: '/customer/new', query: {mode: 6}}}>创建</Link></div>
                     <div><Link to={{pathname: '/customer/fastnew', query: {mode: 6}}}>快速创建</Link></div>

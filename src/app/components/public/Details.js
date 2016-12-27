@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from './Header';
 // require('es6-promise').polyfill();
 import {Link} from 'react-router'
-import fetch from 'isomorphic-fetch';
 import Subheader from 'material-ui/Subheader';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
@@ -116,13 +115,13 @@ class Details extends Component {
             let path = this.props.location.pathname
             fetch(`${BASIC_URL}${path}`, {
                 method: 'PUT',
-                credentials: 'same-origin',
-                body: JSON.stringify({
-                    'website': 'www.zoogooo.com'
-                })
+                body: new FormData(form)
             })
-            this.setState({open: false})
+            this.setState({open: false,disable: false})
         }
+    }
+    componentWillUpdate(){
+        return false
     }
     componentWillReceiveProps(nextProps){
         this.state.data = nextProps.state.data.topic;
@@ -145,7 +144,7 @@ class Details extends Component {
                         <Subheader style={styles.sub}>{typeList[key].blocklabel}</Subheader>
                         <div className='basic-msg'>
                                 {typeList[key].fields&&typeList[key].fields.map((field, index) => {
-                                    if(field.fieldtype === 'picklist'){
+                                    if(field.uitype === '15'){
                                         return  <div key={index} className='list-item'>
                                                     <label>{field.fieldlabel}：</label>
                                                     {
@@ -159,18 +158,29 @@ class Details extends Component {
                                                             : <span>{data[field.fieldname]}</span>
                                                     }
                                                 </div>
-                                    } else if(field.fieldtype === 'reference'){
+                                    } else if(field.uitype === '51'){
                                         return  <div key={index} className='list-item'>
                                                     <label>{field.fieldlabel}：</label>
-                                                    <Link to={`/reference/${field.fieldname}`} >{data[field.fieldname]}</Link>
+                                                    <span>{data[field.fieldname]}{disable ? <ChevronRight color='#6d6c6c' style={styles.chevron}/> : null}</span>
                                                 </div>
-                                    } else if (field.fieldtype === 'data'){
+                                    } else if (field.uitype === '5'){
                                         return <div key={index} className='list-item'>
                                                     <label>{field.fieldlabel}：</label>
                                                     <div>
                                                         <DatePick date={data.hasOwnProperty(field.fieldname) ? new Date(data[field.fieldname]) : null} name={field.fieldname} />
                                                         {disable ? <ChevronRight color='#6d6c6c' style={{width: 20, height: 20}}/> : null}
                                                     </div>
+                                                </div>
+                                    } else if(field.uitype === '19' || field.uitype === '21'){
+                                        return  <div key={index} className='list-item'>
+                                                    <label>{field.fieldlabel}：</label>
+                                                    <textarea
+                                                        rows={5}
+                                                        value={data.hasOwnProperty(field.fieldname) ? data[field.fieldname] : ' '}
+                                                        onChange={this.handleChange}
+                                                        name={field.fieldname}
+                                                        data-type={field.fieldtype}
+                                                    />
                                                 </div>
                                     } else {
                                         return  <div key={index} className='list-item'>

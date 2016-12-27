@@ -18,34 +18,30 @@ import Details from './components/public/Details';
 import Fastnew from './components/public/Fastnew';
 import New from './components/public/New';
 import Reference from './components/public/Reference';
-const My = React.createClass({
-    render(){
-        return <div>{this.props.children}</div>
-    }
-})
 const path = ['customer', 'contact', 'record', 'order']
 const AppRouters = (
     <Route path='/' component={Master}>
         <IndexRoute component={Index} />
-        <Route path='customer' component={My}>
+        <Route path='customer'>
             <IndexRoute component={Customer}/>
-            <Route path='new' component={New} />
             <Route path='fastnew' component={Fastnew} />
+            <Route path='new' component={New} />
             <Route path=':id' component={Details} />
+
         </Route>
         <Route path='reference/:type' component={Reference} />
-        <Route path='setting' component={My}>
+        <Route path='setting'>
             <IndexRoute component={Setting}/>
             <Route path='about' component={About} />
             <Route path='opinion' component={Opinion} />
         </Route>
-        <Route path='contact' component={My}>
+        <Route path='contact'>
             <IndexRoute component={Contact}/>
             <Route path='new' component={New} />
             <Route path='fastnew' component={Fastnew} />
             <Route path=':id' component={Details} />
         </Route>
-        <Route path='record' component={My}>
+        <Route path='record'>
             <IndexRoute component={Record}/>
             <Route path='new' component={New} />
             <Route path='fastnew' component={Fastnew} />
@@ -53,7 +49,7 @@ const AppRouters = (
         </Route>
         <Route path='audit' component={Audit} />
         <Route path='check' component={Check} />
-        <Route path='order' component={My}>
+        <Route path='order'>
             <IndexRoute component={Order}/>
             <Route path='new' component={New} />
             <Route path='fastnew' component={Fastnew} />

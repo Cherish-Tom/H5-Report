@@ -3,6 +3,7 @@ import { REQUEST_POSTS, RECEIVE_POSTS } from '../constants/ActionType';
 import { GET_DATA_START, GET_DATA_SUCCESS } from '../constants/ActionType';
 import { BASIC_URL } from '../constants/Config';
 import { Tool } from '../constants/Tools';
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const requestPosts = path => {
     return {
         type: REQUEST_POSTS,
@@ -19,9 +20,10 @@ const receivePosts = (path, json) => {
 export const fetchPosts = options => {
     let url = '';
     if (options && options.url) {
-         url = `${BASIC_URL}/${options.url}?type=${options.type||'all'}&limit=${options.limit||8}&page=${options.page|| 1}`;
+         url = `${BASIC_URL}/${options.url}?type=${options.type||'all'}&limit=${options.limit||12}&page=${options.page|| 1}`;
     }
     return dispatch => {
+
         dispatch(requestPosts(options.url))
         return fetch(url)
             .then(response => {

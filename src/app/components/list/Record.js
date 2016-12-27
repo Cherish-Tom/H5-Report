@@ -35,7 +35,8 @@ const styles = {
         borderRadius: 4
     },
     inner:{
-        padding: '10px 100px 10px 10px'
+        padding: '10px 100px 10px 10px',
+        backgroundColor: '#fff'
     },
     btn:{
         width: 100,
@@ -73,7 +74,7 @@ class ViewCell extends Component {
             <Link to={{pathname:`/record/${this.props.contactrecordID}`, query:{url: 'records', mode: 55}}}>
                 <ListItem
                     style={styles.back}
-                    innerDivStyle={styles.inner}
+                    innerDivStyle={{padding: '16px 30px 16px 16px', backgroundColor: (this.props.key % 2) ? '#efeef4' : '#fff'}}
                     primaryText = {<p style={styles.textColor}>{this.props.Subject}</p>}
                     secondaryText={<p className="contact_second">
                         <span className='company'>{this.props.accountname}</span>

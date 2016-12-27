@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {List, ListItem} from 'material-ui/List';
 import Drawer from 'material-ui/Drawer';
 import {Link} from 'react-router';
@@ -116,6 +117,11 @@ class ContactList extends React.Component {
             fetchPosts: this.props.fetchPosts
         }
     }
+    componentDidMount(){
+        if(this.state.currentPage < this.state.totalPage) {
+            Tool.nextPage(ReactDOM.findDOMNode(this.refs.container), this.state.currentPage, this.state.totalPage, this.getNextPage, this.state.shouldUpdata)
+        }
+    }
     componentWillReceiveProps(nextProps){
         let { data } = nextProps.state;
         this.state.data = data && data.data || [];
@@ -124,27 +130,23 @@ class ContactList extends React.Component {
         this.state.isFetching = nextProps.state.isFetching || false;
     }
     render() {
-        const {currentPage, totalPage, shouldUpdata} = this.state
-        if(currentPage < totalPage) {
-            Tool.nextPage(this.refs.container, currentPage, totalPage, this.getNextPage, shouldUpdata)
-        }
         return (
             <div>
                 <div className="fiexded" >
                     <Head />
                     <Search title="请输入电话号码或者联系人"/>
                 </div>
-                <List className="item_lists" ref='container'>
-                    {this.state.data&&this.state.data.map((item) => (
+                <List className="item_lists" ref='container' style={{paddingBottom: 0}}>
+                    {this.state.data&&this.state.data.map((item, index) => (
                         <Link to={{pathname:`/contact/${item.contactid}`, query:{url: 'contacts', mode: 4}}} key={item.contactid}>
                             <ListItem
-                                className='contact'
                                 key={item.contactid}
                                 rightIconButton={<IconButton iconStyle={styles.phone} touch={true} onTouchTap={this.handleToggle}>
                                     <PhoneForwarded color='#a2dd86'/>
                                 </IconButton>}
                                 primaryText={<p className='contact_primary'>{item.lastname}</p>}
-                                innerDivStyle={{padding: '16px 30px 16px 16px'}}
+                                innerDivStyle={{padding: '16px 30px 16px 16px', backgroundColor: (index % 2) ? '#efeef4' : '#fff'}}
+                                rightToggle={<PhoneForwarded color='#a2dd86'/>}
                                 secondaryText={
                                     <p className="contact_second">
                                         <span className='company'>{<i className="material-icons">&#xE90B;</i>}{item.account_type}</span>

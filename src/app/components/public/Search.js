@@ -10,21 +10,13 @@ import {blue500, red500, greenA200} from 'material-ui/styles/colors';
 
 const styles={
     inputs:{
-        height:36,
-        marginTop:6,
+        height:28,
+        marginTop: 8,
         backgroundColor:'#fff',
         borderRadius: 20,
-        paddingLeft: 30
+        paddingLeft: 30,
+        fontSize: 14
     },
-    hin:{
-        color: "rgba(0, 0, 0, 0.298039)",
-        fontSize: 12,
-        zIndex:10,
-        left: 42
-    },
-    float:{
-        left: 24
-    }
 }
 
 
@@ -44,19 +36,19 @@ class Search extends Component {
         return (
             <div>
                 <TextField
+                    type='search'
                     className="search_text"
                     name='search'
-                    id='search'
                     type='text'
                     ref='getValue'
                 	fullWidth={true}
+                    placeholder={this.props.title}
                     inputStyle={styles.inputs}
-                	hintText={this.props.title}
                     underlineShow={false}
                     hintStyle={styles.hin}
                     value={this.state.value}
                     floatingLabelText={<SearchIcon color="rgba(0, 0, 0, 0.298039)"/>}
-                    floatingLabelStyle={{left: 20}}
+                    floatingLabelStyle={{left: 20, top: 34}}
                     floatingLabelFixed={true}
                     onChange={this.handleChange}
                 />

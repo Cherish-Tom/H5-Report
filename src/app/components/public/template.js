@@ -20,7 +20,8 @@ const Main = (mySetting) => {
             if(nextProps.state.get('isFetching')){
                 return false
             }
-            return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
+            // return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
+            return !(this.state === nextState) || !(this.props === nextProps)
         }
         render(){
             return  <this.props.defaultSetting.component {...this.props} state={this.props.state.toJS()} />

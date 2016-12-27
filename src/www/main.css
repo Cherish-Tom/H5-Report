@@ -53,7 +53,7 @@ body {
   padding:0;
   margin:0;
   overflow-x: hidden;
-  background-color: rgb(239, 238, 244);
+  background-color: 'rgb(239, 238, 244)';
 }
 input,textarea,select {
 	box-sizing: border-box;
@@ -70,18 +70,18 @@ input:focus,textarea:focus,select:focus{
     background-size: cover;
     background-position: top center;
 }
-nav .menu {
+.menu {
 	list-style: none;
 	margin-top: 2%;
 }
-nav .menu li{
+.menu li{
 	display: inline-block;
 	width: 30.6%;
 	margin-left: 2%;
 	margin-bottom: 2%;
 	text-align: center;
 }
-nav .menu li>a{
+.menu li>a{
     display: inline-block;
     width: 100%;
     padding: 20px 0;
@@ -89,37 +89,37 @@ nav .menu li>a{
 	font-size: 1.0rem;
     text-decoration: none;
 }
-nav .menu li:nth-child(1) {
+.menu li:nth-child(1) {
   background-color: #5fc6e3;
 }
-nav .menu li:nth-child(2) {
+.menu li:nth-child(2) {
   background-color: #afcc12;
 }
-nav .menu li:nth-child(3) {
+.menu li:nth-child(3) {
   background-color: #68bc91;
 }
-nav .menu li:nth-child(4) {
+.menu li:nth-child(4) {
   background-color: #eca266;
 }
-nav .menu li:nth-child(5) {
+.menu li:nth-child(5) {
   background-color: #1cbab7;
 }
-nav .menu li:nth-child(6) {
+.menu li:nth-child(6) {
   background-color: #e9b11c;
 }
-nav .menu li:nth-child(7) {
+.menu li:nth-child(7) {
   background-color: #7c6dc7;
 }
-nav .menu li:nth-child(8) {
+.menu li:nth-child(8) {
   background-color: #00b0d2;
 }
-nav .menu li:nth-child(9) {
+.menu li:nth-child(9) {
   background-color: #ff6571;
 }
-nav .menu li:nth-child(10) {
+.menu li:nth-child(10) {
   background-color: #e4af4c;
 }
-nav .menu a i {
+.menu a i {
 	display: block !important;
 	margin:0 auto;
 	color: #fff !important;
@@ -129,8 +129,8 @@ nav .menu a i {
 .search_text{
     padding: 0 12px;
     box-sizing: border-box;
-    background-color: #c9c9cc!important;
-    height: 48px!important;
+    background-color: #efeff4!important;
+    height: 44px!important;
 }
 .fiexded{
     position: fixed;
@@ -140,18 +140,18 @@ nav .menu a i {
     z-index: 1000;
 }
 .item_lists{
-    padding-top: 93px!important;
+    padding-top: 89px!important;
     background-color: #efeef4
 }
 .contact_primary{
     color: #7888af;
 }
-.item_lists>a:nth-child(2n+1)>div{
+/*.item_lists a:nth-child(2n+1)>div{
     background-color: #fff;
 }
-.item_lists>a:nth-child(2n)>div{
+.item_lists a:nth-child(2n)>div{
     background-color: #efeef4;
-}
+}*/
 .contact_second{
     display: flex;
     font-size: 12px!important;
@@ -389,11 +389,12 @@ input.photo_input:focus{
 .basic-msg .list-item input{
     border: 0;
     outline: 0;
-    height: 100%;
     color: rgb(94, 149, 201)!important;
     font-size: 14px!important;
     text-align: right;
     font-family: inherit;
+    height: 40px;
+    user-select: none;
 }
 .basic-msg .list-item>input,
 .basic-msg .list-item>div,
@@ -418,15 +419,17 @@ input[type='text']:disabled {
     flex: auto;
     margin-left: 15px;
 }
-.address-info textarea{
+.basic-msg textarea{
+    flex: 1;
     width: 100%;
     border-radius: 4px;
-    border: 1px solid #ddd;
+    border: none;
     font-family: inherit;
     text-indent: 6px;
+    margin: 3px 0;
     background-color: rgba(221, 221, 221, 0.5);
 }
-.address-info textarea:focus{
+.basic-msg textarea:focus{
     outline: 0;
 }
 .basic-msg .list-item{
@@ -434,7 +437,6 @@ input[type='text']:disabled {
     justify-content: space-between;
     align-items: flex-start;
     color: rgba(0, 0, 0, 0.54);
-    height: 40px;
     line-height: 40px;
 }
 .container{

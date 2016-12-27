@@ -22,14 +22,14 @@ Tool.nextPage = (element, currentPage, totalPage, callback, shouldUpdata) => {
         height       = 0,
         windowHeight = window.screen.height,
         setTop       = 0,
-        bottom       = 0,
+        top          = 0,
         oldScrollTop = 0,
         time         = null;
 
     element.addEventListener('touchstart', () => {
         height = element.offsetHeight;
         setTop = element.offsetTop;
-        bottom = parseInt(Tool.getStyles(element, 'marginBottom'));
+        top = parseInt(Tool.getStyles(element, 'paddingTop'));
     }, false)
     element.addEventListener('touchmove', () => {
         loadMore();
@@ -54,7 +54,7 @@ Tool.nextPage = (element, currentPage, totalPage, callback, shouldUpdata) => {
 
     const loadMore = () => {
         if ( ( page < totalPage ) && (updata == true) ) {
-            if (document.body.scrollTop + windowHeight >= height + setTop + bottom) {
+            if (document.body.scrollTop + windowHeight >= height + setTop  && document.body.scrollTop > 0) {
                 cancelAnimationFrame(requestID);
                 page++;
                 updata = false;
